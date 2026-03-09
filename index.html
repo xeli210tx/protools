@@ -12,189 +12,162 @@
             --bg-primary: #0a0a0a;
             --bg-card: #141414;
             --bg-card-hover: #1a1a1a;
-            --bg-section: #0d0d0d;
+            --bg-sidebar: #0f0f0f;
             --text-primary: #ffffff;
-            --text-secondary: #a0a0a0;
+            --text-secondary: #888;
             --accent: #00d4ff;
             --accent-hover: #00b8e0;
             --border-color: #222;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Inter', sans-serif; background: var(--bg-primary); color: var(--text-primary); line-height: 1.6; }
+        body { font-family: 'Inter', sans-serif; background: var(--bg-primary); color: var(--text-primary); }
+        
+        /* Layout */
+        .layout { display: flex; min-height: 100vh; }
+        
+        /* Sidebar */
+        .sidebar { width: 260px; background: var(--bg-sidebar); padding: 24px; position: fixed; height: 100vh; overflow-y: auto; }
+        .logo { font-size: 1.5rem; font-weight: 700; margin-bottom: 32px; display: block; text-decoration: none; }
+        .logo span { color: var(--accent); }
+        
+        .nav-section { margin-bottom: 24px; }
+        .nav-title { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text-secondary); margin-bottom: 12px; }
+        .nav-item { display: block; padding: 10px 12px; color: var(--text-secondary); text-decoration: none; border-radius: 8px; margin-bottom: 4px; transition: all 0.2s; }
+        .nav-item:hover, .nav-item.active { background: var(--bg-card); color: var(--accent); }
+        .nav-item .count { float: right; font-size: 0.75rem; background: var(--bg-card); padding: 2px 8px; border-radius: 12px; }
+        
+        /* Main Content */
+        .main { flex: 1; margin-left: 260px; padding: 24px 32px; }
         
         /* Header */
-        header { padding: 20px; background: var(--bg-card); position: sticky; top: 0; z-index: 100; }
-        .header-content { max-width: 1100px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-size: 1.5rem; font-weight: 700; text-decoration: none; color: var(--text-primary); }
-        .logo span { color: var(--accent); }
-        .nav-links { display: flex; gap: 24px; }
-        .nav-links a { color: var(--text-secondary); text-decoration: none; transition: color 0.2s; }
-        .nav-links a:hover { color: var(--accent); }
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 32px; }
+        .header h1 { font-size: 1.75rem; }
+        .search-bar { display: flex; gap: 12px; flex: 1; max-width: 500px; }
+        .search-bar input { flex: 1; padding: 12px 16px; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 8px; color: var(--text-primary); font-size: 0.9rem; }
+        .search-bar input:focus { outline: none; border-color: var(--accent); }
         
-        .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
-        section { padding: 80px 20px; }
+        /* Trending */
+        .trending { margin-bottom: 32px; }
+        .trending-title { font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 12px; }
+        .trending-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+        .trending-tag { padding: 6px 14px; background: var(--bg-card); border-radius: 20px; font-size: 0.85rem; color: var(--text-secondary); text-decoration: none; transition: all 0.2s; }
+        .trending-tag:hover { color: var(--accent); }
         
-        /* Hero with Search */
-        .hero { padding: 80px 20px; text-align: center; background: linear-gradient(180deg, #0f0f0f 0%, var(--bg-primary) 100%); }
-        .hero h1 { font-size: 2.5rem; font-weight: 700; margin-bottom: 8px; }
-        .hero h1 span { color: var(--accent); }
-        .hero p { font-size: 1.1rem; color: var(--text-secondary); margin-bottom: 32px; }
+        /* Products Grid */
+        .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .section-title { font-size: 1.25rem; }
+        .view-all { color: var(--accent); text-decoration: none; font-size: 0.9rem; }
         
-        .search-box { max-width: 500px; margin: 0 auto 40px; position: relative; }
-        .search-box input { width: 100%; padding: 16px 24px; padding-left: 48px; font-size: 1rem; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; color: var(--text-primary); outline: none; }
-        .search-box input:focus { border-color: var(--accent); }
-        .search-icon { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: var(--text-secondary); }
+        .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 20px; }
         
-        /* Categories */
-        .categories { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-bottom: 40px; }
-        .category-tag { padding: 8px 20px; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 24px; color: var(--text-secondary); text-decoration: none; font-size: 0.9rem; transition: all 0.2s; }
-        .category-tag:hover, .category-tag.active { border-color: var(--accent); color: var(--accent); }
+        .product-card { background: var(--bg-card); border-radius: 12px; overflow: hidden; text-decoration: none; color: var(--text-primary); transition: all 0.2s; }
+        .product-card:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(0,0,0,0.3); }
         
-        /* Featured */
-        .section-title { font-size: 1.5rem; font-weight: 600; margin-bottom: 32px; }
+        .product-thumb { height: 140px; background: linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%); display: flex; align-items: center; justify-content: center; font-size: 3rem; }
         
-        .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 24px; }
-        .product-card { background: var(--bg-card); border-radius: 16px; padding: 24px; transition: all 0.2s; border: 1px solid transparent; }
-        .product-card:hover { border-color: var(--accent); transform: translateY(-4px); }
-        .product-header { display: flex; align-items: flex-start; gap: 16px; margin-bottom: 16px; }
-        .product-icon { width: 56px; height: 56px; background: var(--bg-primary); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; flex-shrink: 0; }
-        .product-info { flex: 1; }
-        .product-info h3 { font-size: 1.1rem; margin-bottom: 4px; }
-        .product-info .category { font-size: 0.8rem; color: var(--accent); text-transform: uppercase; letter-spacing: 1px; }
-        .product-card p { color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 16px; }
-        .product-footer { display: flex; justify-content: space-between; align-items: center; }
-        .price { font-weight: 600; }
-        .price free { color: var(--accent); }
-        .view-btn { color: var(--accent); text-decoration: none; font-weight: 500; }
-        .view-btn:hover { text-decoration: underline; }
+        .product-info { padding: 16px; }
+        .product-category { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; color: var(--accent); margin-bottom: 6px; }
+        .product-title { font-size: 0.95rem; font-weight: 600; margin-bottom: 8px; line-height: 1.3; }
+        .product-meta { display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; color: var(--text-secondary); }
+        .product-price { font-weight: 600; }
+        .product-price.free { color: var(--accent); }
         
-        /* Stats */
-        .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; text-align: center; background: var(--bg-section); }
-        .stat-number { font-size: 2.5rem; font-weight: 700; color: var(--accent); }
-        .stat-label { color: var(--text-secondary); }
-        
-        /* Footer */
-        footer { background: var(--bg-card); padding: 40px 20px; text-align: center; }
-        .footer-links { margin-bottom: 16px; }
-        .footer-links a { color: var(--text-secondary); text-decoration: none; margin: 0 16px; }
-        .footer-links a:hover { color: var(--accent); }
-        
+        /* Mobile */
         @media (max-width: 768px) {
-            .stats { grid-template-columns: 1fr; gap: 16px; }
-            .hero h1 { font-size: 2rem; }
+            .layout { flex-direction: column; }
+            .sidebar { position: static; width: 100%; height: auto; padding: 16px; }
+            .main { margin-left: 0; padding: 16px; }
+            .header { flex-direction: column; gap: 16px; align-items: stretch; }
+            .search-bar { max-width: 100%; }
         }
     </style>
 </head>
 <body>
-    <header>
-        <div class="header-content">
+    <div class="layout">
+        <!-- Sidebar -->
+        <aside class="sidebar">
             <a href="/" class="logo">Pro<span>Tools</span></a>
-            <nav class="nav-links">
-                <a href="#products">Products</a>
-                <a href="#categories">Categories</a>
-                <a href="#about">About</a>
-            </nav>
-        </div>
-    </header>
-
-    <!-- Hero -->
-    <section class="hero">
-        <h1>Your Marketplace for<br><span>Productivity Tools</span></h1>
-        <p>Tools that work hard so you don't have to</p>
+            
+            <div class="nav-section">
+                <div class="nav-title">Categories</div>
+                <a href="#" class="nav-item active">All Tools <span class="count">3</span></a>
+                <a href="#" class="nav-item">📷 Photography <span class="count">1</span></a>
+                <a href="#" class="nav-item">📝 Content <span class="count">1</span></a>
+                <a href="#" class="nav-item">🤖 AI <span class="count">1</span></a>
+                <a href="#" class="nav-item">💼 Business <span class="count">1</span></a>
+            </div>
+            
+            <div class="nav-section">
+                <div class="nav-title">Pricing</div>
+                <a href="#" class="nav-item">Free</a>
+                <a href="#" class="nav-item">Paid</a>
+                <a href="#" class="nav-item">Subscription</a>
+            </div>
+        </aside>
         
-        <div class="search-box">
-            <span class="search-icon">🔍</span>
-            <input type="text" placeholder="Search tools...">
-        </div>
-        
-        <div class="categories">
-            <a href="#products" class="category-tag active">All</a>
-            <a href="#products" class="category-tag">📷 Photography</a>
-            <a href="#products" class="category-tag">📝 Content</a>
-            <a href="#products" class="category-tag">🤖 AI</a>
-            <a href="#products" class="category-tag">💼 Business</a>
-        </div>
-    </section>
-
-    <!-- Products Grid -->
-    <section id="products">
-        <div class="container">
-            <h2 class="section-title">Featured Tools</h2>
-            <div class="product-grid">
+        <!-- Main Content -->
+        <main class="main">
+            <!-- Header -->
+            <div class="header">
+                <h1>Tools</h1>
+                <div class="search-bar">
+                    <input type="text" placeholder="Search tools...">
+                </div>
+            </div>
+            
+            <!-- Trending -->
+            <div class="trending">
+                <div class="trending-title">#Trending:</div>
+                <div class="trending-tags">
+                    <a href="#" class="trending-tag">SD Transfer</a>
+                    <a href="#" class="trending-tag">Content Repurpose</a>
+                    <a href="#" class="trending-tag">AI Receptionist</a>
+                    <a href="#" class="trending-tag">Automation</a>
+                    <a href="#" class="trending-tag">Productivity</a>
+                </div>
+            </div>
+            
+            <!-- Products -->
+            <div class="section-header">
+                <h2 class="section-title">All Tools</h2>
+                <a href="#" class="view-all">View All →</a>
+            </div>
+            
+            <div class="products-grid">
                 <a href="/sd-transfer-pro.html" class="product-card">
-                    <div class="product-header">
-                        <div class="product-icon">⚡</div>
-                        <div class="product-info">
-                            <h3>SD Transfer Pro</h3>
-                            <span class="category">Photography</span>
+                    <div class="product-thumb">⚡</div>
+                    <div class="product-info">
+                        <div class="product-category">Photography</div>
+                        <div class="product-title">SD Transfer Pro</div>
+                        <div class="product-meta">
+                            <span class="product-price free">Free - $19/mo</span>
                         </div>
-                    </div>
-                    <p>Lightning-fast SD card transfers. Move thousands of photos in seconds.</p>
-                    <div class="product-footer">
-                        <span class="price free">Free - $19/mo</span>
-                        <span class="view-btn">View →</span>
                     </div>
                 </a>
                 
                 <a href="/content-pipeline.html" class="product-card">
-                    <div class="product-header">
-                        <div class="product-icon">🔄</div>
-                        <div class="product-info">
-                            <h3>Content Pipeline</h3>
-                            <span class="category">Content</span>
+                    <div class="product-thumb">🔄</div>
+                    <div class="product-info">
+                        <div class="product-category">Content</div>
+                        <div class="product-title">Content Pipeline</div>
+                        <div class="product-meta">
+                            <span class="product-price free">Free - $19/mo</span>
                         </div>
-                    </div>
-                    <p>Repurpose content across all platforms automatically.</p>
-                    <div class="product-footer">
-                        <span class="price free">Free - $19/mo</span>
-                        <span class="view-btn">View →</span>
                     </div>
                 </a>
                 
                 <a href="/ai-receptionist.html" class="product-card">
-                    <div class="product-header">
-                        <div class="product-icon">📞</div>
-                        <div class="product-info">
-                            <h3>AI Receptionist</h3>
-                            <span class="category">Business</span>
+                    <div class="product-thumb">📞</div>
+                    <div class="product-info">
+                        <div class="product-category">Business</div>
+                        <div class="product-title">AI Receptionist</div>
+                        <div class="product-meta">
+                            <span class="product-price">$29/mo</span>
                         </div>
-                    </div>
-                    <p>Never miss a call. AI-powered receptionist 24/7.</p>
-                    <div class="product-footer">
-                        <span class="price">$29/mo</span>
-                        <span class="view-btn">View →</span>
                     </div>
                 </a>
             </div>
-        </div>
-    </section>
-
-    <!-- Stats -->
-    <section class="stats">
-        <div class="container">
-            <div>
-                <div class="stat-number">3</div>
-                <div class="stat-label">Tools</div>
-            </div>
-            <div>
-                <div class="stat-number">1000+</div>
-                <div class="stat-label">Users</div>
-            </div>
-            <div>
-                <div class="stat-number">24/7</div>
-                <div class="stat-label">Support</div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer id="about">
-        <div class="footer-links">
-            <a href="#">Privacy Policy</a>
-            <a href="#">Terms of Service</a>
-            <a href="#">Contact</a>
-        </div>
-        <p style="color: var(--text-secondary);">© 2026 ProTools. All rights reserved.</p>
-    </footer>
+        </main>
+    </div>
 </body>
 </html>
