@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuickWatermark - Batch Photo Watermarking Tool</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root { --bg: #0a0a0a; --card: #141414; --text: #fff; --text-sec: #888; --accent: #00d4ff; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); }
+        .container { max-width: 800px; margin: 0 auto; padding: 40px 20px; }
+        header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; }
+        .logo { font-size: 1.2rem; font-weight: 700; text-decoration: none; color: var(--text); }
+        .logo span { color: var(--accent); }
+        .back { color: var(--text-sec); text-decoration: none; }
+        h1 { font-size: 2.5rem; margin-bottom: 16px; }
+        h1 span { color: var(--accent); }
+        .tagline { color: var(--text-sec); font-size: 1.2rem; margin-bottom: 32px; }
+        .price { font-size: 2rem; font-weight: 700; margin: 24px 0; }
+        .price span { font-size: 1rem; color: var(--text-sec); }
+        .cta { display: inline-block; padding: 16px 32px; background: var(--accent); color: #000; text-decoration: none; border-radius: 8px; font-weight: 600; }
+        .features { margin: 40px 0; }
+        .features li { padding: 12px 0; border-bottom: 1px solid #222; list-style: none; }
+        .features li::before { content: "✓"; color: var(--accent); margin-right: 12px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <a href="/" class="logo">Pro<span>Tools</span></a>
+            <a href="/" class="back">← Back</a>
+        </header>
+        <h1>Quick<span>Watermark</span></h1>
+        <p class="tagline">Batch add watermarks to photos in seconds. Protect your work effortlessly.</p>
+        <div class="price">Free - $9<span>/mo</span></div>
+        <a href="#" class="cta">Get Started</a>
+        <ul class="features">
+            <li>Batch process unlimited photos</li>
+            <li>Custom text or logo watermarks</li>
+            <li>Adjustable position and opacity</li>
+            <li>Multiple output formats</li>
+        </ul>
+    </div>
+</body>
+</html>
