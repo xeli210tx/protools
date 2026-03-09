@@ -242,7 +242,7 @@
                 <span class="featured-tag">⭐ FEATURED</span>
                 <h2>SD Card Transfer</h2>
                 <p>Lightning-fast SD card transfers with intelligent file organization. The #1 choice for photographers.</p>
-                <a href="../landing-pages/sd-card-transfer.html" class="btn btn-primary">Learn More</a>
+                <a href="/sd-card-transfer.html" class="btn btn-primary">Learn More</a>
             </div>
             <div class="featured-icon">⚡</div>
         </div>
@@ -290,7 +290,7 @@
                         <span class="rating-count">(128 reviews)</span>
                     </div>
                     <div class="product-footer">
-                        <a href="../landing-pages/sd-card-transfer.html" class="btn-learn-more">Learn More</a>
+                        <a href="/sd-card-transfer.html" class="btn-learn-more">Learn More</a>
                     </div>
                 </div>
                 
@@ -318,7 +318,7 @@
                         <span class="rating-count">(94 reviews)</span>
                     </div>
                     <div class="product-footer">
-                        <a href="../landing-pages/content-pipeline.html" class="btn-learn-more">Learn More</a>
+                        <a href="/content-pipeline.html" class="btn-learn-more">Learn More</a>
                     </div>
                 </div>
                 
@@ -346,7 +346,7 @@
                         <span class="rating-count">(67 reviews)</span>
                     </div>
                     <div class="product-footer">
-                        <a href="../landing-pages/ai-receptionist.html" class="btn-learn-more">Learn More</a>
+                        <a href="/ai-receptionist.html" class="btn-learn-more">Learn More</a>
                     </div>
                 </div>
                 
@@ -374,7 +374,7 @@
                         <span class="rating-count">(89 reviews)</span>
                     </div>
                     <div class="product-footer">
-                        <a href="../landing-pages/quickcrop.html" class="btn-learn-more">Learn More</a>
+                        <a href="/quickcrop.html" class="btn-learn-more">Learn More</a>
                     </div>
                 </div>
                 
@@ -402,7 +402,7 @@
                         <span class="rating-count">(156 reviews)</span>
                     </div>
                     <div class="product-footer">
-                        <a href="../landing-pages/content-repurpose.html" class="btn-learn-more">Learn More</a>
+                        <a href="/content-repurpose.html" class="btn-learn-more">Learn More</a>
                     </div>
                 </div>
                 
@@ -430,7 +430,7 @@
                         <span class="rating-count">(72 reviews)</span>
                     </div>
                     <div class="product-footer">
-                        <a href="../landing-pages/command-center.html" class="btn-learn-more">Learn More</a>
+                        <a href="/command-center.html" class="btn-learn-more">Learn More</a>
                     </div>
                 </div>
                 
@@ -458,7 +458,7 @@
                         <span class="rating-count">(203 reviews)</span>
                     </div>
                     <div class="product-footer">
-                        <a href="../landing-pages/invoice-chase.html" class="btn-learn-more">Learn More</a>
+                        <a href="/invoice-chase.html" class="btn-learn-more">Learn More</a>
                     </div>
                 </div>
                 
@@ -605,42 +605,175 @@
         </div>
     </div>
     
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="footer-inner">
-            <div class="footer-brand">
-                <a href="/" class="logo">
-                    <div class="logo-icon">⚡</div>
-                    ProTools<span>.io</span>
-                </a>
-                <p>Your trusted destination for discovering the best software tools. We curate and verify every tool on our platform.</p>
+    <!-- AI Chat Widget -->
+    <style>
+#ai-chat-widget {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 9999;
+    font-family: 'Inter', sans-serif;
+}
+
+#chat-toggle {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #00d4ff 0%, #0099cc 100%);
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 20px rgba(0, 212, 255, 0.4);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+#chat-toggle:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 28px rgba(0, 212, 255, 0.5);
+}
+
+#chat-toggle svg { width: 28px; height: 28px; fill: #000; transition: transform 0.3s; }
+#chat-toggle.open svg { transform: rotate(90deg); }
+
+#chat-window {
+    position: absolute;
+    bottom: 80px;
+    right: 0;
+    width: 380px;
+    height: 520px;
+    background: #141414;
+    border: 1px solid #333;
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+    display: none;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+#chat-window.open { display: flex; animation: slideUp 0.3s ease; }
+@keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+.chat-header {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    padding: 16px 20px;
+    border-bottom: 1px solid #222;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.chat-header-info { display: flex; align-items: center; gap: 12px; }
+
+.chat-avatar {
+    width: 36px; height: 36px;
+    background: linear-gradient(135deg, #00d4ff 0%, #0099cc 100%);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+}
+
+.chat-avatar svg { width: 20px; height: 20px; fill: #000; }
+.chat-title { font-size: 0.95rem; font-weight: 600; color: #fff; }
+.chat-status { font-size: 0.75rem; color: #10b981; display: flex; align-items: center; gap: 4px; }
+.chat-status::before { content: ''; width: 6px; height: 6px; background: #10b981; border-radius: 50%; animation: pulse 2s infinite; }
+@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+
+.chat-close { background: none; border: none; color: #888; cursor: pointer; padding: 4px; font-size: 1.2rem; line-height: 1; transition: color 0.2s; }
+.chat-close:hover { color: #fff; }
+
+.chat-messages { flex: 1; padding: 16px; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; }
+
+.chat-message { max-width: 85%; padding: 12px 16px; border-radius: 16px; font-size: 0.875rem; line-height: 1.5; word-wrap: break-word; }
+.chat-message.user { align-self: flex-end; background: #00d4ff; color: #000; border-bottom-right-radius: 4px; }
+.chat-message.assistant { align-self: flex-start; background: #222; color: #fff; border: 1px solid #333; border-bottom-left-radius: 4px; }
+.chat-message.loading { color: #888; font-style: italic; }
+
+.chat-typing { display: none; align-self: flex-start; background: #222; border: 1px solid #333; padding: 12px 16px; border-radius: 16px; border-bottom-left-radius: 4px; }
+.chat-typing.visible { display: flex; gap: 4px; }
+.chat-typing span { width: 8px; height: 8px; background: #888; border-radius: 50%; animation: bounce 1.4s infinite ease-in-out; }
+.chat-typing span:nth-child(1) { animation-delay: 0s; }
+.chat-typing span:nth-child(2) { animation-delay: 0.2s; }
+.chat-typing span:nth-child(3) { animation-delay: 0.4s; }
+@keyframes bounce { 0%, 80%, 100% { transform: translateY(0); } 40% { transform: translateY(-8px); } }
+
+.chat-input-container { padding: 16px; border-top: 1px solid #222; display: flex; gap: 12px; align-items: flex-end; }
+.chat-input-wrapper { flex: 1; position: relative; }
+#chat-input { width: 100%; background: #0a0a0a; border: 1px solid #333; border-radius: 24px; padding: 12px 16px; color: #fff; font-size: 0.875rem; font-family: 'Inter', sans-serif; resize: none; outline: none; transition: border-color 0.2s; max-height: 100px; }
+#chat-input:focus { border-color: #00d4ff; }
+#chat-input::placeholder { color: #555; }
+
+#send-button { width: 44px; height: 44px; background: #00d4ff; border: none; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s, transform 0.2s; flex-shrink: 0; }
+#send-button:hover { background: #00b8e0; transform: scale(1.05); }
+#send-button:disabled { background: #333; cursor: not-allowed; transform: none; }
+#send-button svg { width: 20px; height: 20px; fill: #000; }
+
+.chat-error { align-self: flex-start; background: #3a1a1a; border: 1px solid #5a2a2a; color: #ff6b6b; padding: 12px 16px; border-radius: 16px; border-bottom-left-radius: 4px; font-size: 0.8rem; }
+</style>
+
+<div id="ai-chat-widget">
+    <div id="chat-window">
+        <div class="chat-header">
+            <div class="chat-header-info">
+                <div class="chat-avatar"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg></div>
+                <div><div class="chat-title">AI Assistant</div><div class="chat-status">Online</div></div>
             </div>
-            <div class="footer-col">
-                <h4>Browse</h4>
-                <a href="#">All Tools</a>
-                <a href="#">Featured</a>
-                <a href="#">Popular</a>
-                <a href="#">New Arrivals</a>
-            </div>
-            <div class="footer-col">
-                <h4>Categories</h4>
-                <a href="#">Photography</a>
-                <a href="#">Content</a>
-                <a href="#">Business</a>
-                <a href="#">AI Tools</a>
-            </div>
-            <div class="footer-col">
-                <h4>Company</h4>
-                <a href="#">About</a>
-                <a href="#">Submit Tool</a>
-                <a href="#">Contact</a>
-                <a href="#">Privacy</a>
-            </div>
+            <button class="chat-close" onclick="toggleChat()">✕</button>
         </div>
-        <div class="footer-bottom">
-            <span>© 2026 ProTools.io. All rights reserved.</span>
-            <span>Made with ❤️ for creators</span>
+        <div class="chat-messages" id="chat-messages">
+            <div class="chat-message assistant">Hi! I'm your AI assistant. Ask me anything about ProTools or how I can help you today.</div>
+            <div class="chat-typing" id="chat-typing"><span></span><span></span><span></span></div>
         </div>
-    </footer>
+        <div class="chat-input-container">
+            <div class="chat-input-wrapper"><textarea id="chat-input" placeholder="Type your message..." rows="1" onkeydown="handleKeyDown(event)"></textarea></div>
+            <button id="send-button" onclick="sendMessage()"><svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg></button>
+        </div>
+    </div>
+    <button id="chat-toggle" onclick="toggleChat()"><svg viewBox="0 0 24 24" id="chat-icon"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z"/></svg></button>
+</div>
+
+<script>
+let isOpen = false;
+function toggleChat() {
+    const w = document.getElementById('chat-window'), t = document.getElementById('chat-toggle');
+    isOpen = !isOpen;
+    if (isOpen) { w.classList.add('open'); t.classList.add('open'); document.getElementById('chat-input').focus(); }
+    else { w.classList.remove('open'); t.classList.remove('open'); }
+}
+function handleKeyDown(e) {
+    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
+    const ta = e.target;
+    ta.style.height = 'auto';
+    ta.style.height = Math.min(ta.scrollHeight, 100) + 'px';
+}
+async function sendMessage() {
+    const input = document.getElementById('chat-input'), msg = input.value.trim(), btn = document.getElementById('send-button');
+    if (!msg) return;
+    input.disabled = true; btn.disabled = true;
+    addMessage(msg, 'user');
+    input.value = ''; input.style.height = 'auto';
+    const typing = document.getElementById('chat-typing');
+    typing.classList.add('visible');
+    try {
+        const r = await fetch('http://localhost:11434/api/generate', {
+            method: 'POST', headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ model: 'gemma3:4b', prompt: msg, stream: false })
+        });
+        if (!r.ok) throw new Error('Server error: ' + r.status);
+        const d = await r.json();
+        addMessage(d.response || 'Sorry, I could not generate a response.', 'assistant');
+    } catch (e) {
+        addMessage(e.message.includes('Failed to fetch') ? 'Could not connect to Ollama. Is it running at http://localhost:11434?' : 'Sorry, I could not connect to the AI service.', 'error');
+    } finally {
+        typing.classList.remove('visible');
+        input.disabled = false; btn.disabled = false; input.focus();
+    }
+}
+function addMessage(text, type) {
+    const m = document.getElementById('chat-messages'), div = document.createElement('div');
+    div.className = 'chat-message ' + type; div.textContent = text;
+    m.insertBefore(div, document.getElementById('chat-typing')); m.scrollTop = m.scrollHeight;
+}
+</script>
 </body>
 </html>
