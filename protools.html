@@ -23,6 +23,7 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; }
         body {
+            overflow-x: hidden;
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             background: var(--bg);
             color: var(--text);
@@ -284,12 +285,39 @@
         }
         
         @media (max-width: 768px) {
+            body { overflow-x: hidden; }
+            .container { padding: 0 16px; }
+            .hero { padding: 40px 16px; }
+            .hero h1 { font-size: 1.75rem; }
+            .hero p { font-size: 1rem; }
+            .hero-buttons { flex-direction: column; align-items: stretch; }
+            .nav-links { display: none; }
+            .products-grid { grid-template-columns: 1fr; }
+            .category-tabs { flex-wrap: nowrap; -webkit-overflow-scrolling: touch; }
+            .featured-banner { flex-direction: column; text-align: center; }
+            .featured-banner .featured-icon { font-size: 2.5rem; }
+            .stats-bar { grid-template-columns: repeat(2, 1fr); gap: 16px; padding: 16px; }
+            .stat-item h3 { font-size: 1.25rem; }
+            .categories-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+            .category-card { padding: 16px; }
+            .footer-inner { grid-template-columns: 1; gap: fr 1fr24px; }
+            .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
             .hero h1 { font-size: 2.5rem; }
             .hero p { font-size: 1.1rem; }
             .hero-buttons { flex-direction: column; }
             .features-grid { grid-template-columns: 1fr; }
         }
-    </style>
+            img { max-width: 100%; height: auto; }
+        @media (max-width: 480px) {
+            .hero h1 { font-size: 1.5rem; }
+            .hero p { font-size: 0.9rem; }
+            .products-grid { grid-template-columns: 1fr; }
+            .stats-bar { grid-template-columns: 1fr; }
+            .stat-item h3 { font-size: 1.25rem; }
+            .category-tabs { padding: 0 8px; }
+            .category-tab { padding: 8px 12px; font-size: 0.8rem; }
+        }
+</style>
 </head>
 <body>
     <nav>

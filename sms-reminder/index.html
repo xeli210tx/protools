@@ -23,6 +23,7 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; }
         body {
+            overflow-x: hidden;
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             background: var(--bg);
             color: var(--text);
@@ -308,7 +309,13 @@
             .hero-buttons { flex-direction: column; align-items: center; }
             .features-grid { grid-template-columns: 1fr; }
         }
-    </style>
+            img { max-width: 100%; height: auto; }
+        @media (max-width: 480px) {
+            .hero h1 { font-size: 1.5rem; }
+            .hero p { font-size: 0.9rem; }
+            .hero-buttons { flex-direction: column; }
+        }
+</style>
 </head>
 <body>
     <nav>
