@@ -54,7 +54,16 @@
         .btn-ghost:hover { color: var(--text-primary); }
         
         /* Hero */
-        .hero { background: var(--bg-primary); padding: 80px 32px 64px; text-align: center; }
+        .hero { 
+            background: var(--bg-primary); 
+            padding: 80px 32px 64px; 
+            text-align: center; 
+        }
+        .hero-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 32px;
+        }
         .hero-badge { display: inline-flex; align-items: center; gap: 8px; background: var(--bg-primary); color: var(--accent); padding: 10px 24px; border-radius: var(--radius-xl); font-size: 0.8rem; font-weight: 600; margin-bottom: 28px; box-shadow: inset 3px 3px 6px var(--shadow-dark), inset -3px -3px 6px var(--shadow-light); text-shadow: 0 0 15px var(--accent-glow); }
         .hero h1 { font-size: 3rem; font-weight: 700; margin-bottom: 20px; color: var(--text-primary); letter-spacing: -0.03em; line-height: 1.15; }
         .hero h1 span { color: var(--accent); text-shadow: 0 0 30px var(--accent-glow); }
@@ -117,14 +126,31 @@
         .btn-learn-more:hover { background: var(--accent); color: #fff; box-shadow: 0 0 25px var(--accent-glow), 0 6px 20px rgba(0, 212, 255, 0.3); }
         
         /* Stats Bar */
-        .stats-bar { background: var(--bg-primary); border-radius: var(--radius-lg); padding: 40px 48px; margin-bottom: 48px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px; text-align: center; box-shadow: 10px 10px 20px var(--shadow-dark), -10px -10px 20px var(--shadow-light); }
+        .stats-bar { 
+            background: var(--bg-primary); 
+            border-radius: var(--radius-lg); 
+            padding: 40px 48px; 
+            margin-bottom: 48px; 
+            display: grid; 
+            grid-template-columns: repeat(4, 1fr); 
+            gap: 40px; 
+            text-align: center; 
+            max-width: 100%;
+            box-shadow: 10px 10px 20px var(--shadow-dark), -10px -10px 20px var(--shadow-light); 
+        }
         .stat-item { position: relative; }
         .stat-item:not(:last-child)::after { content: ''; position: absolute; right: -20px; top: 50%; transform: translateY(-50%); height: 50px; width: 2px; background: linear-gradient(to bottom, transparent, var(--shadow-dark), transparent); }
         .stat-item h3 { font-size: 2.2rem; font-weight: 700; color: var(--accent); margin-bottom: 6px; letter-spacing: -0.02em; text-shadow: 0 0 20px var(--accent-glow); }
         .stat-item p { font-size: 0.9rem; color: var(--text-secondary); font-weight: 500; }
         
         /* Category Cards */
-        .categories-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin-bottom: 56px; }
+        .categories-grid { 
+            display: grid; 
+            grid-template-columns: repeat(4, 1fr); 
+            gap: 24px; 
+            margin-bottom: 56px; 
+            max-width: 100%;
+        }
         .category-card { background: var(--bg-primary); border-radius: var(--radius-lg); padding: 32px 24px; text-align: center; transition: all 0.3s ease; cursor: pointer; box-shadow: 8px 8px 16px var(--shadow-dark), -8px -8px 16px var(--shadow-light); }
         .category-card:hover { transform: translateY(-6px); box-shadow: 12px 12px 24px var(--shadow-dark), -12px -12px 24px var(--shadow-light); }
         .category-card-icon { width: 64px; height: 64px; background: var(--bg-primary); border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; font-size: 1.75rem; margin: 0 auto 18px; box-shadow: 4px 4px 8px var(--shadow-dark), -4px -4px 8px var(--shadow-light); transition: all 0.3s ease; }
@@ -199,31 +225,33 @@
     
     <!-- Hero -->
     <section class="hero">
-        <div class="hero-badge">
-            ✨ New tools added daily
-        </div>
-        <h1>Discover the Best <span>Software Tools</span></h1>
-        <p class="hero-subtitle">Explore our curated collection of powerful tools for photographers, content creators, businesses, and AI enthusiasts.</p>
-        <div class="hero-buttons">
-            <button class="btn btn-primary">Browse All Tools</button>
-            <button class="btn btn-ghost">Learn More</button>
-        </div>
-        <div class="trust-badges">
-            <div class="trust-badge">
-                <div class="trust-badge-icon">✓</div>
-                Trusted by 10,000+ users
+        <div class="hero-inner">
+            <div class="hero-badge">
+                ✨ New tools added daily
             </div>
-            <div class="trust-badge">
-                <div class="trust-badge-icon">✓</div>
-                Free to start
+            <h1>Discover the Best <span>Software Tools</span></h1>
+            <p class="hero-subtitle">Explore our curated collection of powerful tools for photographers, content creators, businesses, and AI enthusiasts.</p>
+            <div class="hero-buttons">
+                <button class="btn btn-primary">Browse All Tools</button>
+                <button class="btn btn-ghost">Learn More</button>
             </div>
-            <div class="trust-badge">
-                <div class="trust-badge-icon">✓</div>
-                50+ verified tools
-            </div>
-            <div class="trust-badge">
-                <div class="trust-badge-icon">✓</div>
-                Updated daily
+            <div class="trust-badges">
+                <div class="trust-badge">
+                    <div class="trust-badge-icon">✓</div>
+                    Trusted by 10,000+ users
+                </div>
+                <div class="trust-badge">
+                    <div class="trust-badge-icon">✓</div>
+                    Free to start
+                </div>
+                <div class="trust-badge">
+                    <div class="trust-badge-icon">✓</div>
+                    50+ verified tools
+                </div>
+                <div class="trust-badge">
+                    <div class="trust-badge-icon">✓</div>
+                    Updated daily
+                </div>
             </div>
         </div>
     </section>
