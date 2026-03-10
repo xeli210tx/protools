@@ -595,52 +595,189 @@
             <!-- Tools Tab -->
             <div class="tab-content active" id="tab-tools">
                 <div class="tools-grid">
-                    <div class="tool-card" data-tool="discord">
-                        <div class="tool-icon">💬</div>
-                        <h3>Discord Bot</h3>
-                        <p>Manage the Renegade Discord bot, check status, and view activity logs.</p>
+                    <!-- Business Tools -->
+                    <div class="tool-card" data-tool="crm" onclick="openTool('crm')">
+                        <div class="tool-icon">👥</div>
+                        <h3>CRM</h3>
+                        <p>Customer relationship management for Wedding, Real Estate & SaaS</p>
                         <div class="tool-status">Active</div>
                     </div>
-                    <div class="tool-card" data-tool="website">
+                    <div class="tool-card" data-tool="invoicechase" onclick="openTool('invoicechase')">
+                        <div class="tool-icon">💰</div>
+                        <h3>Invoice Chase</h3>
+                        <p>Automated invoice follow-ups & payment collection</p>
+                        <div class="tool-status">Active</div>
+                    </div>
+                    <div class="tool-card" data-tool="invoicedash" onclick="openTool('invoicedash')">
+                        <div class="tool-icon">📄</div>
+                        <h3>Invoice Dash</h3>
+                        <p>Professional invoicing for freelancers & small businesses</p>
+                        <div class="tool-status">Active</div>
+                    </div>
+                    <div class="tool-card" data-tool="leadflow" onclick="openTool('leadflow')">
+                        <div class="tool-icon">📈</div>
+                        <h3>LeadFlow</h3>
+                        <p>Lead generation & pipeline management</p>
+                        <div class="tool-status">Active</div>
+                    </div>
+                    <div class="tool-card" data-tool="taxhelper" onclick="openTool('taxhelper')">
+                        <div class="tool-icon">🧾</div>
+                        <h3>Tax Helper</h3>
+                        <p>Tax deductions tracker & CPA-ready reports</p>
+                        <div class="tool-status">Active</div>
+                    </div>
+                    <div class="tool-card" data-tool="receiptprocessor" onclick="openTool('receiptprocessor')">
+                        <div class="tool-icon">🧾</div>
+                        <h3>Receipt Processor</h3>
+                        <p>AI-powered receipt scanning & expense tracking</p>
+                        <div class="tool-status">Active</div>
+                    </div>
+                    
+                    <!-- AI Tools -->
+                    <div class="tool-card" data-tool="aireceptionist" onclick="openTool('aireceptionist')">
+                        <div class="tool-icon">🤖</div>
+                        <h3>AI Receptionist</h3>
+                        <p>24/7 AI phone receptionist with scheduling</p>
+                        <div class="tool-status">Active</div>
+                    </div>
+                    <div class="tool-card" data-tool="smsreminder" onclick="openTool('smsreminder')">
+                        <div class="tool-icon">📱</div>
+                        <h3>SMS Reminder</h3>
+                        <p>Automated appointment reminders & follow-ups</p>
+                        <div class="tool-status">Active</div>
+                    </div>
+                    <div class="tool-card" data-tool="quickmeet" onclick="openTool('quickmeet')">
+                        <div class="tool-icon">📅</div>
+                        <h3>QuickMeet</h3>
+                        <p>Instant meeting scheduler with calendar sync</p>
+                        <div class="tool-status">Active</div>
+                    </div>
+                    <div class="tool-card" data-tool="contentrepurpose" onclick="openTool('contentrepurpose')">
+                        <div class="tool-icon">🔄</div>
+                        <h3>Content Repurpose</h3>
+                        <p>Turn one content into many formats with AI</p>
+                        <div class="tool-status">Active</div>
+                    </div>
+                    <div class="tool-card" data-tool="contentpipeline" onclick="openTool('contentpipeline')">
+                        <div class="tool-icon">📝</div>
+                        <h3>Content Pipeline</h3>
+                        <p>AI-powered content creation & distribution</p>
+                        <div class="tool-status">Active</div>
+                    </div>
+                    <div class="tool-card" data-tool="localaisuite" onclick="openTool('localaisuite')">
+                        <div class="tool-icon">🧠</div>
+                        <h3>Local AI Suite</h3>
+                        <p>Privacy-first AI tools that run offline</p>
+                        <div class="tool-status">Active</div>
+                    </div>
+                    
+                    <!-- Marketing Tools -->
+                    <div class="tool-card" data-tool="localseo" onclick="openTool('localseo')">
+                        <div class="tool-icon">🔍</div>
+                        <h3>Local SEO Tool</h3>
+                        <p>Rank higher in local search results</p>
+                        <div class="tool-status">Active</div>
+                    </div>
+                    <div class="tool-card" data-tool="cloudcostcompare" onclick="openTool('cloudcostcompare')">
+                        <div class="tool-icon">☁️</div>
+                        <h3>Cloud Cost Compare</h3>
+                        <p>Compare cloud hosting costs & save money</p>
+                        <div class="tool-status">Active</div>
+                    </div>
+                    <div class="tool-card" data-tool="marketbuilder" onclick="openTool('marketbuilder')">
+                        <div class="tool-icon">🏗️</div>
+                        <h3>Market Builder</h3>
+                        <p>Build marketing campaigns with AI</p>
+                        <div class="tool-status">Active</div>
+                    </div>
+                    
+                    <!-- Developer Tools -->
+                    <div class="tool-card" data-tool="sdcardtransfer" onclick="openTool('sdcardtransfer')">
+                        <div class="tool-icon">💾</div>
+                        <h3>SD Card Transfer</h3>
+                        <p>Fast peer-to-peer file transfer</p>
+                        <div class="tool-status">Active</div>
+                    </div>
+                    <div class="tool-card" data-tool="sdtransferlanding" onclick="openTool('sdtransferlanding')">
                         <div class="tool-icon">🌐</div>
-                        <h3>Website Manager</h3>
-                        <p>Update content, manage blog posts, and configure site settings.</p>
+                        <h3>SD Transfer Landing</h3>
+                        <p>Landing page for file transfer service</p>
                         <div class="tool-status">Active</div>
                     </div>
-                    <div class="tool-card" data-tool="api">
-                        <div class="tool-icon">🔌</div>
-                        <h3>API Console</h3>
-                        <p>Test API endpoints, view usage stats, and manage API keys.</p>
+                    <div class="tool-card" data-tool="promptlab" onclick="openTool('promptlab')">
+                        <div class="tool-icon">💡</div>
+                        <h3>Prompt Lab</h3>
+                        <p>AI prompt library & management</p>
                         <div class="tool-status">Active</div>
                     </div>
-                    <div class="tool-card" data-tool="database">
-                        <div class="tool-icon">🗄️</div>
-                        <h3>Database</h3>
-                        <p>Access and manage the database, run queries, and view schema.</p>
+                    <div class="tool-card" data-tool="microlaunch" onclick="openTool('microlaunch')">
+                        <div class="tool-icon">🚀</div>
+                        <h3>MicroLaunch</h3>
+                        <p>Launch micro-SaaS products quickly</p>
                         <div class="tool-status">Active</div>
                     </div>
-                    <div class="tool-card" data-tool="analytics">
-                        <div class="tool-icon">📊</div>
-                        <h3>Analytics</h3>
-                        <p>View traffic analytics, user metrics, and performance data.</p>
+                    <div class="tool-card" data-tool="creatorforge" onclick="openTool('creatorforge')">
+                        <div class="tool-icon">⚡</div>
+                        <h3>CreatorForge</h3>
+                        <p>All-in-one creator economy toolkit</p>
                         <div class="tool-status">Active</div>
                     </div>
-                    <div class="tool-card" data-tool="email">
-                        <div class="tool-icon">📧</div>
-                        <h3>Email Manager</h3>
-                        <p>Send emails, manage templates, and view send history.</p>
+                    <div class="tool-card" data-tool="linearcursor" onclick="openTool('linearcursor')">
+                        <div class="tool-icon">💻</div>
+                        <h3>Linear Cursor Tools</h3>
+                        <p>Developer productivity integrations</p>
                         <div class="tool-status">Active</div>
                     </div>
-                    <div class="tool-card" data-tool="storage">
-                        <div class="tool-icon">📁</div>
-                        <h3>File Storage</h3>
-                        <p>Manage uploaded files, media library, and storage usage.</p>
+                    <div class="tool-card" data-tool="commandcenter" onclick="openTool('commandcenter')">
+                        <div class="tool-icon">🎛️</div>
+                        <h3>Command Center</h3>
+                        <p>Unified dashboard for all your tools</p>
                         <div class="tool-status">Active</div>
                     </div>
-                    <div class="tool-card" data-tool="logs">
-                        <div class="tool-icon">📋</div>
-                        <h3>System Logs</h3>
-                        <p>View application logs, error reports, and system events.</p>
+                    
+                    <!-- Quick Tools -->
+                    <div class="tool-card" data-tool="shopifycalc" onclick="openTool('shopifycalc')">
+                        <div class="tool-icon">🛒</div>
+                        <h3>Shopify Fee Calc</h3>
+                        <p>Calculate Shopify fees & profit margins</p>
+                        <div class="tool-status">Active</div>
+                    </div>
+                    <div class="tool-card" data-tool="reviewresponder" onclick="openTool('reviewresponder')">
+                        <div class="tool-icon">⭐</div>
+                        <h3>Review Responder</h3>
+                        <p>AI-powered review responses</p>
+                        <div class="tool-status">Active</div>
+                    </div>
+                    <div class="tool-card" data-tool="remindme" onclick="openTool('remindme')">
+                        <div class="tool-icon">⏰</div>
+                        <h3>RemindMe</h3>
+                        <p>Personal reminder & task management</p>
+                        <div class="tool-status">Active</div>
+                    </div>
+                    <div class="tool-card" data-tool="quickcrop" onclick="openTool('quickcrop')">
+                        <div class="tool-icon">✂️</div>
+                        <h3>QuickCrop</h3>
+                        <p>Quick image cropping tool</p>
+                        <div class="tool-status">Active</div>
+                    </div>
+                    <div class="tool-card" data-tool="tweetspark" onclick="openTool('tweetspark')">
+                        <div class="tool-icon">🐦</div>
+                        <h3>Tweet Spark</h3>
+                        <p>AI tweet generator & scheduler</p>
+                        <div class="tool-status">Active</div>
+                    </div>
+                    
+                    <!-- Photography -->
+                    <div class="tool-card" data-tool="wedding" onclick="openTool('wedding')">
+                        <div class="tool-icon">💒</div>
+                        <h3>Everlasting Moments</h3>
+                        <p>Wedding photography website</p>
+                        <div class="tool-status">Active</div>
+                    </div>
+                    <div class="tool-card" data-tool="realestate" onclick="openTool('realestate')">
+                        <div class="tool-icon">🏠</div>
+                        <h3>Elevated Visuals</h3>
+                        <p>Real estate photography website</p>
                         <div class="tool-status">Active</div>
                     </div>
                 </div>
@@ -891,6 +1028,14 @@
         // Close Tool Modal
         function closeToolModal() {
             document.getElementById('toolModal').classList.remove('active');
+        }
+
+        // Open Tool - Navigate to tool URL
+        function openTool(toolId) {
+            const tool = CONFIG.tools[toolId];
+            if (tool && tool.url) {
+                window.location.href = tool.url;
+            }
         }
 
         // Password Modal
