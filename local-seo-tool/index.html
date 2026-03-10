@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Local SEO Tool — Rank Higher in Local Search</title>
-    <meta name="description" content="Optimize for local search. Track rankings and manage citations.">
+    <meta name="description" content="Optimize for local search. Track rankings and manage citations. Get more local customers.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -40,6 +40,20 @@
             z-index: -1;
         }
         .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+        
+        .value-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: linear-gradient(135deg, #22C55E20 0%, #22C55E10 100%);
+            border: 1px solid #22C55E40;
+            color: #22C55E;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
         
         nav {
             padding: 20px 0;
@@ -98,10 +112,7 @@
             color: var(--primary);
         }
         
-        .hero {
-            padding: 100px 0 80px;
-            text-align: center;
-        }
+        .hero { padding: 100px 0 80px; text-align: center; }
         .hero-badge {
             display: inline-flex;
             align-items: center;
@@ -124,210 +135,55 @@
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
-        .hero p {
-            font-size: 1.25rem;
-            color: var(--text-muted);
-            max-width: 600px;
-            margin: 0 auto 40px;
-        }
-        .hero-buttons {
-            display: flex;
-            gap: 16px;
-            justify-content: center;
-            margin-bottom: 60px;
-        }
+        .hero p { font-size: 1.25rem; color: var(--text-muted); max-width: 600px; margin: 0 auto 40px; }
+        .hero-buttons { display: flex; gap: 16px; justify-content: center; margin-bottom: 60px; }
         
-        .features {
-            padding: 80px 0;
-        }
-        .section-header {
-            text-align: center;
-            margin-bottom: 60px;
-        }
-        .section-header h2 {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 16px;
-        }
-        .section-header p {
-            color: var(--text-muted);
-            font-size: 1.1rem;
-            max-width: 500px;
-            margin: 0 auto;
-        }
+        .social-proof { display: flex; justify-content: center; gap: 40px; flex-wrap: wrap; }
+        .proof-item { display: flex; align-items: center; gap: 8px; color: var(--text-muted); font-size: 0.9rem; }
+        .proof-item strong { color: var(--text); font-weight: 600; }
         
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 24px;
-        }
-        .feature-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 32px;
-            transition: all 0.3s;
-        }
-        .feature-card:hover {
-            border-color: var(--primary);
-            transform: translateY(-4px);
-        }
-        .feature-icon {
-            width: 48px;
-            height: 48px;
-            background: #22C55E20;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            margin-bottom: 20px;
-        }
-        .feature-card h3 {
-            font-size: 1.25rem;
-            font-weight: 600;
-            margin-bottom: 12px;
-        }
-        .feature-card p {
-            color: var(--text-muted);
-            font-size: 0.95rem;
-        }
+        .features { padding: 80px 0; }
+        .section-header { text-align: center; margin-bottom: 60px; }
+        .section-header h2 { font-size: 2.5rem; font-weight: 700; margin-bottom: 16px; }
+        .section-header p { color: var(--text-muted); font-size: 1.1rem; max-width: 500px; margin: 0 auto; }
         
-        .pricing {
-            padding: 80px 0;
-            background: rgba(0, 0, 0, 0.2);
-        }
-        .pricing-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 24px;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        .pricing-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 32px;
-            text-align: center;
-        }
-        .pricing-card.featured {
-            border-color: var(--primary);
-            position: relative;
-        }
-        .pricing-card.featured::before {
-            content: 'Popular';
-            position: absolute;
-            top: -12px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: var(--primary);
-            color: white;
-            padding: 4px 16px;
-            border-radius: 100px;
-            font-size: 12px;
-            font-weight: 600;
-        }
-        .pricing-card h3 {
-            font-size: 1.25rem;
-            font-weight: 600;
-            margin-bottom: 8px;
-        }
-        .pricing-price {
-            font-size: 2.5rem;
-            font-weight: 800;
-            margin: 16px 0;
-            font-family: 'JetBrains Mono', monospace;
-        }
-        .pricing-price span {
-            font-size: 1rem;
-            font-weight: 400;
-            color: var(--text-muted);
-        }
-        .pricing-features {
-            list-style: none;
-            margin: 24px 0;
-            text-align: left;
-        }
-        .pricing-features li {
-            padding: 8px 0;
-            color: var(--text-muted);
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-        .pricing-features li::before {
-            content: '✓';
-            color: var(--primary);
-            font-weight: 600;
-        }
+        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; }
+        .feature-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 16px; padding: 32px; transition: all 0.3s; }
+        .feature-card:hover { border-color: var(--primary); transform: translateY(-4px); }
+        .feature-icon { width: 48px; height: 48px; background: #22C55E20; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; margin-bottom: 20px; }
+        .feature-card h3 { font-size: 1.25rem; font-weight: 600; margin-bottom: 12px; }
+        .feature-card p { color: var(--text-muted); font-size: 0.95rem; }
         
-        .cta {
-            padding: 80px 0;
-            text-align: center;
-        }
-        .cta h2 {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 16px;
-        }
-        .cta p {
-            color: var(--text-muted);
-            font-size: 1.1rem;
-            margin-bottom: 32px;
-        }
+        .pricing { padding: 80px 0; background: rgba(0, 0, 0, 0.2); }
+        .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px; max-width: 800px; margin: 0 auto; }
+        .pricing-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 16px; padding: 32px; text-align: center; }
+        .pricing-card.featured { border-color: var(--primary); position: relative; }
+        .pricing-card.featured::before { content: 'Popular'; position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: var(--primary); color: white; padding: 4px 16px; border-radius: 100px; font-size: 12px; font-weight: 600; }
+        .pricing-card h3 { font-size: 1.25rem; font-weight: 600; margin-bottom: 8px; }
+        .pricing-price { font-size: 2.5rem; font-weight: 800; margin: 16px 0; font-family: 'JetBrains Mono', monospace; }
+        .pricing-price span { font-size: 1rem; font-weight: 400; color: var(--text-muted); }
+        .pricing-savings { background: #22C55E20; color: #22C55E; font-size: 0.8rem; font-weight: 600; padding: 4px 10px; border-radius: 4px; display: inline-block; margin-bottom: 12px; }
+        .pricing-features { list-style: none; margin: 24px 0; text-align: left; }
+        .pricing-features li { padding: 10px 0; color: var(--text-muted); display: flex; align-items: center; gap: 12px; }
+        .pricing-features li::before { content: '✓'; color: var(--primary); font-weight: 600; }
         
-        footer {
-            padding: 40px 0;
-            border-top: 1px solid var(--border);
-            text-align: center;
-            color: var(--text-muted);
-        }
+        .trial-banner { background: linear-gradient(135deg, #22C55E10 0%, #22C55E05 100%); border: 1px solid #22C55E40; border-radius: 12px; padding: 24px; text-align: center; margin: 40px auto; max-width: 500px; }
+        
+        .cta { padding: 80px 0; text-align: center; }
+        .cta h2 { font-size: 2.5rem; font-weight: 700; margin-bottom: 16px; }
+        .cta p { color: var(--text-muted); font-size: 1.1rem; margin-bottom: 32px; }
+        
+        footer { padding: 40px 0; border-top: 1px solid var(--border); text-align: center; color: var(--text-muted); }
         
         @media (max-width: 768px) {
-            body { overflow-x: hidden; }
-            .container { padding: 0 16px; }
-            .hero { padding: 60px 16px 40px; }
             .hero h1 { font-size: 2rem; }
             .hero p { font-size: 1rem; }
-            .hero-buttons { flex-direction: column; align-items: stretch; }
-            .hero-buttons .btn { width: 100%; text-align: center; }
-            .features { padding: 40px 0; }
+            .hero-buttons { flex-direction: column; align-items: center; }
             .features-grid { grid-template-columns: 1fr; }
-            .pricing { padding: 40px 0; }
             .pricing-grid { grid-template-columns: 1fr; }
-            .section-header h2 { font-size: 1.75rem; }
-            .section-header p { font-size: 1rem; }
             .nav-links { display: none; }
-            .logo { font-size: 1.2rem; }
-            .logo-icon { width: 28px; height: 28px; font-size: 1rem; }
-            .btn { padding: 10px 16px; font-size: 0.9rem; }
-            .feature-card { padding: 20px; }
-            .pricing-card { padding: 20px; }
-            .footer { padding: 32px 16px; }
-            .footer-inner { grid-template-columns: 1fr; gap: 24px; }
-            .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
-            .hero h1 { font-size: 2.5rem; }
-            .hero p { font-size: 1.1rem; }
-            .hero-buttons { flex-direction: column; }
-            .features-grid { grid-template-columns: 1fr; }
         }
-            img { max-width: 100%; height: auto; }
-        @media (max-width: 480px) {
-            .hero h1 { font-size: 1.5rem; }
-            .hero p { font-size: 0.9rem; }
-            .hero-buttons { gap: 12px; }
-            .section-header h2 { font-size: 1.5rem; }
-            .feature-card { padding: 16px; }
-            .pricing-card { padding: 16px; }
-            .pricing-price { font-size: 2rem; }
-            .btn { padding: 8px 12px; font-size: 0.85rem; }
-            .logo { font-size: 1rem; }
-            .stats-bar { grid-template-columns: 1fr 1fr; }
-            .stat-item h3 { font-size: 1.25rem; }
-            .categories-grid { grid-template-columns: 1fr; }
-        }
-</style>
+    </style>
 </head>
 <body>
     <nav>
@@ -339,49 +195,71 @@
             <div class="nav-links">
                 <a href="#features">Features</a>
                 <a href="#pricing">Pricing</a>
-                <a href="#" class="btn btn-primary">Get Started</a>
+                <a href="#" class="btn btn-secondary">Log In</a>
+                <a href="#" class="btn btn-primary">Start Free</a>
             </div>
         </div>
     </nav>
 
     <section class="hero">
         <div class="container">
-            <div class="hero-badge">
-                ✨ Now available
-            </div>
+            <div class="hero-badge">✨ Now available</div>
+            <div class="value-badge">📈 Rank #1 in local search</div>
             <h1>Master Local SEO in Minutes</h1>
-            <p>Optimize for local search. Track rankings and manage citations.</p>
+            <p>Optimize for local search. Track rankings and manage citations. Get more customers from Google Maps.</p>
+            
+            <div class="social-proof">
+                <div class="proof-item"><strong>25,000+</strong> local businesses</div>
+                <div class="proof-item"><strong>500K+</strong> citations managed</div>
+                <div class="proof-item"><strong>3x</strong> more visibility</div>
+            </div>
+            
             <div class="hero-buttons">
-                <a href="#" class="btn btn-primary">Try Free →</a>
+                <a href="#" class="btn btn-primary">Start Free Trial →</a>
                 <a href="#features" class="btn btn-secondary">Learn More</a>
             </div>
+            
+            <p style="font-size: 0.85rem; color: var(--text-muted);">No credit card required • 14-day free trial</p>
         </div>
-    <section class="features" id    </section>
+    </section>
 
-="features">
+    <section class="features" id="features">
         <div class="container">
             <div class="section-header">
                 <h2>Everything you need</h2>
-                <p>Powerful features to help you rank higher locally</p>
+                <p>Powerful features to rank higher in local search</p>
             </div>
             <div class="features-grid">
                 <div class="feature-card">
-    <div class="feature-icon">🤖</div>
-    <h3>AI-Powered</h3>
-    <p>Powered by advanced AI models</p>
-</div><div class="feature-card">
-    <div class="feature-icon">⚡</div>
-    <h3>Fast Results</h3>
-    <p>Get results in seconds</p>
-</div><div class="feature-card">
-    <div class="feature-icon">🔒</div>
-    <h3>Secure</h3>
-    <p>Your data is always protected</p>
-</div><div class="feature-card">
-    <div class="feature-icon">📈</div>
-    <h3>Analytics</h3>
-    <p>Track your performance over time</p>
-</div>
+                    <div class="feature-icon">🔍</div>
+                    <h3>Rank Tracking</h3>
+                    <p>Track your rankings for local keywords. See daily position changes in Google Maps.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📋</div>
+                    <h3>Citation Management</h3>
+                    <p>List your business on 50+ directories. One submission, everywhere.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⭐</div>
+                    <h3>Review Management</h3>
+                    <p>Monitor and respond to reviews from one dashboard. Build your reputation.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📝</div>
+                    <h3>GBP Optimization</h3>
+                    <p>Optimize your Google Business Profile. Photos, posts, products, services.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <h3>Keyword Research</h3>
+                    <p>Discover local keywords your customers search for. Volume and difficulty.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3>Competitor Analysis</h3>
+                    <p>See what competitors are doing. Find gaps and opportunities.</p>
+                </div>
             </div>
         </div>
     </section>
@@ -392,31 +270,61 @@
                 <h2>Simple pricing</h2>
                 <p>Start free, upgrade when you're ready</p>
             </div>
+            
+            <div class="trial-banner">
+                <h3>🎉 Try Pro Free for 14 Days</h3>
+                <p>Full access to all features. No credit card required.</p>
+            </div>
+            
             <div class="pricing-grid">
-                <div class="pricing-card ">
-    <h3>Free</h3>
-    <div class="pricing-price">$0<span>/mo</span></div>
-    <ul class="pricing-features">
-        <li>Basic features</li><li>Community support</li>
-    </ul>
-    <a href="#" class="btn btn-secondary">Get Started</a>
-</div><div class="pricing-card featured">
-    <h3>Pro</h3>
-    <div class="pricing-price">$29/mo<span>/mo</span></div>
-    <ul class="pricing-features">
-        <li>All features</li><li>Priority support</li>
-    </ul>
-    <a href="#" class="btn btn-primary">Get Started</a>
-</div>
+                <div class="pricing-card">
+                    <h3>Starter</h3>
+                    <div class="pricing-price">$0<span>/mo</span></div>
+                    <ul class="pricing-features">
+                        <li>Track 5 keywords</li>
+                        <li>1 location</li>
+                        <li>Basic citations</li>
+                        <li>Email support</li>
+                    </ul>
+                    <a href="#" class="btn btn-secondary" style="width: 100%;">Get Started</a>
+                </div>
+                <div class="pricing-card featured">
+                    <h3>Pro</h3>
+                    <div class="pricing-savings">Rank #1</div>
+                    <div class="pricing-price">$29<span>/mo</span></div>
+                    <ul class="pricing-features">
+                        <li>Unlimited keywords</li>
+                        <li>3 locations</li>
+                        <li>Priority citations</li>
+                        <li>Review management</li>
+                        <li>GBP optimization</li>
+                        <li>Competitor analysis</li>
+                        <li>Priority support</li>
+                    </ul>
+                    <a href="#" class="btn btn-primary" style="width: 100%;">Start Free Trial</a>
+                </div>
+                <div class="pricing-card">
+                    <h3>Agency</h3>
+                    <div class="pricing-price">$99<span>/mo</span></div>
+                    <ul class="pricing-features">
+                        <li>Everything in Pro</li>
+                        <li>Unlimited locations</li>
+                        <li>White-label reports</li>
+                        <li>API access</li>
+                        <li>Dedicated support</li>
+                    </ul>
+                    <a href="#" class="btn btn-secondary" style="width: 100%;">Contact Sales</a>
+                </div>
             </div>
         </div>
     </section>
 
     <section class="cta">
         <div class="container">
-            <h2>Ready to get started?</h2>
-            <p>Join thousands of users already using Local SEO Tool</p>
+            <h2>Ready to dominate local search?</h2>
+            <p>Join 25,000+ local businesses getting more customers</p>
             <a href="#" class="btn btn-primary">Start Free Trial →</a>
+            <p style="margin-top: 16px; font-size: 0.85rem; color: var(--text-muted);">No credit card required • 14-day free trial</p>
         </div>
     </section>
 
