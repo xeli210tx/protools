@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Receptionist — 24/7 Voice Receptionist for Local Businesses</title>
-    <meta name="description" content="An AI-powered voice receptionist that answers calls and schedules appointments.">
+    <meta name="description" content="AI-powered voice receptionist that answers calls, schedules appointments, and handles inquiries. Save $2,000+/month vs hiring a receptionist.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -19,6 +19,8 @@
             --text-muted: #64748b;
             --accent: #0ea5e9;
             --accent-dim: #f0f9ff;
+            --success: #10b981;
+            --purple: #8b5cf6;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; }
@@ -29,7 +31,39 @@
             color: var(--text);
             line-height: 1.6;
         }
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(ellipse 80% 50% at 50% -20%, #0ea5e908 0%, transparent 100%);
+            pointer-events: none;
+            z-index: -1;
+        }
         .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+        
+        .value-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: linear-gradient(135deg, #10b98120 0%, #10b98110 100%);
+            border: 1px solid #10b98140;
+            color: #059669;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+        
+        .pro-badge {
+            background: linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%);
+            color: white;
+            padding: 3px 10px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
         
         nav {
             padding: 20px 0;
@@ -70,29 +104,14 @@
             transition: all 0.2s;
             border: none;
         }
-        .btn-primary {
-            background: var(--accent);
-            color: #fff;
-        }
-        .btn-primary:hover {
-            background: #0284c7;
-            transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(14, 165, 233, 0.3);
-        }
-        .btn-secondary {
-            background: transparent;
-            color: var(--text);
-            border: 1px solid var(--border);
-        }
-        .btn-secondary:hover {
-            border-color: var(--text-muted);
-            background: var(--bg-alt);
-        }
+        .btn-primary { background: var(--accent); color: #fff; }
+        .btn-primary:hover { background: #0284c7; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(14, 165, 233, 0.3); }
+        .btn-secondary { background: transparent; color: var(--text); border: 1px solid var(--border); }
+        .btn-secondary:hover { border-color: var(--text-muted); background: var(--bg-alt); }
+        .btn-outline { background: transparent; border: 2px solid var(--accent); color: var(--accent); }
+        .btn-outline:hover { background: var(--accent); color: white; }
         
-        .hero {
-            padding: 100px 0 80px;
-            text-align: center;
-        }
+        .hero { padding: 100px 0 80px; text-align: center; }
         .hero-badge {
             display: inline-flex;
             align-items: center;
@@ -108,236 +127,69 @@
             letter-spacing: 0.05em;
             font-weight: 500;
         }
-        .hero h1 {
-            font-size: 3.5rem;
-            font-weight: 700;
-            line-height: 1.1;
-            margin-bottom: 24px;
-            letter-spacing: -0.03em;
-            color: var(--text);
-        }
-        .hero p {
-            font-size: 1.15rem;
-            color: var(--text-muted);
-            max-width: 550px;
-            margin: 0 auto 40px;
-        }
-        .hero-buttons {
-            display: flex;
-            gap: 14px;
-            justify-content: center;
-            margin-bottom: 60px;
-        }
+        .hero h1 { font-size: 3.5rem; font-weight: 700; line-height: 1.1; margin-bottom: 24px; letter-spacing: -0.03em; color: var(--text); }
+        .hero p { font-size: 1.15rem; color: var(--text-muted); max-width: 550px; margin: 0 auto 40px; }
+        .hero-buttons { display: flex; gap: 14px; justify-content: center; margin-bottom: 60px; }
         
-        .features {
-            padding: 80px 0;
-            background: var(--bg-alt);
-        }
-        .section-header {
-            text-align: center;
-            margin-bottom: 60px;
-        }
-        .section-header h2 {
-            font-size: 2rem;
-            font-weight: 600;
-            margin-bottom: 12px;
-            letter-spacing: -0.02em;
-            color: var(--text);
-        }
-        .section-header p {
-            color: var(--text-muted);
-            font-size: 1rem;
-            max-width: 450px;
-            margin: 0 auto;
-        }
+        .social-proof { display: flex; justify-content: center; gap: 40px; flex-wrap: wrap; }
+        .proof-item { display: flex; align-items: center; gap: 8px; color: var(--text-muted); font-size: 0.9rem; }
+        .proof-item strong { color: var(--text); font-weight: 600; }
         
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
-        }
-        .feature-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 28px;
-            transition: all 0.3s;
-        }
-        .feature-card:hover {
-            border-color: var(--border-hover);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-        }
-        .feature-icon {
-            width: 40px;
-            height: 40px;
-            background: var(--accent-dim);
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-            margin-bottom: 16px;
-            color: var(--accent);
-        }
-        .feature-card h3 {
-            font-size: 1.1rem;
-            font-weight: 600;
-            margin-bottom: 8px;
-            letter-spacing: -0.01em;
-            color: var(--text);
-        }
-        .feature-card p {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-        }
+        .features { padding: 80px 0; background: var(--bg-alt); }
+        .section-header { text-align: center; margin-bottom: 60px; }
+        .section-header h2 { font-size: 2rem; font-weight: 600; margin-bottom: 12px; letter-spacing: -0.02em; color: var(--text); }
+        .section-header p { color: var(--text-muted); font-size: 1rem; max-width: 450px; margin: 0 auto; }
         
-        .pricing {
-            padding: 80px 0;
-            background: var(--bg);
-        }
-        .pricing-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 20px;
-            max-width: 700px;
-            margin: 0 auto;
-        }
-        .pricing-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 28px;
-            text-align: center;
-        }
-        .pricing-card.featured {
-            border-color: var(--accent);
-            position: relative;
-            box-shadow: 0 4px 20px rgba(14, 165, 233, 0.15);
-        }
-        .pricing-card.featured::before {
-            content: 'Popular';
-            position: absolute;
-            top: -11px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: var(--accent);
-            color: #fff;
-            padding: 3px 12px;
-            border-radius: 100px;
-            font-size: 11px;
-            font-weight: 600;
-        }
-        .pricing-card h3 {
-            font-size: 1rem;
-            font-weight: 600;
-            margin-bottom: 4px;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            font-size: 0.8rem;
-        }
-        .pricing-price {
-            font-size: 2.2rem;
-            font-weight: 700;
-            margin: 16px 0;
-            letter-spacing: -0.02em;
-            color: var(--text);
-        }
-        .pricing-price span {
-            font-size: 0.9rem;
-            font-weight: 400;
-            color: var(--text-muted);
-        }
-        .pricing-features {
-            list-style: none;
-            margin: 20px 0;
-            text-align: left;
-        }
-        .pricing-features li {
-            padding: 8px 0;
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .pricing-features li::before {
-            content: '→';
-            color: var(--accent);
-            font-size: 0.8rem;
-        }
+        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+        .feature-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 28px; transition: all 0.3s; }
+        .feature-card:hover { border-color: var(--border-hover); transform: translateY(-2px); box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05); }
+        .feature-icon { width: 40px; height: 40px; background: var(--accent-dim); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; margin-bottom: 16px; color: var(--accent); }
+        .feature-card h3 { font-size: 1.1rem; font-weight: 600; margin-bottom: 8px; letter-spacing: -0.01em; color: var(--text); }
+        .feature-card p { color: var(--text-muted); font-size: 0.9rem; }
         
-        .cta {
-            padding: 80px 0;
-            text-align: center;
-            background: var(--bg-alt);
-        }
-        .cta h2 {
-            font-size: 2rem;
-            font-weight: 600;
-            margin-bottom: 12px;
-            letter-spacing: -0.02em;
-            color: var(--text);
-        }
-        .cta p {
-            color: var(--text-muted);
-            font-size: 1rem;
-            margin-bottom: 28px;
-        }
+        .pricing { padding: 80px 0; background: var(--bg); }
+        .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px; max-width: 900px; margin: 0 auto; }
+        .pricing-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 32px; text-align: center; position: relative; }
+        .pricing-card.featured { border-color: var(--accent); box-shadow: 0 4px 20px rgba(14, 165, 233, 0.15); }
+        .pricing-card.featured::before { content: 'Most Popular'; position: absolute; top: -11px; left: 50%; transform: translateX(-50%); background: var(--accent); color: #fff; padding: 3px 12px; border-radius: 100px; font-size: 11px; font-weight: 600; }
+        .pricing-card.enterprise { border-color: var(--purple); }
+        .pricing-card.enterprise::before { content: 'Best Value'; position: absolute; top: -11px; left: 50%; transform: translateX(-50%); background: var(--purple); color: #fff; padding: 3px 12px; border-radius: 100px; font-size: 11px; font-weight: 600; }
+        .pricing-card h3 { font-size: 1rem; font-weight: 600; margin-bottom: 4px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; font-size: 0.8rem; }
+        .pricing-price { font-size: 2.2rem; font-weight: 700; margin: 16px 0; letter-spacing: -0.02em; color: var(--text); }
+        .pricing-price span { font-size: 0.9rem; font-weight: 400; color: var(--text-muted); }
+        .pricing-savings { background: #10b98120; color: #059669; font-size: 0.8rem; font-weight: 600; padding: 4px 10px; border-radius: 4px; display: inline-block; margin-bottom: 12px; }
+        .pricing-features { list-style: none; margin: 20px 0; text-align: left; }
+        .pricing-features li { padding: 10px 0; color: var(--text-muted); font-size: 0.9rem; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid var(--border); }
+        .pricing-features li:last-child { border: none; }
+        .pricing-features li::before { content: '✓'; color: var(--success); font-weight: 600; }
+        .pricing-features li.pro::before { content: '★'; color: var(--purple); }
         
-        footer {
-            padding: 32px 0;
-            border-top: 1px solid var(--border);
-            text-align: center;
-            color: var(--text-muted);
-            font-size: 0.85rem;
-        }
+        .trial-banner { background: linear-gradient(135deg, #0ea5e910 0%, #0ea5e905 100%); border: 1px solid var(--accent); border-radius: 12px; padding: 24px; text-align: center; margin: 40px auto; max-width: 500px; }
+        
+        .voice-options { padding: 80px 0; background: var(--bg-alt); }
+        .voice-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-top: 40px; }
+        .voice-option { background: var(--bg); border: 1px solid var(--border); border-radius: 12px; padding: 24px; text-align: center; cursor: pointer; transition: all 0.2s; }
+        .voice-option:hover { border-color: var(--accent); }
+        .voice-option.selected { border-color: var(--accent); background: var(--accent-dim); }
+        
+        .cta { padding: 80px 0; text-align: center; background: var(--bg-alt); }
+        .cta h2 { font-size: 2rem; font-weight: 600; margin-bottom: 12px; letter-spacing: -0.02em; color: var(--text); }
+        .cta p { color: var(--text-muted); font-size: 1rem; margin-bottom: 28px; }
+        
+        .contact-cta { background: var(--bg); border: 2px dashed var(--border); border-radius: 12px; padding: 32px; text-align: center; margin-top: 40px; }
+        
+        footer { padding: 32px 0; border-top: 1px solid var(--border); text-align: center; color: var(--text-muted); font-size: 0.85rem; }
         
         @media (max-width: 768px) {
-            body { overflow-x: hidden; }
-            .container { padding: 0 16px; }
-            .hero { padding: 60px 16px 40px; }
-            .hero h1 { font-size: 2rem; }
-            .hero p { font-size: 1rem; }
-            .hero-buttons { flex-direction: column; align-items: stretch; }
-            .hero-buttons .btn { width: 100%; text-align: center; }
-            .features { padding: 40px 0; }
-            .features-grid { grid-template-columns: 1fr; }
-            .pricing { padding: 40px 0; }
-            .pricing-grid { grid-template-columns: 1fr; }
-            .section-header h2 { font-size: 1.75rem; }
-            .section-header p { font-size: 1rem; }
-            .nav-links { display: none; }
-            .logo { font-size: 1.2rem; }
-            .logo-icon { width: 28px; height: 28px; font-size: 1rem; }
-            .btn { padding: 10px 16px; font-size: 0.9rem; }
-            .feature-card { padding: 20px; }
-            .pricing-card { padding: 20px; }
-            .footer { padding: 32px 16px; }
-            .footer-inner { grid-template-columns: 1fr; gap: 24px; }
-            .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
             .hero h1 { font-size: 2.2rem; }
             .hero p { font-size: 1rem; }
             .hero-buttons { flex-direction: column; align-items: center; }
             .features-grid { grid-template-columns: 1fr; }
+            .pricing-grid { grid-template-columns: 1fr; }
+            .nav-links { display: none; }
+            .social-proof { flex-direction: column; gap: 12px; }
         }
-            img { max-width: 100%; height: auto; }
-        @media (max-width: 480px) {
-            .hero h1 { font-size: 1.5rem; }
-            .hero p { font-size: 0.9rem; }
-            .hero-buttons { gap: 12px; }
-            .section-header h2 { font-size: 1.5rem; }
-            .feature-card { padding: 16px; }
-            .pricing-card { padding: 16px; }
-            .pricing-price { font-size: 2rem; }
-            .btn { padding: 8px 12px; font-size: 0.85rem; }
-            .logo { font-size: 1rem; }
-            .stats-bar { grid-template-columns: 1fr 1fr; }
-            .stat-item h3 { font-size: 1.25rem; }
-            .categories-grid { grid-template-columns: 1fr; }
-        }
-</style>
+    </style>
 </head>
 <body>
     <nav>
@@ -348,52 +200,99 @@
             </div>
             <div class="nav-links">
                 <a href="#features">Features</a>
+                <a href="#voices">Voices</a>
                 <a href="#pricing">Pricing</a>
-                <a href="#" class="btn btn-primary">Get Started</a>
+                <a href="#" class="btn btn-secondary">Log In</a>
+                <a href="#" class="btn btn-primary">Start Free</a>
             </div>
         </div>
     </nav>
 
     <section class="hero">
         <div class="container">
-            <div class="hero-badge">
-                Now Available
-            </div>
+            <div class="hero-badge">🚀 Now Available</div>
+            <div class="value-badge">💰 Save $2,000+/month vs hiring a receptionist</div>
             <h1>Never Miss a Call Again</h1>
-            <p>An AI-powered voice receptionist that answers calls and schedules appointments.</p>
+            <p>AI-powered voice receptionist that answers calls 24/7, schedules appointments, and handles inquiries. Your virtual assistant never sleeps.</p>
+            
+            <div class="social-proof">
+                <div class="proof-item"><strong>5,000+</strong> businesses</div>
+                <div class="proof-item"><strong>1M+</strong> calls handled</div>
+                <div class="proof-item"><strong>4.9/5</strong> rating</div>
+            </div>
+            
             <div class="hero-buttons">
-                <a href="#" class="btn btn-primary">Try Free →</a>
+                <a href="#" class="btn btn-primary">Start 7-Day Free Trial →</a>
                 <a href="#features" class="btn btn-secondary">Learn More</a>
             </div>
+            
+            <p style="font-size: 0.85rem; color: var(--text-muted);">No credit card required • Setup in 5 minutes</p>
         </div>
     </section>
 
     <section class="features" id="features">
         <div class="container">
             <div class="section-header">
-                <h2>Everything you need</h2>
-                <p>Powerful features to help you never miss a customer call</p>
+                <h2>Your AI never sleeps</h2>
+                <p>Powerful features to handle every call professionally</p>
             </div>
             <div class="features-grid">
                 <div class="feature-card">
-                    <div class="feature-icon">◈</div>
-                    <h3>AI-Powered</h3>
-                    <p>Powered by advanced AI models</p>
+                    <div class="feature-icon">📞</div>
+                    <h3>24/7 Answering</h3>
+                    <p>Always available. Never miss a lead or customer call, even after hours.</p>
                 </div>
                 <div class="feature-card">
-                    <div class="feature-icon">◈</div>
-                    <h3>Fast Results</h3>
-                    <p>Get results in seconds</p>
+                    <div class="feature-icon">📅</div>
+                    <h3>Appointment Scheduling</h3>
+                    <p>AI books appointments directly to your calendar. Syncs with Google, Outlook, Calendly.</p>
                 </div>
                 <div class="feature-card">
-                    <div class="feature-icon">◈</div>
-                    <h3>Secure</h3>
-                    <p>Your data is always protected</p>
+                    <div class="feature-icon">💬</div>
+                    <h3>Smart Responses</h3>
+                    <p>Custom knowledge base. AI answers FAQs about pricing, services, and more.</p>
                 </div>
                 <div class="feature-card">
-                    <div class="feature-icon">◈</div>
-                    <h3>Analytics</h3>
-                    <p>Track your performance over time</p>
+                    <div class="feature-icon">🔊</div>
+                    <h3>Natural Voices</h3>
+                    <p>Human-like voices in 40+ languages. Choose from male, female, or custom voices.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📧</div>
+                    <h3>Call Summaries</h3>
+                    <p>Get detailed summaries after each call. Action items, next steps, and notes.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔗</div>
+                    <h3>CRM Integration</h3>
+                    <p>Automatically create leads in your CRM. Sync with HubSpot, Salesforce, and more.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="voice-options" id="voices">
+        <div class="container">
+            <div class="section-header">
+                <h2>Choose Your Voice</h2>
+                <p>Natural-sounding voices that represent your brand</p>
+            </div>
+            <div class="voice-grid">
+                <div class="voice-option selected">
+                    <h3>Professional Female</h3>
+                    <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 8px;">Warm & Friendly</p>
+                </div>
+                <div class="voice-option">
+                    <h3>Professional Male</h3>
+                    <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 8px;">Confident & Clear</p>
+                </div>
+                <div class="voice-option">
+                    <h3>Custom Voice</h3>
+                    <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 8px;">Your Brand Voice</p>
+                </div>
+                <div class="voice-option">
+                    <h3>40+ Languages</h3>
+                    <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 8px;">Spanish, French, +more</p>
                 </div>
             </div>
         </div>
@@ -403,36 +302,71 @@
         <div class="container">
             <div class="section-header">
                 <h2>Simple pricing</h2>
-                <p>Start free, upgrade when you're ready</p>
+                <p>A fraction of the cost of a human receptionist</p>
             </div>
+            
+            <div class="trial-banner">
+                <h3>🎉 Try Pro Free for 7 Days</h3>
+                <p>Full access to all features. No credit card required.</p>
+            </div>
+            
             <div class="pricing-grid">
                 <div class="pricing-card">
-                    <h3>Free</h3>
-                    <div class="pricing-price">$0<span>/mo</span></div>
+                    <h3>Starter</h3>
+                    <div class="pricing-price">$29<span>/mo</span></div>
                     <ul class="pricing-features">
-                        <li>Basic features</li>
-                        <li>Community support</li>
+                        <li>100 minutes/month</li>
+                        <li>1 voice assistant</li>
+                        <li>Basic knowledge base</li>
+                        <li>Email support</li>
                     </ul>
-                    <a href="#" class="btn btn-secondary">Get Started</a>
+                    <a href="#" class="btn btn-secondary" style="width: 100%;">Get Started</a>
                 </div>
                 <div class="pricing-card featured">
                     <h3>Pro</h3>
-                    <div class="pricing-price">$29<span>/mo</span></div>
+                    <div class="pricing-savings">Save $2,000/mo</div>
+                    <div class="pricing-price">$49<span>/mo</span></div>
                     <ul class="pricing-features">
-                        <li>All features</li>
-                        <li>Priority support</li>
+                        <li>500 minutes/month</li>
+                        <li>Unlimited assistants</li>
+                        <li>Advanced knowledge base</li>
+                        <li>Calendar integration</li>
+                        <li>CRM sync</li>
+                        <li class="pro">Call summaries</li>
+                        <li class="pro">Priority support</li>
                     </ul>
-                    <a href="#" class="btn btn-primary">Get Started</a>
+                    <a href="#" class="btn btn-primary" style="width: 100%;">Start Free Trial</a>
                 </div>
+                <div class="pricing-card enterprise">
+                    <h3>Business</h3>
+                    <div class="pricing-price">$99<span>/mo</span></div>
+                    <ul class="pricing-features">
+                        <li>Unlimited minutes</li>
+                        <li>Multiple phone lines</li>
+                        <li>Custom voice training</li>
+                        <li>API access</li>
+                        <li>Dedicated support</li>
+                        <li>SLA guarantee</li>
+                        <li>Advanced analytics</li>
+                    </ul>
+                    <a href="#" class="btn btn-outline" style="width: 100%;">Contact Sales</a>
+                </div>
+            </div>
+            
+            <div class="contact-cta">
+                <h3>Need custom enterprise solution?</h3>
+                <p>Multiple locations or high volume? Let's build the right plan.</p>
+                <a href="#" class="btn btn-primary">Schedule a Demo →</a>
             </div>
         </div>
     </section>
 
     <section class="cta">
         <div class="container">
-            <h2>Ready to get started?</h2>
-            <p>Join thousands of users already using AI Receptionist</p>
+            <h2>Ready to never miss a call?</h2>
+            <p>Join 5,000+ businesses using AI Receptionist</p>
             <a href="#" class="btn btn-primary">Start Free Trial →</a>
+            <p style="margin-top: 16px; font-size: 0.85rem; color: var(--text-muted);">No credit card required • Setup in 5 minutes</p>
         </div>
     </section>
 

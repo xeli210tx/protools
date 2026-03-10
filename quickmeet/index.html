@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>QuickMeet — Instant Meeting Scheduler</title>
-    <meta name="description" content="Schedule meetings in seconds with QuickMeet.">
+    <meta name="description" content="Schedule meetings in seconds. Share your link and let others book time with you.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -19,6 +19,8 @@
             --text-muted: #64748b;
             --accent: #0ea5e9;
             --accent-dim: #f0f9ff;
+            --success: #10b981;
+            --purple: #8b5cf6;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; }
@@ -33,12 +35,25 @@
             content: '';
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
-            background: 
-                radial-gradient(ellipse 80% 50% at 50% -20%, #0ea5e908 0%, transparent 100%);
+            background: radial-gradient(ellipse 80% 50% at 50% -20%, #0ea5e908 0%, transparent 100%);
             pointer-events: none;
             z-index: -1;
         }
         .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+        
+        .value-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: linear-gradient(135deg, #10b98120 0%, #10b98110 100%);
+            border: 1px solid #10b98140;
+            color: #059669;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
         
         nav {
             padding: 20px 0;
@@ -79,29 +94,14 @@
             transition: all 0.2s;
             border: none;
         }
-        .btn-primary {
-            background: var(--accent);
-            color: #fff;
-        }
-        .btn-primary:hover {
-            background: #0284c7;
-            transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(14, 165, 233, 0.3);
-        }
-        .btn-secondary {
-            background: transparent;
-            color: var(--text);
-            border: 1px solid var(--border);
-        }
-        .btn-secondary:hover {
-            border-color: var(--text-muted);
-            background: var(--bg-alt);
-        }
+        .btn-primary { background: var(--accent); color: #fff; }
+        .btn-primary:hover { background: #0284c7; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(14, 165, 233, 0.3); }
+        .btn-secondary { background: transparent; color: var(--text); border: 1px solid var(--border); }
+        .btn-secondary:hover { border-color: var(--text-muted); background: var(--bg-alt); }
+        .btn-outline { background: transparent; border: 2px solid var(--accent); color: var(--accent); }
+        .btn-outline:hover { background: var(--accent); color: white; }
         
-        .hero {
-            padding: 100px 0 80px;
-            text-align: center;
-        }
+        .hero { padding: 100px 0 80px; text-align: center; }
         .hero-badge {
             display: inline-flex;
             align-items: center;
@@ -117,236 +117,63 @@
             letter-spacing: 0.05em;
             font-weight: 500;
         }
-        .hero h1 {
-            font-size: 3.5rem;
-            font-weight: 700;
-            line-height: 1.1;
-            margin-bottom: 24px;
-            letter-spacing: -0.03em;
-            color: var(--text);
-        }
-        .hero p {
-            font-size: 1.15rem;
-            color: var(--text-muted);
-            max-width: 550px;
-            margin: 0 auto 40px;
-        }
-        .hero-buttons {
-            display: flex;
-            gap: 14px;
-            justify-content: center;
-            margin-bottom: 60px;
-        }
+        .hero h1 { font-size: 3.5rem; font-weight: 700; line-height: 1.1; margin-bottom: 24px; letter-spacing: -0.03em; color: var(--text); }
+        .hero p { font-size: 1.15rem; color: var(--text-muted); max-width: 550px; margin: 0 auto 40px; }
+        .hero-buttons { display: flex; gap: 14px; justify-content: center; margin-bottom: 60px; }
         
-        .features {
-            padding: 80px 0;
-            background: var(--bg-alt);
-        }
-        .section-header {
-            text-align: center;
-            margin-bottom: 60px;
-        }
-        .section-header h2 {
-            font-size: 2rem;
-            font-weight: 600;
-            margin-bottom: 12px;
-            letter-spacing: -0.02em;
-            color: var(--text);
-        }
-        .section-header p {
-            color: var(--text-muted);
-            font-size: 1rem;
-            max-width: 450px;
-            margin: 0 auto;
-        }
+        .social-proof { display: flex; justify-content: center; gap: 40px; flex-wrap: wrap; }
+        .proof-item { display: flex; align-items: center; gap: 8px; color: var(--text-muted); font-size: 0.9rem; }
+        .proof-item strong { color: var(--text); font-weight: 600; }
         
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
-        }
-        .feature-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 28px;
-            transition: all 0.3s;
-        }
-        .feature-card:hover {
-            border-color: var(--border-hover);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-        }
-        .feature-icon {
-            width: 40px;
-            height: 40px;
-            background: var(--accent-dim);
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-            margin-bottom: 16px;
-            color: var(--accent);
-        }
-        .feature-card h3 {
-            font-size: 1.1rem;
-            font-weight: 600;
-            margin-bottom: 8px;
-            letter-spacing: -0.01em;
-            color: var(--text);
-        }
-        .feature-card p {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-        }
+        .features { padding: 80px 0; background: var(--bg-alt); }
+        .section-header { text-align: center; margin-bottom: 60px; }
+        .section-header h2 { font-size: 2rem; font-weight: 600; margin-bottom: 12px; letter-spacing: -0.02em; color: var(--text); }
+        .section-header p { color: var(--text-muted); font-size: 1rem; max-width: 450px; margin: 0 auto; }
         
-        .pricing {
-            padding: 80px 0;
-            background: var(--bg);
-        }
-        .pricing-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 20px;
-            max-width: 700px;
-            margin: 0 auto;
-        }
-        .pricing-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 28px;
-            text-align: center;
-        }
-        .pricing-card.featured {
-            border-color: var(--accent);
-            position: relative;
-            box-shadow: 0 4px 20px rgba(14, 165, 233, 0.15);
-        }
-        .pricing-card.featured::before {
-            content: 'Popular';
-            position: absolute;
-            top: -11px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: var(--accent);
-            color: #fff;
-            padding: 3px 12px;
-            border-radius: 100px;
-            font-size: 11px;
-            font-weight: 600;
-        }
-        .pricing-card h3 {
-            font-size: 1rem;
-            font-weight: 600;
-            margin-bottom: 4px;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            font-size: 0.8rem;
-        }
-        .pricing-price {
-            font-size: 2.2rem;
-            font-weight: 700;
-            margin: 16px 0;
-            letter-spacing: -0.02em;
-            color: var(--text);
-        }
-        .pricing-price span {
-            font-size: 0.9rem;
-            font-weight: 400;
-            color: var(--text-muted);
-        }
-        .pricing-features {
-            list-style: none;
-            margin: 20px 0;
-            text-align: left;
-        }
-        .pricing-features li {
-            padding: 8px 0;
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .pricing-features li::before {
-            content: '→';
-            color: var(--accent);
-            font-size: 0.8rem;
-        }
+        .features-grid { display-template-columns: repeat(auto-fit, minmax(280px, 1fr: grid; grid)); gap: 20px; }
+        .feature-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 28px; transition: all 0.3s; }
+        .feature-card:hover { border-color: var(--border-hover); transform: translateY(-2px); box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05); }
+        .feature-icon { width: 40px; height: 40px; background: var(--accent-dim); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; margin-bottom: 16px; color: var(--accent); }
+        .feature-card h3 { font-size: 1.1rem; font-weight: 600; margin-bottom: 8px; letter-spacing: -0.01em; color: var(--text); }
+        .feature-card p { color: var(--text-muted); font-size: 0.9rem; }
         
-        .cta {
-            padding: 80px 0;
-            text-align: center;
-            background: var(--bg-alt);
-        }
-        .cta h2 {
-            font-size: 2rem;
-            font-weight: 600;
-            margin-bottom: 12px;
-            letter-spacing: -0.02em;
-            color: var(--text);
-        }
-        .cta p {
-            color: var(--text-muted);
-            font-size: 1rem;
-            margin-bottom: 28px;
-        }
+        .integrations { padding: 80px 0; background: var(--bg); }
+        .integrations-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 16px; margin-top: 40px; }
+        .integration-item { background: var(--bg-alt); border: 1px solid var(--border); border-radius: 8px; padding: 20px; text-align: center; font-weight: 500; color: var(--text-muted); transition: all 0.2s; }
+        .integration-item:hover { border-color: var(--accent); color: var(--accent); }
         
-        footer {
-            padding: 32px 0;
-            border-top: 1px solid var(--border);
-            text-align: center;
-            color: var(--text-muted);
-            font-size: 0.85rem;
-        }
+        .pricing { padding: 80px 0; background: var(--bg-alt); }
+        .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px; max-width: 800px; margin: 0 auto; }
+        .pricing-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 32px; text-align: center; position: relative; }
+        .pricing-card.featured { border-color: var(--accent); box-shadow: 0 4px 20px rgba(14, 165, 233, 0.15); }
+        .pricing-card.featured::before { content: 'Most Popular'; position: absolute; top: -11px; left: 50%; transform: translateX(-50%); background: var(--accent); color: #fff; padding: 3px 12px; border-radius: 100px; font-size: 11px; font-weight: 600; }
+        .pricing-card h3 { font-size: 1rem; font-weight: 600; margin-bottom: 4px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; font-size: 0.8rem; }
+        .pricing-price { font-size: 2.2rem; font-weight: 700; margin: 16px 0; letter-spacing: -0.02em; color: var(--text); }
+        .pricing-price span { font-size: 0.9rem; font-weight: 400; color: var(--text-muted); }
+        .pricing-savings { background: #10b98120; color: #059669; font-size: 0.8rem; font-weight: 600; padding: 4px 10px; border-radius: 4px; display: inline-block; margin-bottom: 12px; }
+        .pricing-features { list-style: none; margin: 20px 0; text-align: left; }
+        .pricing-features li { padding: 10px 0; color: var(--text-muted); font-size: 0.9rem; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid var(--border); }
+        .pricing-features li:last-child { border: none; }
+        .pricing-features li::before { content: '✓'; color: var(--success); font-weight: 600; }
+        .pricing-features li.pro::before { content: '★'; color: var(--purple); }
+        
+        .trial-banner { background: linear-gradient(135deg, #0ea5e910 0%, #0ea5e905 100%); border: 1px solid var(--accent); border-radius: 12px; padding: 24px; text-align: center; margin: 40px auto; max-width: 500px; }
+        
+        .cta { padding: 80px 0; text-align: center; background: var(--bg); }
+        .cta h2 { font-size: 2rem; font-weight: 600; margin-bottom: 12px; letter-spacing: -0.02em; color: var(--text); }
+        .cta p { color: var(--text-muted); font-size: 1rem; margin-bottom: 28px; }
+        
+        footer { padding: 32px 0; border-top: 1px solid var(--border); text-align: center; color: var(--text-muted); font-size: 0.85rem; }
         
         @media (max-width: 768px) {
-            body { overflow-x: hidden; }
-            .container { padding: 0 16px; }
-            .hero { padding: 60px 16px 40px; }
-            .hero h1 { font-size: 2rem; }
-            .hero p { font-size: 1rem; }
-            .hero-buttons { flex-direction: column; align-items: stretch; }
-            .hero-buttons .btn { width: 100%; text-align: center; }
-            .features { padding: 40px 0; }
-            .features-grid { grid-template-columns: 1fr; }
-            .pricing { padding: 40px 0; }
-            .pricing-grid { grid-template-columns: 1fr; }
-            .section-header h2 { font-size: 1.75rem; }
-            .section-header p { font-size: 1rem; }
-            .nav-links { display: none; }
-            .logo { font-size: 1.2rem; }
-            .logo-icon { width: 28px; height: 28px; font-size: 1rem; }
-            .btn { padding: 10px 16px; font-size: 0.9rem; }
-            .feature-card { padding: 20px; }
-            .pricing-card { padding: 20px; }
-            .footer { padding: 32px 16px; }
-            .footer-inner { grid-template-columns: 1fr; gap: 24px; }
-            .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
             .hero h1 { font-size: 2.2rem; }
             .hero p { font-size: 1rem; }
             .hero-buttons { flex-direction: column; align-items: center; }
             .features-grid { grid-template-columns: 1fr; }
+            .pricing-grid { grid-template-columns: 1fr; }
+            .nav-links { display: none; }
         }
-            img { max-width: 100%; height: auto; }
-        @media (max-width: 480px) {
-            .hero h1 { font-size: 1.5rem; }
-            .hero p { font-size: 0.9rem; }
-            .hero-buttons { gap: 12px; }
-            .section-header h2 { font-size: 1.5rem; }
-            .feature-card { padding: 16px; }
-            .pricing-card { padding: 16px; }
-            .pricing-price { font-size: 2rem; }
-            .btn { padding: 8px 12px; font-size: 0.85rem; }
-            .logo { font-size: 1rem; }
-            .stats-bar { grid-template-columns: 1fr 1fr; }
-            .stat-item h3 { font-size: 1.25rem; }
-            .categories-grid { grid-template-columns: 1fr; }
-        }
-</style>
+    </style>
 </head>
 <body>
     <nav>
@@ -357,23 +184,33 @@
             </div>
             <div class="nav-links">
                 <a href="#features">Features</a>
+                <a href="#integrations">Integrations</a>
                 <a href="#pricing">Pricing</a>
-                <a href="#" class="btn btn-primary">Get Started</a>
+                <a href="#" class="btn btn-secondary">Log In</a>
+                <a href="#" class="btn btn-primary">Start Free</a>
             </div>
         </div>
     </nav>
 
     <section class="hero">
         <div class="container">
-            <div class="hero-badge">
-                Now Available
+            <div class="hero-badge">🚀 Now Available</div>
+            <div class="value-badge">⏱️ Schedule meetings in 15 seconds</div>
+            <h1>Meet in Seconds, Not Emails</h1>
+            <p>Share your booking link and let others schedule time with you. No more back-and-forth emails.</p>
+            
+            <div class="social-proof">
+                <div class="proof-item"><strong>100,000+</strong> professionals</div>
+                <div class="proof-item"><strong>2M+</strong> meetings booked</div>
+                <div class="proof-item"><strong>4.9/5</strong> rating</div>
             </div>
-            <h1>Meet in Seconds</h1>
-            <p>Schedule meetings instantly with QuickMeet.</p>
+            
             <div class="hero-buttons">
-                <a href="#" class="btn btn-primary">Try Free →</a>
+                <a href="#" class="btn btn-primary">Get Your Booking Link →</a>
                 <a href="#features" class="btn btn-secondary">Learn More</a>
             </div>
+            
+            <p style="font-size: 0.85rem; color: var(--text-muted);">Free forever plan • No credit card required</p>
         </div>
     </section>
 
@@ -381,29 +218,58 @@
         <div class="container">
             <div class="section-header">
                 <h2>Everything you need</h2>
-                <p>Powerful features to schedule meetings</p>
+                <p>Powerful scheduling features for professionals</p>
             </div>
             <div class="features-grid">
                 <div class="feature-card">
-                    <div class="feature-icon">◈</div>
-                    <h3>Instant Links</h3>
-                    <p>Generate meeting links instantly</p>
+                    <div class="feature-icon">🔗</div>
+                    <h3>Custom Booking Page</h3>
+                    <p>Yourname.quickmeet.com - share your personal booking link everywhere.</p>
                 </div>
                 <div class="feature-card">
-                    <div class="feature-icon">◈</div>
+                    <div class="feature-icon">📅</div>
                     <h3>Calendar Sync</h3>
-                    <p>Sync with your calendar</p>
+                    <p>Two-way sync with Google Calendar, Outlook, iCal. Auto-block busy times.</p>
                 </div>
                 <div class="feature-card">
-                    <div class="feature-icon">◈</div>
-                    <h3>Custom URLs</h3>
-                    <p>Personalized meeting links</p>
+                    <div class="feature-icon">⏰</div>
+                    <h3>Flexible Availability</h3>
+                    <p>Set custom hours, buffer times, and meeting durations. Control your schedule.</p>
                 </div>
                 <div class="feature-card">
-                    <div class="feature-icon">◈</div>
-                    <h3>Reminders</h3>
-                    <p>Automated meeting reminders</p>
+                    <div class="feature-icon">📝</div>
+                    <h3>Collect Info Upfront</h3>
+                    <p>Ask booking questions. Name, company, topic - collect what you need.</p>
                 </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔔</div>
+                    <h3>Automatic Reminders</h3>
+                    <p>Email and SMS reminders to both parties. Reduce no-shows by 80%.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3>Booking Analytics</h3>
+                    <p>Track meeting volume, popular times, and conversion rates.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="integrations" id="integrations">
+        <div class="container">
+            <div class="section-header">
+                <h2>Works with your tools</h2>
+                <p>Connect with the calendar and video tools you already use</p>
+            </div>
+            <div class="integrations-grid">
+                <div class="integration-item">Google Calendar</div>
+                <div class="integration-item">Outlook</div>
+                <div class="integration-item">iCal</div>
+                <div class="integration-item">Zoom</div>
+                <div class="integration-item">Google Meet</div>
+                <div class="integration-item">Microsoft Teams</div>
+                <div class="integration-item">Slack</div>
+                <div class="integration-item">Zapier</div>
             </div>
         </div>
     </section>
@@ -412,26 +278,53 @@
         <div class="container">
             <div class="section-header">
                 <h2>Simple pricing</h2>
-                <p>Start free, upgrade when you're ready</p>
+                <p>Start free, upgrade when you need more</p>
             </div>
+            
+            <div class="trial-banner">
+                <h3>🎉 Pro Free for 14 Days</h3>
+                <p>Full access to all features. No credit card required.</p>
+            </div>
+            
             <div class="pricing-grid">
                 <div class="pricing-card">
                     <h3>Free</h3>
                     <div class="pricing-price">$0<span>/mo</span></div>
                     <ul class="pricing-features">
                         <li>5 meetings/month</li>
-                        <li>Basic features</li>
+                        <li>Basic booking page</li>
+                        <li>Calendar sync</li>
+                        <li>Email support</li>
                     </ul>
-                    <a href="#" class="btn btn-secondary">Get Started</a>
+                    <a href="#" class="btn btn-secondary" style="width: 100%;">Get Started</a>
                 </div>
                 <div class="pricing-card featured">
                     <h3>Pro</h3>
+                    <div class="pricing-savings">Save 50% vs Calendly</div>
                     <div class="pricing-price">$15<span>/mo</span></div>
                     <ul class="pricing-features">
                         <li>Unlimited meetings</li>
                         <li>Custom branding</li>
+                        <li>Collect questions</li>
+                        <li>SMS reminders</li>
+                        <li>Analytics dashboard</li>
+                        <li class="pro">Remove QuickMeet branding</li>
+                        <li class="pro">Priority support</li>
                     </ul>
-                    <a href="#" class="btn btn-primary">Get Started</a>
+                    <a href="#" class="btn btn-primary" style="width: 100%;">Start Free Trial</a>
+                </div>
+                <div class="pricing-card">
+                    <h3>Business</h3>
+                    <div class="pricing-price">$29<span>/mo</span></div>
+                    <ul class="pricing-features">
+                        <li>Everything in Pro</li>
+                        <li>Unlimited team members</li>
+                        <li>Admin dashboard</li>
+                        <li>SSO / SAML</li>
+                        <li>API access</li>
+                        <li>Dedicated support</li>
+                    </ul>
+                    <a href="#" class="btn btn-outline" style="width: 100%;">Contact Sales</a>
                 </div>
             </div>
         </div>
@@ -439,9 +332,10 @@
 
     <section class="cta">
         <div class="container">
-            <h2>Ready to get started?</h2>
-            <p>Join thousands of professionals using QuickMeet</p>
-            <a href="#" class="btn btn-primary">Start Free Trial →</a>
+            <h2>Ready to simplify scheduling?</h2>
+            <p>Join 100,000+ professionals using QuickMeet</p>
+            <a href="#" class="btn btn-primary">Get Your Booking Link →</a>
+            <p style="margin-top: 16px; font-size: 0.85rem; color: var(--text-muted);">Free forever plan available</p>
         </div>
     </section>
 

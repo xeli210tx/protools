@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>InvoiceDash - Simple Invoicing for Freelancers</title>
+    <meta name="description" content="Create professional invoices in seconds. Save 40% vs FreshBooks and QuickBooks.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -17,21 +18,89 @@
             --accent: #00d4ff;
             --accent-hover: #00b8e0;
             --border-color: #222;
+            --success: #10b981;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             overflow-x: hidden; font-family: 'Inter', sans-serif; background: var(--bg-primary); color: var(--text-primary); line-height: 1.6; }
         
+        /* Value Badge */
+        .value-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: linear-gradient(135deg, #10b98120 0%, #10b98110 100%);
+            border: 1px solid #10b98140;
+            color: #10b981;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+        
+        /* Pro Badge */
+        .pro-badge {
+            background: linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%);
+            color: white;
+            padding: 3px 10px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+        
         header { padding: 20px; background: var(--bg-card); position: sticky; top: 0; z-index: 100; }
         .header-content { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
         .logo { font-size: 1.5rem; font-weight: 700; text-decoration: none; color: var(--text-primary); }
         .logo span { color: var(--accent); }
-        .nav-links { display: flex; gap: 24px; }
+        .nav-links { display: flex; gap: 24px; align-items: center; }
         .nav-links a { color: var(--text-secondary); text-decoration: none; transition: color 0.2s; }
         .nav-links a:hover { color: var(--accent); }
         
         .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
         section { padding: 80px 20px; }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+        }
+        .btn-primary {
+            background: var(--accent);
+            color: #000;
+        }
+        .btn-primary:hover {
+            background: var(--accent-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(0, 212, 255, 0.3);
+        }
+        .btn-secondary {
+            background: transparent;
+            border: 2px solid var(--accent);
+            color: var(--accent);
+        }
+        .btn-secondary:hover {
+            background: var(--accent);
+            color: #000;
+        }
+        .btn-ghost {
+            background: transparent;
+            color: var(--text-secondary);
+            border: 1px solid var(--border-color);
+        }
+        .btn-ghost:hover {
+            border-color: var(--text-secondary);
+            color: var(--text-primary);
+        }
         
         .hero { padding: 120px 20px; text-align: center; background: linear-gradient(180deg, #0f0f0f 0%, var(--bg-primary) 100%); }
         .hero-icon { font-size: 4rem; margin-bottom: 24px; }
@@ -39,14 +108,31 @@
         .hero h1 span { color: var(--accent); }
         .hero p { font-size: 1.25rem; color: var(--text-secondary); max-width: 600px; margin: 0 auto 32px; }
         .cta-group { display: flex; gap: 16px; justify-content: center; }
-        .cta-button { display: inline-block; padding: 16px 32px; background: var(--accent); color: #000; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 1.1rem; transition: all 0.2s; }
-        .cta-button:hover { background: var(--accent-hover); transform: translateY(-2px); }
-        .cta-button.secondary { background: transparent; border: 2px solid var(--accent); color: var(--accent); }
-        .cta-button.secondary:hover { background: var(--accent); color: #000; }
+        
+        /* Social Proof */
+        .social-proof {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+            margin-bottom: 40px;
+        }
+        .proof-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+        .proof-item strong {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
         
         .features { background: var(--bg-section); }
         .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 32px; }
-        .feature-card { background: var(--bg-card); padding: 32px; border-radius: 12px; }
+        .feature-card { background: var(--bg-card); padding: 32px; border-radius: 12px; border: 1px solid var(--border-color); transition: all 0.3s; }
+        .feature-card:hover { border-color: var(--accent); transform: translateY(-4px); }
         .feature-icon { font-size: 2rem; margin-bottom: 16px; }
         .feature-card h3 { margin-bottom: 12px; font-size: 1.25rem; }
         .feature-card p { color: var(--text-secondary); }
@@ -55,17 +141,26 @@
         .step { text-align: center; padding: 32px; }
         .step-number { width: 64px; height: 64px; background: var(--accent); color: #000; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1.5rem; margin: 0 auto 20px; }
         
+        .integrations { background: var(--bg-section); }
+        .integrations-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 16px; margin-top: 40px; }
+        .integration-item { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 8px; padding: 20px; text-align: center; font-weight: 500; color: var(--text-secondary); transition: all 0.2s; }
+        .integration-item:hover { border-color: var(--accent); color: var(--accent); }
+        
         .pricing { background: var(--bg-section); }
-        .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; max-width: 900px; margin: 0 auto; }
-        .price-card { background: var(--bg-card); padding: 40px; border-radius: 12px; text-align: center; border: 2px solid var(--border-color); }
-        .price-card.featured { border-color: var(--accent); position: relative; }
+        .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; max-width: 1000px; margin: 0 auto; }
+        .price-card { background: var(--bg-card); padding: 40px; border-radius: 12px; text-align: center; border: 2px solid var(--border-color); position: relative; }
+        .price-card.featured { border-color: var(--accent); }
         .price-card.featured::before { content: "MOST POPULAR"; position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: var(--accent); color: #000; padding: 4px 16px; font-size: 0.75rem; font-weight: 700; border-radius: 4px; }
+        .price-card.enterprise { border-color: #8b5cf6; }
+        .price-card.enterprise::before { content: "BEST VALUE"; position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%); color: #fff; padding: 4px 16px; font-size: 0.75rem; font-weight: 700; border-radius: 4px; }
         .price { font-size: 3rem; font-weight: 700; margin: 16px 0; }
         .price span { font-size: 1rem; color: var(--text-secondary); font-weight: 400; }
+        .price-savings { background: #10b98120; color: #10b981; font-size: 0.8rem; font-weight: 600; padding: 4px 10px; border-radius: 4px; display: inline-block; margin-bottom: 12px; }
         .price-card ul { list-style: none; margin: 24px 0; text-align: left; }
-        .price-card li { padding: 10px 0; color: var(--text-secondary); border-bottom: 1px solid var(--border-color); }
+        .price-card li { padding: 10px 0; color: var(--text-secondary); border-bottom: 1px solid var(--border-color); display: flex; align-items: center; gap: 10px; }
         .price-card li:last-child { border: none; }
-        .price-card li::before { content: "✓"; color: var(--accent); margin-right: 10px; font-weight: 600; }
+        .price-card li::before { content: "✓"; color: var(--success); font-weight: 600; }
+        .price-card li.pro::before { content: "★"; color: #8b5cf6; }
         
         .testimonials { background: var(--bg-section); }
         .testimonial-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; }
@@ -73,6 +168,27 @@
         .testimonial-card .stars { color: #ffd700; font-size: 1.25rem; margin-bottom: 16px; }
         .testimonial-card p { font-size: 1.1rem; margin-bottom: 16px; }
         .testimonial-card cite { color: var(--accent); font-style: normal; font-weight: 500; }
+        
+        /* Free Trial Banner */
+        .trial-banner {
+            background: linear-gradient(135deg, #00d4ff10 0%, #00d4ff05 100%);
+            border: 1px solid var(--accent);
+            border-radius: 12px;
+            padding: 24px;
+            text-align: center;
+            margin: 40px auto;
+            max-width: 500px;
+        }
+        
+        /* Contact CTA */
+        .contact-cta {
+            background: var(--bg-card);
+            border: 2px dashed var(--border-color);
+            border-radius: 12px;
+            padding: 32px;
+            text-align: center;
+            margin-top: 40px;
+        }
         
         .cta-section { text-align: center; background: linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-section) 100%); }
         
@@ -82,68 +198,58 @@
         .footer-links a:hover { color: var(--accent); }
         
         @media (max-width: 768px) {
-            body { overflow-x: hidden; }
-            .container { padding: 0 16px; }
-            .hero { padding: 60px 16px 40px; }
             .hero h1 { font-size: 2rem; }
             .hero p { font-size: 1rem; }
-            .hero-buttons { flex-direction: column; align-items: stretch; }
-            .hero-buttons .btn { width: 100%; text-align: center; }
-            .features { padding: 40px 0; }
-            .features-grid { grid-template-columns: 1fr; }
-            .pricing { padding: 40px 0; }
-            .pricing-grid { grid-template-columns: 1fr; }
-            .section-header h2 { font-size: 1.75rem; }
-            .section-header p { font-size: 1rem; }
-            .nav-links { display: none; }
-            .logo { font-size: 1.2rem; }
-            .logo-icon { width: 28px; height: 28px; font-size: 1rem; }
-            .btn { padding: 10px 16px; font-size: 0.9rem; }
-            .feature-card { padding: 20px; }
-            .pricing-card { padding: 20px; }
-            .footer { padding: 32px 16px; }
-            .footer-inner { grid-template-columns: 1fr; gap: 24px; }
-            .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
-            .hero h1 { font-size: 2.5rem; }
             .cta-group { flex-direction: column; }
+            .features-grid { grid-template-columns: 1fr; }
+            .pricing-grid { grid-template-columns: 1fr; }
+            .nav-links { display: none; }
         }
-            img { max-width: 100%; height: auto; }
-        @media (max-width: 480px) {
-            .hero h1 { font-size: 1.5rem; }
-            .hero p { font-size: 0.9rem; }
-            .hero-buttons { gap: 12px; }
-            .section-header h2 { font-size: 1.5rem; }
-            .feature-card { padding: 16px; }
-            .pricing-card { padding: 16px; }
-            .pricing-price { font-size: 2rem; }
-            .btn { padding: 8px 12px; font-size: 0.85rem; }
-            .logo { font-size: 1rem; }
-            .stats-bar { grid-template-columns: 1fr 1fr; }
-            .stat-item h3 { font-size: 1.25rem; }
-            .categories-grid { grid-template-columns: 1fr; }
-        }
-</style>
+    </style>
 </head>
 <body>
     <header>
         <div class="header-content">
-            <a href="/index.html" class="logo">Renegade<span>Tools</span></a>
+            <a href="/index.html" class="logo">Invoice<span>Dash</span></a>
             <nav class="nav-links">
                 <a href="#features">Features</a>
                 <a href="#how-it-works">How It Works</a>
+                <a href="#integrations">Integrations</a>
                 <a href="#pricing">Pricing</a>
+                <a href="#" class="btn btn-ghost">Log In</a>
+                <a href="#pricing" class="btn btn-primary">Start Free</a>
             </nav>
         </div>
     </header>
 
     <section class="hero">
         <div class="hero-icon">📄</div>
+        
+        <div class="value-badge">
+            💰 Save 40% vs FreshBooks & QuickBooks
+        </div>
+        
         <h1>Invoice<span>Dash</span></h1>
         <p>Create professional invoices in seconds. Get paid faster with automated reminders and online payments.</p>
-        <div class="cta-group">
-            <a href="#pricing" class="cta-button">Start Invoicing Free</a>
-            <a href="#how-it-works" class="cta-button secondary">See How It Works</a>
+        
+        <div class="social-proof">
+            <div class="proof-item">
+                <strong>50,000+</strong> freelancers
+            </div>
+            <div class="proof-item">
+                <strong>$200M+</strong> invoiced
+            </div>
+            <div class="proof-item">
+                <strong>4.9/5</strong> rating
+            </div>
         </div>
+        
+        <div class="cta-group">
+            <a href="#pricing" class="btn btn-primary">Start 14-Day Free Trial</a>
+            <a href="#how-it-works" class="btn btn-secondary">See How It Works</a>
+        </div>
+        
+        <p style="margin-top: 16px; font-size: 0.85rem; color: var(--text-secondary);">No credit card required • Free forever plan available</p>
     </section>
 
     <section class="features" id="features">
@@ -157,28 +263,38 @@
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">💳</div>
-                    <h3>Get Paid Faster</h3>
-                    <p>Accept credit cards, PayPal, and bank transfers. Send payment links instantly.</p>
+                    <h3>Accept Payments Online</h3>
+                    <p>Credit cards, PayPal, bank transfers. Send payment links instantly.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">🔔</div>
                     <h3>Auto Reminders</h3>
-                    <p>Never chase a payment again. Automatic reminders keep clients on track.</p>
+                    <p>Automatic payment reminders. Never chase a payment again.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">📊</div>
-                    <h3>Track Everything</h3>
-                    <p>Know exactly what you're owed. Dashboard shows your financial health at a glance.</p>
+                    <h3>Financial Dashboard</h3>
+                    <p>Revenue tracking, expense reports, tax estimates. All in one place.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">📝</div>
                     <h3>Professional Templates</h3>
-                    <p>Beautiful, customizable templates that make you look like a pro.</p>
+                    <p>Beautiful, customizable templates. Your brand, your style.</p>
                 </div>
                 <div class="feature-card">
-                    <div class="feature-icon">📧</div>
-                    <h3>Email & Download</h3>
-                    <p>Send directly via email or download PDF. Your clients receive it instantly.</p>
+                    <div class="feature-icon">📤</div>
+                    <h3>Export to Anything</h3>
+                    <p>CSV, Excel, PDF. Export data for accountants or tax software.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔄</div>
+                    <h3>Recurring Invoices</h3>
+                    <p>Set it and forget it. Automate monthly billing for retainer clients.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🌐</div>
+                    <h3>Multi-Currency</h3>
+                    <p>Invoice in USD, EUR, GBP, and 20+ other currencies.</p>
                 </div>
             </div>
         </div>
@@ -207,24 +323,51 @@
         </div>
     </section>
 
+    <section class="integrations" id="integrations">
+        <div class="container">
+            <h2 style="text-align: center; margin-bottom: 16px; font-size: 2rem;">Works With Your Tools</h2>
+            <p style="text-align: center; color: var(--text-secondary); margin-bottom: 32px;">Seamlessly connect with the software you already use</p>
+            <div class="integrations-grid">
+                <div class="integration-item">QuickBooks</div>
+                <div class="integration-item">Xero</div>
+                <div class="integration-item">FreshBooks</div>
+                <div class="integration-item">Stripe</div>
+                <div class="integration-item">PayPal</div>
+                <div class="integration-item">Square</div>
+                <div class="integration-item">Slack</div>
+                <div class="integration-item">Zapier</div>
+                <div class="integration-item">Google Drive</div>
+                <div class="integration-item">Dropbox</div>
+            </div>
+        </div>
+    </section>
+
     <section class="pricing" id="pricing">
         <div class="container">
-            <h2 style="text-align: center; margin-bottom: 48px; font-size: 2rem;">Simple Pricing</h2>
+            <h2 style="text-align: center; margin-bottom: 16px; font-size: 2rem;">Simple, Transparent Pricing</h2>
+            <p style="text-align: center; color: var(--text-secondary); margin-bottom: 32px;">Start free, upgrade when you need more</p>
+            
+            <div class="trial-banner">
+                <h3 style="margin-bottom: 8px;">🎉 Try Pro Free for 14 Days</h3>
+                <p style="color: var(--text-secondary);">Full access to all features. No credit card required.</p>
+            </div>
+            
             <div class="pricing-grid">
                 <div class="price-card">
                     <h3>Starter</h3>
                     <div class="price">$0</div>
                     <span>Free forever</span>
                     <ul>
-                        <li>10 invoices per month</li>
+                        <li>10 invoices/month</li>
                         <li>Basic templates</li>
                         <li>PDF download</li>
                         <li>Email support</li>
                     </ul>
-                    <a href="#" class="cta-button secondary">Get Started</a>
+                    <a href="#" class="btn btn-ghost" style="width: 100%;">Get Started</a>
                 </div>
                 <div class="price-card featured">
                     <h3>Pro</h3>
+                    <div class="price-savings">Save 40% vs competitors</div>
                     <div class="price">$9<span>/mo</span></div>
                     <span>or $69 one-time</span>
                     <ul>
@@ -232,17 +375,40 @@
                         <li>Online payments</li>
                         <li>Auto reminders</li>
                         <li>Recurring invoices</li>
-                        <li>Priority support</li>
+                        <li>Multi-currency</li>
+                        <li class="pro">Custom branding</li>
+                        <li class="pro">Priority support</li>
                     </ul>
-                    <a href="#" class="cta-button">Get Pro</a>
+                    <a href="#" class="btn btn-primary" style="width: 100%;">Start Free Trial</a>
                 </div>
+                <div class="price-card enterprise">
+                    <h3>Business</h3>
+                    <div class="price">$29<span>/mo</span></div>
+                    <span>per user</span>
+                    <ul>
+                        <li>Everything in Pro</li>
+                        <li>Unlimited team members</li>
+                        <li>Advanced permissions</li>
+                        <li>API access</li>
+                        <li>Dedicated support</li>
+                        <li>Custom integrations</li>
+                        <li>SLA guarantee</li>
+                    </ul>
+                    <a href="#" class="btn btn-secondary" style="width: 100%;">Contact Sales</a>
+                </div>
+            </div>
+            
+            <div class="contact-cta">
+                <h3>Need a custom solution?</h3>
+                <p style="color: var(--text-secondary); margin-bottom: 16px;">High volume or enterprise needs? We can help.</p>
+                <a href="#" class="btn btn-primary">Schedule a Demo →</a>
             </div>
         </div>
     </section>
 
     <section class="testimonials">
         <div class="container">
-            <h2 style="text-align: center; margin-bottom: 48px; font-size: 2rem;">Trusted by Freelancers</h2>
+            <h2 style="text-align: center; margin-bottom: 48px; font-size: 2rem;">Trusted by 50,000+ Freelancers</h2>
             <div class="testimonial-grid">
                 <div class="testimonial-card">
                     <div class="stars">★★★★★</div>
@@ -251,8 +417,13 @@
                 </div>
                 <div class="testimonial-card">
                     <div class="stars">★★★★★</div>
-                    <p>"Finally, invoicing that doesn't feel like a chore. Beautiful templates, easy to use."</p>
+                    <p>"Finally, invoicing that doesn't feel like a chore. Beautiful templates, easy to use. Worth every penny."</p>
                     <cite>— Chris P., Developer</cite>
+                </div>
+                <div class="testimonial-card">
+                    <div class="stars">★★★★★</div>
+                    <p>"The recurring invoices feature alone saves me hours every month. Best invoicing tool I've used."</p>
+                    <cite>— Sarah M., Consultant</cite>
                 </div>
             </div>
         </div>
@@ -260,8 +431,9 @@
 
     <section class="cta-section">
         <h2 style="font-size: 2.5rem; margin-bottom: 16px;">Start Getting Paid Faster</h2>
-        <p style="color: var(--text-secondary); margin-bottom: 32px; font-size: 1.1rem;">Join freelancers who trust InvoiceDash.</p>
-        <a href="#pricing" class="cta-button">Start Invoicing Free</a>
+        <p style="color: var(--text-secondary); margin-bottom: 32px; font-size: 1.1rem;">Join 50,000+ freelancers who trust InvoiceDash.</p>
+        <a href="#pricing" class="btn btn-primary">Start 14-Day Free Trial</a>
+        <p style="margin-top: 16px; font-size: 0.85rem; color: var(--text-secondary);">No credit card required • Cancel anytime</p>
     </section>
 
     <footer>
@@ -269,8 +441,9 @@
             <a href="/index.html">Home</a>
             <a href="#">Privacy Policy</a>
             <a href="#">Terms of Service</a>
+            <a href="#">Contact</a>
         </div>
-        <p style="color: var(--text-secondary);">© 2026 InvoiceDash. Part of RenegadeTools.</p>
+        <p style="color: var(--text-secondary);">© 2026 InvoiceDash. Part of ProTools.</p>
     </footer>
 </body>
 </html>

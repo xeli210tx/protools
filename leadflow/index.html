@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width-width, initial-scale=1.0">
     <title>LeadFlow — Lead Management System</title>
-    <meta name="description" content="Capture, track, and convert more leads with ease.">
+    <meta name="description" content="Capture, track, and convert more leads. CRM features for local businesses.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -19,6 +19,8 @@
             --text-muted: #64748b;
             --accent: #0ea5e9;
             --accent-dim: #f0f9ff;
+            --success: #10b981;
+            --purple: #8b5cf6;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; }
@@ -39,6 +41,31 @@
             z-index: -1;
         }
         .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+        
+        /* Badges */
+        .value-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: linear-gradient(135deg, #10b98120 0%, #10b98110 100%);
+            border: 1px solid #10b98140;
+            color: #059669;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+        
+        .pro-badge {
+            background: linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%);
+            color: white;
+            padding: 3px 10px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
         
         nav {
             padding: 20px 0;
@@ -97,6 +124,15 @@
             border-color: var(--text-muted);
             background: var(--bg-alt);
         }
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--accent);
+            color: var(--accent);
+        }
+        .btn-outline:hover {
+            background: var(--accent);
+            color: white;
+        }
         
         .hero {
             padding: 100px 0 80px;
@@ -137,6 +173,22 @@
             justify-content: center;
             margin-bottom: 60px;
         }
+        
+        /* Social Proof */
+        .social-proof {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+        .proof-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+        .proof-item strong { color: var(--text); font-weight: 600; }
         
         .features {
             padding: 80px 0;
@@ -201,36 +253,98 @@
             font-size: 0.9rem;
         }
         
-        .pricing {
+        /* CRM Features */
+        .crm-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+            margin-top: 40px;
+        }
+        .crm-item {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 24px;
+            display: flex;
+            gap: 16px;
+            align-items: flex-start;
+        }
+        .crm-icon {
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+        
+        .integrations {
             padding: 80px 0;
             background: var(--bg);
         }
+        .integrations-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 16px;
+            margin-top: 40px;
+        }
+        .integration-item {
+            background: var(--bg-alt);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            font-weight: 500;
+            color: var(--text-muted);
+            transition: all 0.2s;
+        }
+        .integration-item:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+        
+        .pricing {
+            padding: 80px 0;
+            background: var(--bg-alt);
+        }
         .pricing-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 20px;
-            max-width: 700px;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 24px;
+            max-width: 900px;
             margin: 0 auto;
         }
         .pricing-card {
             background: var(--card-bg);
             border: 1px solid var(--border);
             border-radius: 12px;
-            padding: 28px;
+            padding: 32px;
             text-align: center;
+            position: relative;
         }
         .pricing-card.featured {
             border-color: var(--accent);
-            position: relative;
             box-shadow: 0 4px 20px rgba(14, 165, 233, 0.15);
         }
         .pricing-card.featured::before {
-            content: 'Popular';
+            content: 'Most Popular';
             position: absolute;
             top: -11px;
             left: 50%;
             transform: translateX(-50%);
             background: var(--accent);
+            color: #fff;
+            padding: 3px 12px;
+            border-radius: 100px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+        .pricing-card.enterprise {
+            border-color: var(--purple);
+        }
+        .pricing-card.enterprise::before {
+            content: 'Best Value';
+            position: absolute;
+            top: -11px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--purple);
             color: #fff;
             padding: 3px 12px;
             border-radius: 100px;
@@ -258,29 +372,55 @@
             font-weight: 400;
             color: var(--text-muted);
         }
+        .pricing-savings {
+            background: #10b98120;
+            color: #059669;
+            font-size: 0.8rem;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 4px;
+            display: inline-block;
+            margin-bottom: 12px;
+        }
         .pricing-features {
             list-style: none;
             margin: 20px 0;
             text-align: left;
         }
         .pricing-features li {
-            padding: 8px 0;
+            padding: 10px 0;
             color: var(--text-muted);
             font-size: 0.9rem;
             display: flex;
             align-items: center;
             gap: 10px;
+            border-bottom: 1px solid var(--border);
         }
+        .pricing-features li:last-child { border: none; }
         .pricing-features li::before {
-            content: '→';
-            color: var(--accent);
-            font-size: 0.8rem;
+            content: '✓';
+            color: var(--success);
+            font-weight: 600;
+        }
+        .pricing-features li.pro::before {
+            content: '★';
+            color: var(--purple);
+        }
+        
+        .trial-banner {
+            background: linear-gradient(135deg, #0ea5e910 0%, #0ea5e905 100%);
+            border: 1px solid var(--accent);
+            border-radius: 12px;
+            padding: 24px;
+            text-align: center;
+            margin: 40px auto;
+            max-width: 500px;
         }
         
         .cta {
             padding: 80px 0;
             text-align: center;
-            background: var(--bg-alt);
+            background: var(--bg);
         }
         .cta h2 {
             font-size: 2rem;
@@ -295,6 +435,15 @@
             margin-bottom: 28px;
         }
         
+        .contact-cta {
+            background: var(--bg-alt);
+            border: 2px dashed var(--border);
+            border-radius: 12px;
+            padding: 32px;
+            text-align: center;
+            margin-top: 40px;
+        }
+        
         footer {
             padding: 32px 0;
             border-top: 1px solid var(--border);
@@ -304,49 +453,16 @@
         }
         
         @media (max-width: 768px) {
-            body { overflow-x: hidden; }
-            .container { padding: 0 16px; }
-            .hero { padding: 60px 16px 40px; }
-            .hero h1 { font-size: 2rem; }
-            .hero p { font-size: 1rem; }
-            .hero-buttons { flex-direction: column; align-items: stretch; }
-            .hero-buttons .btn { width: 100%; text-align: center; }
-            .features { padding: 40px 0; }
-            .features-grid { grid-template-columns: 1fr; }
-            .pricing { padding: 40px 0; }
-            .pricing-grid { grid-template-columns: 1fr; }
-            .section-header h2 { font-size: 1.75rem; }
-            .section-header p { font-size: 1rem; }
-            .nav-links { display: none; }
-            .logo { font-size: 1.2rem; }
-            .logo-icon { width: 28px; height: 28px; font-size: 1rem; }
-            .btn { padding: 10px 16px; font-size: 0.9rem; }
-            .feature-card { padding: 20px; }
-            .pricing-card { padding: 20px; }
-            .footer { padding: 32px 16px; }
-            .footer-inner { grid-template-columns: 1fr; gap: 24px; }
-            .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
             .hero h1 { font-size: 2.2rem; }
             .hero p { font-size: 1rem; }
             .hero-buttons { flex-direction: column; align-items: center; }
             .features-grid { grid-template-columns: 1fr; }
+            .pricing-grid { grid-template-columns: 1fr; }
+            .crm-grid { grid-template-columns: 1fr; }
+            .nav-links { display: none; }
+            .social-proof { flex-direction: column; gap: 12px; }
         }
-            img { max-width: 100%; height: auto; }
-        @media (max-width: 480px) {
-            .hero h1 { font-size: 1.5rem; }
-            .hero p { font-size: 0.9rem; }
-            .hero-buttons { gap: 12px; }
-            .section-header h2 { font-size: 1.5rem; }
-            .feature-card { padding: 16px; }
-            .pricing-card { padding: 16px; }
-            .pricing-price { font-size: 2rem; }
-            .btn { padding: 8px 12px; font-size: 0.85rem; }
-            .logo { font-size: 1rem; }
-            .stats-bar { grid-template-columns: 1fr 1fr; }
-            .stat-item h3 { font-size: 1.25rem; }
-            .categories-grid { grid-template-columns: 1fr; }
-        }
-</style>
+    </style>
 </head>
 <body>
     <nav>
@@ -357,8 +473,11 @@
             </div>
             <div class="nav-links">
                 <a href="#features">Features</a>
+                <a href="#crm">CRM</a>
+                <a href="#integrations">Integrations</a>
                 <a href="#pricing">Pricing</a>
-                <a href="#" class="btn btn-primary">Get Started</a>
+                <a href="#" class="btn btn-secondary">Log In</a>
+                <a href="#" class="btn btn-primary">Start Free</a>
             </div>
         </div>
     </nav>
@@ -366,44 +485,144 @@
     <section class="hero">
         <div class="container">
             <div class="hero-badge">
-                Now Available
+                🚀 Now Available
             </div>
-            <h1>Capture More Leads</h1>
-            <p>Capture, track, and convert more leads with ease.</p>
+            <div class="value-badge">
+                💰 Save 60% vs HubSpot & Salesforce
+            </div>
+            <h1>Capture More Leads.<br>Close More Deals.</h1>
+            <p>Full-featured CRM for local businesses. Capture, track, and convert leads with ease.</p>
+            
+            <div class="social-proof">
+                <div class="proof-item">
+                    <strong>10,000+</strong> businesses
+                </div>
+                <div class="proof-item">
+                    <strong>1M+</strong> leads tracked
+                </div>
+                <div class="proof-item">
+                    <strong>4.9/5</strong> rating
+                </div>
+            </div>
+            
             <div class="hero-buttons">
-                <a href="#" class="btn btn-primary">Try Free →</a>
+                <a href="#" class="btn btn-primary">Start 14-Day Free Trial →</a>
                 <a href="#features" class="btn btn-secondary">Learn More</a>
             </div>
+            
+            <p style="font-size: 0.85rem; color: var(--text-muted);">No credit card required • Free forever plan</p>
         </div>
     </section>
 
     <section class="features" id="features">
         <div class="container">
             <div class="section-header">
-                <h2>Everything you need</h2>
-                <p>Powerful features to help you manage leads</p>
+                <h2>Everything you need to grow</h2>
+                <p>Powerful features to capture, track, and convert more leads</p>
             </div>
             <div class="features-grid">
                 <div class="feature-card">
-                    <div class="feature-icon">◈</div>
-                    <h3>Lead Capture</h3>
-                    <p>Capture leads from everywhere</p>
+                    <div class="feature-icon">🎯</div>
+                    <h3>Lead Capture Forms</h3>
+                    <p>Beautiful embeddable forms. Capture leads from your website, social media, or anywhere.</p>
                 </div>
                 <div class="feature-card">
-                    <div class="feature-icon">◈</div>
-                    <h3>Pipeline Tracking</h3>
-                    <p>Visual sales pipeline</p>
+                    <div class="feature-icon">📊</div>
+                    <h3>Visual Pipeline</h3>
+                    <p>Drag-and-drop deal tracking. See every opportunity at a glance.</p>
                 </div>
                 <div class="feature-card">
-                    <div class="feature-icon">◈</div>
-                    <h3>Auto Follow-up</h3>
-                    <p>Never miss a lead</p>
+                    <div class="feature-icon">📧</div>
+                    <h3>Email Sequences</h3>
+                    <p>Automated follow-up sequences. Nurture leads on autopilot.</p>
                 </div>
                 <div class="feature-card">
-                    <div class="feature-icon">◈</div>
-                    <h3>Analytics</h3>
-                    <p>Track your conversion</p>
+                    <div class="feature-icon">📱</div>
+                    <h3>SMS & Texting</h3>
+                    <p>Send texts directly from CRM. Two-way conversations in one inbox.</p>
                 </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📅</div>
+                    <h3>Appointment Booking</h3>
+                    <p>Let leads book demos directly. Calendar integration included.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📈</div>
+                    <h3>Conversion Analytics</h3>
+                    <p>Track KPIs: lead sources, conversion rates, revenue pipeline.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="crm" style="padding: 80px 0; background: var(--bg-alt);">
+        <div class="container">
+            <div class="section-header">
+                <h2>Full CRM Features</h2>
+                <p>Everything a sales team needs to succeed</p>
+            </div>
+            <div class="crm-grid">
+                <div class="crm-item">
+                    <span class="crm-icon">👥</span>
+                    <div>
+                        <h3>Contact Management</h3>
+                        <p style="color: var(--text-muted); font-size: 0.9rem;">Store lead details, notes, interaction history, and custom fields.</p>
+                    </div>
+                </div>
+                <div class="crm-item">
+                    <span class="crm-icon">👤</span>
+                    <div>
+                        <h3>User Permissions</h3>
+                        <p style="color: var(--text-muted); font-size: 0.9rem;">Role-based access control. Manager, salesperson, or custom roles.</p>
+                    </div>
+                </div>
+                <div class="crm-item">
+                    <span class="crm-icon">📋</span>
+                    <div>
+                        <h3>Deal Stages</h3>
+                        <p style="color: var(--text-muted); font-size: 0.9rem;">Customize your pipeline. Add, rename, or reorder stages.</p>
+                    </div>
+                </div>
+                <div class="crm-item">
+                    <span class="crm-icon">🔔</span>
+                    <div>
+                        <h3>Task Reminders</h3>
+                        <p style="color: var(--text-muted); font-size: 0.9rem;">Never miss a follow-up. Set tasks and get reminders.</p>
+                    </div>
+                </div>
+                <div class="crm-item">
+                    <span class="crm-icon">📝</span>
+                    <div>
+                        <h3>Notes & Activity Log</h3>
+                        <p style="color: var(--text-muted); font-size: 0.9rem;">Track every interaction. Calls, emails, meetings, and notes.</p>
+                    </div>
+                </div>
+                <div class="crm-item">
+                    <span class="crm-icon">📤</span>
+                    <div>
+                        <h3>Export Data</h3>
+                        <p style="color: var(--text-muted); font-size: 0.9rem;">Export leads, deals, and reports to CSV/Excel.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="integrations" id="integrations">
+        <div class="container">
+            <div class="section-header">
+                <h2>Works with your tools</h2>
+                <p>Connect LeadFlow with the software you already use</p>
+            </div>
+            <div class="integrations-grid">
+                <div class="integration-item">Google Contacts</div>
+                <div class="integration-item">Mailchimp</div>
+                <div class="integration-item">Twilio</div>
+                <div class="integration-item">Slack</div>
+                <div class="integration-item">Zapier</div>
+                <div class="integration-item">Google Calendar</div>
+                <div class="integration-item">Outlook</div>
+                <div class="integration-item">+ more</div>
             </div>
         </div>
     </section>
@@ -414,34 +633,69 @@
                 <h2>Simple pricing</h2>
                 <p>Start free, upgrade when you're ready</p>
             </div>
+            
+            <div class="trial-banner">
+                <h3>🎉 Try Pro Free for 14 Days</h3>
+                <p>Full access to all CRM features. No credit card required.</p>
+            </div>
+            
             <div class="pricing-grid">
                 <div class="pricing-card">
-                    <h3>Free</h3>
+                    <h3>Starter</h3>
                     <div class="pricing-price">$0<span>/mo</span></div>
                     <ul class="pricing-features">
                         <li>100 leads</li>
-                        <li>Basic analytics</li>
+                        <li>Basic pipeline</li>
+                        <li>Email support</li>
+                        <li>Contact management</li>
                     </ul>
-                    <a href="#" class="btn btn-secondary">Get Started</a>
+                    <a href="#" class="btn btn-secondary" style="width: 100%;">Get Started</a>
                 </div>
                 <div class="pricing-card featured">
                     <h3>Pro</h3>
+                    <div class="pricing-savings">Save 60% vs HubSpot</div>
                     <div class="pricing-price">$49<span>/mo</span></div>
                     <ul class="pricing-features">
                         <li>Unlimited leads</li>
-                        <li>Advanced analytics</li>
+                        <li>Advanced pipeline</li>
+                        <li>Email sequences</li>
+                        <li>SMS texting</li>
+                        <li>Appointment booking</li>
+                        <li class="pro">Task reminders</li>
+                        <li class="pro">Priority support</li>
                     </ul>
-                    <a href="#" class="btn btn-primary">Get Started</a>
+                    <a href="#" class="btn btn-primary" style="width: 100%;">Start Free Trial</a>
                 </div>
+                <div class="pricing-card enterprise">
+                    <h3>Business</h3>
+                    <div class="pricing-price">$99<span>/mo</span></div>
+                    <ul class="pricing-features">
+                        <li>Everything in Pro</li>
+                        <li>Unlimited users</li>
+                        <li>API access</li>
+                        <li>Custom integrations</li>
+                        <li>Dedicated support</li>
+                        <li>Advanced permissions</li>
+                        <li>SLA guarantee</li>
+                    </ul>
+                    <a href="#" class="btn btn-outline" style="width: 100%;">Contact Sales</a>
+                </div>
+            </div>
+            
+            <div class="contact-cta">
+                <h3>Need a custom solution?</h3>
+                <p>Enterprise or high-volume needs? Let's build the right plan for you.</p>
+                <a href="#" class="btn btn-primary">Schedule a Demo →</a>
             </div>
         </div>
     </section>
 
     <section class="cta">
         <div class="container">
-            <h2>Ready to get started?</h2>
-            <p>Join thousands of businesses using LeadFlow</p>
+            <h2>Ready to grow your business?</h2>
+            <p>Join 10,000+ businesses using LeadFlow</p>
             <a href="#" class="btn btn-primary">Start Free Trial →</a>
+            <p style="margin-top: 16px; font-size: 0.85rem; color: var(--text-muted);">No credit card required • 14-day free trial</p>
         </div>
     </section>
 
