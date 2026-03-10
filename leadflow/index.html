@@ -2,707 +2,511 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width-width, initial-scale=1.0">
-    <title>LeadFlow — Lead Management System</title>
-    <meta name="description" content="Capture, track, and convert more leads. CRM features for local businesses.">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LeadFlow CRM — RenegadeTools</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #ffffff;
-            --bg-alt: #f8fafc;
-            --card-bg: #ffffff;
-            --border: #e2e8f0;
-            --border-hover: #cbd5e1;
-            --text: #0f172a;
-            --text-muted: #64748b;
-            --accent: #0ea5e9;
-            --accent-dim: #f0f9ff;
-            --success: #10b981;
-            --purple: #8b5cf6;
+            --bg: #f8fafc; --card-bg: #ffffff; --border: #e2e8f0;
+            --text: #0f172a; --text-muted: #64748b;
+            --accent: #8b5cf6; --accent-dim: #f5f3ff;
+            --new: #3b82f6; --contacted: #f59e0b; --qualified: #10b981; --won: #8b5cf6;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        html { scroll-behavior: smooth; }
-        body {
-            overflow-x: hidden;
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            line-height: 1.6;
-        }
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: 
-                radial-gradient(ellipse 80% 50% at 50% -20%, #0ea5e908 0%, transparent 100%);
-            pointer-events: none;
-            z-index: -1;
-        }
-        .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); line-height: 1.5; }
         
-        /* Badges */
-        .value-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            background: linear-gradient(135deg, #10b98120 0%, #10b98110 100%);
-            border: 1px solid #10b98140;
-            color: #059669;
-            padding: 6px 12px;
-            border-radius: 6px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            margin-bottom: 16px;
-        }
+        .header { background: var(--card-bg); border-bottom: 1px solid var(--border); padding: 16px 24px; position: sticky; top: 0; z-index: 100; }
+        .header-content { max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-weight: 700; font-size: 1.25rem; display: flex; align-items: center; gap: 8px; }
+        .logo-icon { width: 32px; height: 32px; background: var(--accent-dim); border: 1px solid var(--accent); border-radius: 6px; display: flex; align-items: center; justify-content: center; }
         
-        .pro-badge {
-            background: linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%);
-            color: white;
-            padding: 3px 10px;
-            border-radius: 4px;
-            font-size: 0.7rem;
-            font-weight: 700;
-            text-transform: uppercase;
-        }
+        .nav-tabs { display: flex; gap: 4px; background: var(--bg); padding: 4px; border-radius: 8px; }
+        .nav-tab { padding: 8px 16px; border: none; background: transparent; color: var(--text-muted); font-weight: 500; cursor: pointer; border-radius: 6px; transition: all 0.2s; }
+        .nav-tab.active { background: var(--card-bg); color: var(--text); box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
         
-        nav {
-            padding: 20px 0;
-            border-bottom: 1px solid var(--border);
-            position: sticky;
-            top: 0;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            z-index: 100;
-        }
-        nav .container { display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-weight: 700; font-size: 1.3rem; display: flex; align-items: center; gap: 10px; letter-spacing: -0.02em; }
-        .logo-icon {
-            width: 32px; height: 32px;
-            background: var(--accent-dim);
-            border: 1px solid var(--accent);
-            border-radius: 6px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1rem;
-            color: var(--accent);
-        }
-        .nav-links { display: flex; gap: 24px; align-items: center; }
-        .nav-links a { color: var(--text-muted); text-decoration: none; font-weight: 500; font-size: 0.9rem; transition: color 0.2s; }
-        .nav-links a:hover { color: var(--text); }
+        .main { max-width: 1400px; margin: 0 auto; padding: 24px; }
         
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 10px 20px;
-            border-radius: 6px;
-            font-weight: 600;
-            font-size: 14px;
-            text-decoration: none;
-            cursor: pointer;
-            transition: all 0.2s;
-            border: none;
-        }
-        .btn-primary {
-            background: var(--accent);
-            color: #fff;
-        }
-        .btn-primary:hover {
-            background: #0284c7;
-            transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(14, 165, 233, 0.3);
-        }
-        .btn-secondary {
-            background: transparent;
-            color: var(--text);
-            border: 1px solid var(--border);
-        }
-        .btn-secondary:hover {
-            border-color: var(--text-muted);
-            background: var(--bg-alt);
-        }
-        .btn-outline {
-            background: transparent;
-            border: 2px solid var(--accent);
-            color: var(--accent);
-        }
-        .btn-outline:hover {
-            background: var(--accent);
-            color: white;
-        }
+        .page { display: none; }
+        .page.active { display: block; }
         
-        .hero {
-            padding: 100px 0 80px;
-            text-align: center;
-        }
-        .hero-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: var(--accent-dim);
-            border: 1px solid #0ea5e920;
-            padding: 6px 14px;
-            border-radius: 100px;
-            font-size: 13px;
-            color: var(--accent);
-            margin-bottom: 24px;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            font-weight: 500;
-        }
-        .hero h1 {
-            font-size: 3.5rem;
-            font-weight: 700;
-            line-height: 1.1;
-            margin-bottom: 24px;
-            letter-spacing: -0.03em;
-            color: var(--text);
-        }
-        .hero p {
-            font-size: 1.15rem;
-            color: var(--text-muted);
-            max-width: 550px;
-            margin: 0 auto 40px;
-        }
-        .hero-buttons {
-            display: flex;
-            gap: 14px;
-            justify-content: center;
-            margin-bottom: 60px;
-        }
+        .card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 20px; margin-bottom: 16px; }
+        .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+        .card-title { font-weight: 600; font-size: 1rem; }
         
-        /* Social Proof */
-        .social-proof {
-            display: flex;
-            justify-content: center;
-            gap: 40px;
-            flex-wrap: wrap;
-        }
-        .proof-item {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            color: var(--text-muted);
-            font-size: 0.9rem;
-        }
-        .proof-item strong { color: var(--text); font-weight: 600; }
+        .btn { display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; border-radius: 8px; font-weight: 500; cursor: pointer; border: none; transition: all 0.2s; }
+        .btn-primary { background: var(--accent); color: white; }
+        .btn-primary:hover { background: #7c3aed; }
+        .btn-secondary { background: var(--bg); color: var(--text); border: 1px solid var(--border); }
+        .btn-secondary:hover { border-color: var(--border-hover); }
+        .btn-sm { padding: 6px 12px; font-size: 0.875rem; }
         
-        .features {
-            padding: 80px 0;
-            background: var(--bg-alt);
-        }
-        .section-header {
-            text-align: center;
-            margin-bottom: 60px;
-        }
-        .section-header h2 {
-            font-size: 2rem;
-            font-weight: 600;
-            margin-bottom: 12px;
-            letter-spacing: -0.02em;
-            color: var(--text);
-        }
-        .section-header p {
-            color: var(--text-muted);
-            font-size: 1rem;
-            max-width: 450px;
-            margin: 0 auto;
-        }
+        .form-group { margin-bottom: 16px; }
+        .form-label { display: block; font-weight: 500; margin-bottom: 6px; font-size: 0.875rem; }
+        .form-input, .form-select, .form-textarea { width: 100%; padding: 10px 12px; border: 1px solid var(--border); border-radius: 8px; font-size: 0.9rem; transition: border-color 0.2s; font-family: inherit; }
+        .form-input:focus, .form-select:focus, .form-textarea:focus { outline: none; border-color: var(--accent); }
         
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
-        }
-        .feature-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 28px;
-            transition: all 0.3s;
-        }
-        .feature-card:hover {
-            border-color: var(--border-hover);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-        }
-        .feature-icon {
-            width: 40px;
-            height: 40px;
-            background: var(--accent-dim);
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-            margin-bottom: 16px;
-            color: var(--accent);
-        }
-        .feature-card h3 {
-            font-size: 1.1rem;
-            font-weight: 600;
-            margin-bottom: 8px;
-            letter-spacing: -0.01em;
-            color: var(--text);
-        }
-        .feature-card p {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-        }
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 16px; margin-bottom: 24px; }
+        .stat-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 20px; }
+        .stat-label { font-size: 0.875rem; color: var(--text-muted); margin-bottom: 4px; }
+        .stat-value { font-size: 1.75rem; font-weight: 700; }
         
-        /* CRM Features */
-        .crm-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 24px;
-            margin-top: 40px;
-        }
-        .crm-item {
-            background: var(--bg);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 24px;
-            display: flex;
-            gap: 16px;
-            align-items: flex-start;
-        }
-        .crm-icon {
-            font-size: 1.5rem;
-            flex-shrink: 0;
-        }
+        .pipeline { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+        .pipeline-stage { background: var(--bg); border-radius: 12px; padding: 16px; min-height: 400px; }
+        .stage-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 2px solid; }
+        .stage-header.new { border-color: var(--new); }
+        .stage-header.contacted { border-color: var(--contacted); }
+        .stage-header.qualified { border-color: var(--qualified); }
+        .stage-header.won { border-color: var(--won); }
+        .stage-title { font-weight: 600; }
+        .stage-count { background: var(--card-bg); padding: 2px 8px; border-radius: 100px; font-size: 0.8rem; }
         
-        .integrations {
-            padding: 80px 0;
-            background: var(--bg);
-        }
-        .integrations-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-            gap: 16px;
-            margin-top: 40px;
-        }
-        .integration-item {
-            background: var(--bg-alt);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 20px;
-            text-align: center;
-            font-weight: 500;
-            color: var(--text-muted);
-            transition: all 0.2s;
-        }
-        .integration-item:hover {
-            border-color: var(--accent);
-            color: var(--accent);
-        }
+        .lead-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 8px; padding: 12px; margin-bottom: 8px; cursor: pointer; transition: all 0.2s; }
+        .lead-card:hover { border-color: var(--accent); transform: translateY(-1px); }
+        .lead-name { font-weight: 600; margin-bottom: 4px; }
+        .lead-company { font-size: 0.85rem; color: var(--text-muted); }
         
-        .pricing {
-            padding: 80px 0;
-            background: var(--bg-alt);
-        }
-        .pricing-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 24px;
-            max-width: 900px;
-            margin: 0 auto;
-        }
-        .pricing-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 32px;
-            text-align: center;
-            position: relative;
-        }
-        .pricing-card.featured {
-            border-color: var(--accent);
-            box-shadow: 0 4px 20px rgba(14, 165, 233, 0.15);
-        }
-        .pricing-card.featured::before {
-            content: 'Most Popular';
-            position: absolute;
-            top: -11px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: var(--accent);
-            color: #fff;
-            padding: 3px 12px;
-            border-radius: 100px;
-            font-size: 11px;
-            font-weight: 600;
-        }
-        .pricing-card.enterprise {
-            border-color: var(--purple);
-        }
-        .pricing-card.enterprise::before {
-            content: 'Best Value';
-            position: absolute;
-            top: -11px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: var(--purple);
-            color: #fff;
-            padding: 3px 12px;
-            border-radius: 100px;
-            font-size: 11px;
-            font-weight: 600;
-        }
-        .pricing-card h3 {
-            font-size: 1rem;
-            font-weight: 600;
-            margin-bottom: 4px;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            font-size: 0.8rem;
-        }
-        .pricing-price {
-            font-size: 2.2rem;
-            font-weight: 700;
-            margin: 16px 0;
-            letter-spacing: -0.02em;
-            color: var(--text);
-        }
-        .pricing-price span {
-            font-size: 0.9rem;
-            font-weight: 400;
-            color: var(--text-muted);
-        }
-        .pricing-savings {
-            background: #10b98120;
-            color: #059669;
-            font-size: 0.8rem;
-            font-weight: 600;
-            padding: 4px 10px;
-            border-radius: 4px;
-            display: inline-block;
-            margin-bottom: 12px;
-        }
-        .pricing-features {
-            list-style: none;
-            margin: 20px 0;
-            text-align: left;
-        }
-        .pricing-features li {
-            padding: 10px 0;
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            border-bottom: 1px solid var(--border);
-        }
-        .pricing-features li:last-child { border: none; }
-        .pricing-features li::before {
-            content: '✓';
-            color: var(--success);
-            font-weight: 600;
-        }
-        .pricing-features li.pro::before {
-            content: '★';
-            color: var(--purple);
-        }
+        .contact-list { display: grid; gap: 12px; }
+        .contact-item { display: flex; justify-content: space-between; align-items: center; padding: 16px; background: var(--bg); border-radius: 8px; }
+        .contact-info { display: flex; flex-direction: column; }
+        .contact-name { font-weight: 600; }
+        .contact-details { font-size: 0.875rem; color: var(--text-muted); }
         
-        .trial-banner {
-            background: linear-gradient(135deg, #0ea5e910 0%, #0ea5e905 100%);
-            border: 1px solid var(--accent);
-            border-radius: 12px;
-            padding: 24px;
-            text-align: center;
-            margin: 40px auto;
-            max-width: 500px;
-        }
+        .activity-item { display: flex; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--border); }
+        .activity-icon { width: 32px; height: 32px; background: var(--accent-dim); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+        .activity-content { flex: 1; }
+        .activity-text { margin-bottom: 4px; }
+        .activity-time { font-size: 0.8rem; color: var(--text-muted); }
         
-        .cta {
-            padding: 80px 0;
-            text-align: center;
-            background: var(--bg);
-        }
-        .cta h2 {
-            font-size: 2rem;
-            font-weight: 600;
-            margin-bottom: 12px;
-            letter-spacing: -0.02em;
-            color: var(--text);
-        }
-        .cta p {
-            color: var(--text-muted);
-            font-size: 1rem;
-            margin-bottom: 28px;
-        }
+        .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 200; align-items: center; justify-content: center; }
+        .modal-overlay.active { display: flex; }
+        .modal { background: var(--card-bg); border-radius: 12px; padding: 24px; max-width: 600px; width: 90%; max-height: 90vh; overflow-y: auto; }
+        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .modal-title { font-weight: 600; font-size: 1.125rem; }
+        .modal-close { background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--text-muted); }
         
-        .contact-cta {
-            background: var(--bg-alt);
-            border: 2px dashed var(--border);
-            border-radius: 12px;
-            padding: 32px;
-            text-align: center;
-            margin-top: 40px;
-        }
+        .detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
+        .detail-item label { font-size: 0.8rem; color: var(--text-muted); display: block; }
+        .detail-item span { font-weight: 500; }
         
-        footer {
-            padding: 32px 0;
-            border-top: 1px solid var(--border);
-            text-align: center;
-            color: var(--text-muted);
-            font-size: 0.85rem;
-        }
+        .empty-state { text-align: center; padding: 48px; color: var(--text-muted); }
         
+        .notes-section { margin-top: 16px; }
+        .note-item { background: var(--bg); padding: 12px; border-radius: 8px; margin-bottom: 8px; }
+        .note-text { margin-bottom: 4px; }
+        .note-time { font-size: 0.75rem; color: var(--text-muted); }
+        
+        @media (max-width: 1024px) {
+            .pipeline { grid-template-columns: repeat(2, 1fr); }
+        }
         @media (max-width: 768px) {
-            .hero h1 { font-size: 2.2rem; }
-            .hero p { font-size: 1rem; }
-            .hero-buttons { flex-direction: column; align-items: center; }
-            .features-grid { grid-template-columns: 1fr; }
-            .pricing-grid { grid-template-columns: 1fr; }
-            .crm-grid { grid-template-columns: 1fr; }
-            .nav-links { display: none; }
-            .social-proof { flex-direction: column; gap: 12px; }
+            .header-content { flex-direction: column; gap: 12px; }
+            .pipeline { grid-template-columns: 1fr; }
+            .detail-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
-    <nav>
-        <div class="container">
-            <div class="logo">
-                <div class="logo-icon">◈</div>
-                LeadFlow
-            </div>
-            <div class="nav-links">
-                <a href="#features">Features</a>
-                <a href="#crm">CRM</a>
-                <a href="#integrations">Integrations</a>
-                <a href="#pricing">Pricing</a>
-                <a href="#" class="btn btn-secondary">Log In</a>
-                <a href="#" class="btn btn-primary">Start Free</a>
+    <header class="header">
+        <div class="header-content">
+            <div class="logo"><span class="logo-icon">🔗</span> LeadFlow CRM</div>
+            <div class="nav-tabs">
+                <button class="nav-tab active" data-page="pipeline">Pipeline</button>
+                <button class="nav-tab" data-page="contacts">Contacts</button>
+                <button class="nav-tab" data-page="activity">Activity</button>
             </div>
         </div>
-    </nav>
+    </header>
 
-    <section class="hero">
-        <div class="container">
-            <div class="hero-badge">
-                🚀 Now Available
-            </div>
-            <div class="value-badge">
-                💰 Save 60% vs HubSpot & Salesforce
-            </div>
-            <h1>Capture More Leads.<br>Close More Deals.</h1>
-            <p>Full-featured CRM for local businesses. Capture, track, and convert leads with ease.</p>
-            
-            <div class="social-proof">
-                <div class="proof-item">
-                    <strong>10,000+</strong> businesses
+    <main class="main">
+        <!-- Pipeline Page -->
+        <div class="page active" id="pipeline">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-label">Total Leads</div>
+                    <div class="stat-value" id="totalLeads">0</div>
                 </div>
-                <div class="proof-item">
-                    <strong>1M+</strong> leads tracked
+                <div class="stat-card">
+                    <div class="stat-label">New</div>
+                    <div class="stat-value" style="color: var(--new)" id="newCount">0</div>
                 </div>
-                <div class="proof-item">
-                    <strong>4.9/5</strong> rating
+                <div class="stat-card">
+                    <div class="stat-label">Contacted</div>
+                    <div class="stat-value" style="color: var(--contacted)" id="contactedCount">0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Qualified</div>
+                    <div class="stat-value" style="color: var(--qualified)" id="qualifiedCount">0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Won</div>
+                    <div class="stat-value" style="color: var(--won)" id="wonCount">0</div>
                 </div>
             </div>
-            
-            <div class="hero-buttons">
-                <a href="#" class="btn btn-primary">Start 14-Day Free Trial →</a>
-                <a href="#features" class="btn btn-secondary">Learn More</a>
-            </div>
-            
-            <p style="font-size: 0.85rem; color: var(--text-muted);">No credit card required • Free forever plan</p>
-        </div>
-    </section>
 
-    <section class="features" id="features">
-        <div class="container">
-            <div class="section-header">
-                <h2>Everything you need to grow</h2>
-                <p>Powerful features to capture, track, and convert more leads</p>
-            </div>
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">🎯</div>
-                    <h3>Lead Capture Forms</h3>
-                    <p>Beautiful embeddable forms. Capture leads from your website, social media, or anywhere.</p>
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-title">Lead Pipeline</span>
+                    <button class="btn btn-primary btn-sm" onclick="openModal('leadModal')">+ Add Lead</button>
                 </div>
-                <div class="feature-card">
-                    <div class="feature-icon">📊</div>
-                    <h3>Visual Pipeline</h3>
-                    <p>Drag-and-drop deal tracking. See every opportunity at a glance.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">📧</div>
-                    <h3>Email Sequences</h3>
-                    <p>Automated follow-up sequences. Nurture leads on autopilot.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">📱</div>
-                    <h3>SMS & Texting</h3>
-                    <p>Send texts directly from CRM. Two-way conversations in one inbox.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">📅</div>
-                    <h3>Appointment Booking</h3>
-                    <p>Let leads book demos directly. Calendar integration included.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">📈</div>
-                    <h3>Conversion Analytics</h3>
-                    <p>Track KPIs: lead sources, conversion rates, revenue pipeline.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="crm" style="padding: 80px 0; background: var(--bg-alt);">
-        <div class="container">
-            <div class="section-header">
-                <h2>Full CRM Features</h2>
-                <p>Everything a sales team needs to succeed</p>
-            </div>
-            <div class="crm-grid">
-                <div class="crm-item">
-                    <span class="crm-icon">👥</span>
-                    <div>
-                        <h3>Contact Management</h3>
-                        <p style="color: var(--text-muted); font-size: 0.9rem;">Store lead details, notes, interaction history, and custom fields.</p>
+                <div class="pipeline">
+                    <div class="pipeline-stage">
+                        <div class="stage-header new">
+                            <span class="stage-title">New</span>
+                            <span class="stage-count" id="newStageCount">0</span>
+                        </div>
+                        <div id="newStage"></div>
                     </div>
-                </div>
-                <div class="crm-item">
-                    <span class="crm-icon">👤</span>
-                    <div>
-                        <h3>User Permissions</h3>
-                        <p style="color: var(--text-muted); font-size: 0.9rem;">Role-based access control. Manager, salesperson, or custom roles.</p>
+                    <div class="pipeline-stage">
+                        <div class="stage-header contacted">
+                            <span class="stage-title">Contacted</span>
+                            <span class="stage-count" id="contactedStageCount">0</span>
+                        </div>
+                        <div id="contactedStage"></div>
                     </div>
-                </div>
-                <div class="crm-item">
-                    <span class="crm-icon">📋</span>
-                    <div>
-                        <h3>Deal Stages</h3>
-                        <p style="color: var(--text-muted); font-size: 0.9rem;">Customize your pipeline. Add, rename, or reorder stages.</p>
+                    <div class="pipeline-stage">
+                        <div class="stage-header qualified">
+                            <span class="stage-title">Qualified</span>
+                            <span class="stage-count" id="qualifiedStageCount">0</span>
+                        </div>
+                        <div id="qualifiedStage"></div>
                     </div>
-                </div>
-                <div class="crm-item">
-                    <span class="crm-icon">🔔</span>
-                    <div>
-                        <h3>Task Reminders</h3>
-                        <p style="color: var(--text-muted); font-size: 0.9rem;">Never miss a follow-up. Set tasks and get reminders.</p>
-                    </div>
-                </div>
-                <div class="crm-item">
-                    <span class="crm-icon">📝</span>
-                    <div>
-                        <h3>Notes & Activity Log</h3>
-                        <p style="color: var(--text-muted); font-size: 0.9rem;">Track every interaction. Calls, emails, meetings, and notes.</p>
-                    </div>
-                </div>
-                <div class="crm-item">
-                    <span class="crm-icon">📤</span>
-                    <div>
-                        <h3>Export Data</h3>
-                        <p style="color: var(--text-muted); font-size: 0.9rem;">Export leads, deals, and reports to CSV/Excel.</p>
+                    <div class="pipeline-stage">
+                        <div class="stage-header won">
+                            <span class="stage-title">Won</span>
+                            <span class="stage-count" id="wonStageCount">0</span>
+                        </div>
+                        <div id="wonStage"></div>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
 
-    <section class="integrations" id="integrations">
-        <div class="container">
-            <div class="section-header">
-                <h2>Works with your tools</h2>
-                <p>Connect LeadFlow with the software you already use</p>
-            </div>
-            <div class="integrations-grid">
-                <div class="integration-item">Google Contacts</div>
-                <div class="integration-item">Mailchimp</div>
-                <div class="integration-item">Twilio</div>
-                <div class="integration-item">Slack</div>
-                <div class="integration-item">Zapier</div>
-                <div class="integration-item">Google Calendar</div>
-                <div class="integration-item">Outlook</div>
-                <div class="integration-item">+ more</div>
-            </div>
-        </div>
-    </section>
-
-    <section class="pricing" id="pricing">
-        <div class="container">
-            <div class="section-header">
-                <h2>Simple pricing</h2>
-                <p>Start free, upgrade when you're ready</p>
-            </div>
-            
-            <div class="trial-banner">
-                <h3>🎉 Try Pro Free for 14 Days</h3>
-                <p>Full access to all CRM features. No credit card required.</p>
-            </div>
-            
-            <div class="pricing-grid">
-                <div class="pricing-card">
-                    <h3>Starter</h3>
-                    <div class="pricing-price">$0<span>/mo</span></div>
-                    <ul class="pricing-features">
-                        <li>100 leads</li>
-                        <li>Basic pipeline</li>
-                        <li>Email support</li>
-                        <li>Contact management</li>
-                    </ul>
-                    <a href="#" class="btn btn-secondary" style="width: 100%;">Get Started</a>
+        <!-- Contacts Page -->
+        <div class="page" id="contacts">
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-title">All Contacts</span>
+                    <button class="btn btn-primary btn-sm" onclick="openModal('leadModal')">+ Add Lead</button>
                 </div>
-                <div class="pricing-card featured">
-                    <h3>Pro</h3>
-                    <div class="pricing-savings">Save 60% vs HubSpot</div>
-                    <div class="pricing-price">$49<span>/mo</span></div>
-                    <ul class="pricing-features">
-                        <li>Unlimited leads</li>
-                        <li>Advanced pipeline</li>
-                        <li>Email sequences</li>
-                        <li>SMS texting</li>
-                        <li>Appointment booking</li>
-                        <li class="pro">Task reminders</li>
-                        <li class="pro">Priority support</li>
-                    </ul>
-                    <a href="#" class="btn btn-primary" style="width: 100%;">Start Free Trial</a>
-                </div>
-                <div class="pricing-card enterprise">
-                    <h3>Business</h3>
-                    <div class="pricing-price">$99<span>/mo</span></div>
-                    <ul class="pricing-features">
-                        <li>Everything in Pro</li>
-                        <li>Unlimited users</li>
-                        <li>API access</li>
-                        <li>Custom integrations</li>
-                        <li>Dedicated support</li>
-                        <li>Advanced permissions</li>
-                        <li>SLA guarantee</li>
-                    </ul>
-                    <a href="#" class="btn btn-outline" style="width: 100%;">Contact Sales</a>
-                </div>
+                <div class="contact-list" id="contactList"></div>
             </div>
+        </div>
+
+        <!-- Activity Page -->
+        <div class="page" id="activity">
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-title">Activity Log</span>
+                    <button class="btn btn-secondary btn-sm" onclick="clearActivity()">Clear Log</button>
+                </div>
+                <div id="activityList"></div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Lead Modal -->
+    <div class="modal-overlay" id="leadModal">
+        <div class="modal">
+            <div class="modal-header">
+                <span class="modal-title" id="leadModalTitle">Add Lead</span>
+                <button class="modal-close" onclick="closeModal('leadModal')">&times;</button>
+            </div>
+            <form id="leadForm">
+                <input type="hidden" id="leadId">
+                <div class="form-group">
+                    <label class="form-label">Name *</label>
+                    <input type="text" class="form-input" id="leadName" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Email *</label>
+                    <input type="email" class="form-input" id="leadEmail" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Phone</label>
+                    <input type="tel" class="form-input" id="leadPhone">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Company</label>
+                    <input type="text" class="form-input" id="leadCompany">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Stage</label>
+                    <select class="form-select" id="leadStage">
+                        <option value="new">New</option>
+                        <option value="contacted">Contacted</option>
+                        <option value="qualified">Qualified</option>
+                        <option value="won">Won</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Value ($)</label>
+                    <input type="number" class="form-input" id="leadValue" step="0.01">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Notes</label>
+                    <textarea class="form-textarea" id="leadNotes" rows="3"></textarea>
+                </div>
+                <div style="display: flex; gap: 8px; justify-content: flex-end;">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal('leadModal')">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save Lead</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Contact Detail Modal -->
+    <div class="modal-overlay" id="detailModal">
+        <div class="modal" style="max-width: 700px;">
+            <div class="modal-header">
+                <span class="modal-title">Contact Details</span>
+                <button class="modal-close" onclick="closeModal('detailModal')">&times;</button>
+            </div>
+            <div id="detailContent"></div>
+            <div class="notes-section">
+                <h4 style="margin-bottom: 12px;">Notes</h4>
+                <div id="leadNotesList"></div>
+                <form id="addNoteForm" style="display: flex; gap: 8px; margin-top: 12px;">
+                    <input type="text" class="form-input" id="newNoteText" placeholder="Add a note..." style="flex:1">
+                    <button type="submit" class="btn btn-primary btn-sm">Add</button>
+                </form>
+            </div>
+            <div style="margin-top: 20px; display: flex; gap: 8px; justify-content: flex-end;">
+                <button class="btn btn-secondary btn-sm" onclick="closeModal('detailModal'); openModal('leadModal')">Edit</button>
+                <button class="btn btn-secondary btn-sm" style="color: var(--danger)" onclick="deleteCurrentLead()">Delete</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let leads = JSON.parse(localStorage.getItem('rc_leads') || '[]');
+        let activities = JSON.parse(localStorage.getItem('rc_activities') || '[]');
+        let currentLeadId = null;
+
+        function saveData() {
+            localStorage.setItem('rc_leads', JSON.stringify(leads));
+            localStorage.setItem('rc_activities', JSON.stringify(activities));
+        }
+
+        function addActivity(type, leadId, leadName, details = '') {
+            activities.unshift({
+                id: Date.now().toString(),
+                type,
+                leadId,
+                leadName,
+                details,
+                time: new Date().toISOString()
+            });
+            saveData();
+            renderActivity();
+        }
+
+        // Navigation
+        document.querySelectorAll('.nav-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+                tab.classList.add('active');
+                document.getElementById(tab.dataset.page).classList.add('active');
+                if (tab.dataset.page === 'contacts') renderContacts();
+                if (tab.dataset.page === 'activity') renderActivity();
+            });
+        });
+
+        function openModal(id) {
+            document.getElementById(id).classList.add('active');
+            if (id === 'leadModal') document.getElementById('leadForm').reset();
+        }
+        function closeModal(id) {
+            document.getElementById(id).classList.remove('active');
+        }
+
+        // Lead Functions
+        document.getElementById('leadForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const id = document.getElementById('leadId').value;
+            const lead = {
+                id: id || Date.now().toString(),
+                name: document.getElementById('leadName').value,
+                email: document.getElementById('leadEmail').value,
+                phone: document.getElementById('leadPhone').value,
+                company: document.getElementById('leadCompany').value,
+                stage: document.getElementById('leadStage').value,
+                value: parseFloat(document.getElementById('leadValue').value) || 0,
+                notes: document.getElementById('leadNotes').value,
+                notesList: id ? leads.find(l => l.id === id).notesList : [],
+                createdAt: id ? leads.find(l => l.id === id).createdAt : new Date().toISOString()
+            };
             
-            <div class="contact-cta">
-                <h3>Need a custom solution?</h3>
-                <p>Enterprise or high-volume needs? Let's build the right plan for you.</p>
-                <a href="#" class="btn btn-primary">Schedule a Demo →</a>
-            </div>
-        </div>
-    </section>
+            if (id) {
+                const idx = leads.findIndex(l => l.id === id);
+                leads[idx] = lead;
+                addActivity('updated', id, lead.name, `Changed stage to ${lead.stage}`);
+            } else {
+                leads.push(lead);
+                addActivity('created', lead.id, lead.name, 'New lead added');
+            }
+            saveData();
+            closeModal('leadModal');
+            renderPipeline();
+        });
 
-    <section class="cta">
-        <div class="container">
-            <h2>Ready to grow your business?</h2>
-            <p>Join 10,000+ businesses using LeadFlow</p>
-            <a href="#" class="btn btn-primary">Start Free Trial →</a>
-            <p style="margin-top: 16px; font-size: 0.85rem; color: var(--text-muted);">No credit card required • 14-day free trial</p>
-        </div>
-    </section>
+        document.getElementById('addNoteForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const text = document.getElementById('newNoteText').value.trim();
+            if (!text || !currentLeadId) return;
+            
+            const lead = leads.find(l => l.id === currentLeadId);
+            if (!lead) return;
+            
+            lead.notesList = lead.notesList || [];
+            lead.notesList.unshift({ text, time: new Date().toISOString() });
+            saveData();
+            document.getElementById('newNoteText').value = '';
+            renderLeadNotes(currentLeadId);
+            addActivity('note', currentLeadId, lead.name, text);
+        });
 
-    <footer>
-        <div class="container">
-            <p>© 2026 LeadFlow. Built with care.</p>
-        </div>
-    </footer>
+        function editLead(id) {
+            const lead = leads.find(l => l.id === id);
+            if (!lead) return;
+            document.getElementById('leadId').value = lead.id;
+            document.getElementById('leadName').value = lead.name;
+            document.getElementById('leadEmail').value = lead.email;
+            document.getElementById('leadPhone').value = lead.phone || '';
+            document.getElementById('leadCompany').value = lead.company || '';
+            document.getElementById('leadStage').value = lead.stage;
+            document.getElementById('leadValue').value = lead.value || '';
+            document.getElementById('leadNotes').value = lead.notes || '';
+            document.getElementById('leadModalTitle').textContent = 'Edit Lead';
+            closeModal('detailModal');
+            openModal('leadModal');
+        }
+
+        function deleteLead(id) {
+            if (confirm('Delete this lead?')) {
+                const lead = leads.find(l => l.id === id);
+                leads = leads.filter(l => l.id !== id);
+                saveData();
+                renderPipeline();
+                addActivity('deleted', id, lead.name, 'Lead deleted');
+            }
+        }
+
+        function deleteCurrentLead() {
+            if (currentLeadId) deleteLead(currentLeadId);
+            closeModal('detailModal');
+        }
+
+        function viewLeadDetail(id) {
+            currentLeadId = id;
+            const lead = leads.find(l => l.id === id);
+            if (!lead) return;
+            
+            const stageColors = { new: 'var(--new)', contacted: 'var(--contacted)', qualified: 'var(--qualified)', won: 'var(--won)' };
+            
+            document.getElementById('detailContent').innerHTML = `
+                <div class="detail-grid">
+                    <div class="detail-item"><label>Name</label><span>${lead.name}</span></div>
+                    <div class="detail-item"><label>Email</label><span>${lead.email}</span></div>
+                    <div class="detail-item"><label>Phone</label><span>${lead.phone || '-'}</span></div>
+                    <div class="detail-item"><label>Company</label><span>${lead.company || '-'}</span></div>
+                    <div class="detail-item"><label>Stage</label><span style="color: ${stageColors[lead.stage]}; font-weight: 600">${lead.stage.charAt(0).toUpperCase() + lead.stage.slice(1)}</span></div>
+                    <div class="detail-item"><label>Value</label><span>$${(lead.value || 0).toFixed(2)}</span></div>
+                </div>
+                ${lead.notes ? `<p style="margin-bottom: 16px;"><label>Description</label><br>${lead.notes}</p>` : ''}
+            `;
+            renderLeadNotes(id);
+            openModal('detailModal');
+        }
+
+        function renderLeadNotes(id) {
+            const lead = leads.find(l => l.id === id);
+            const notes = lead?.notesList || [];
+            document.getElementById('leadNotesList').innerHTML = notes.map(n => `
+                <div class="note-item">
+                    <div class="note-text">${n.text}</div>
+                    <div class="note-time">${new Date(n.time).toLocaleString()}</div>
+                </div>
+            `).join('') || '<p class="empty-state" style="padding: 20px;">No notes yet</p>';
+        }
+
+        function moveStage(id, newStage) {
+            const lead = leads.find(l => l.id === id);
+            if (lead) {
+                const oldStage = lead.stage;
+                lead.stage = newStage;
+                saveData();
+                renderPipeline();
+                addActivity('stage', id, lead.name, `${oldStage} → ${newStage}`);
+            }
+        }
+
+        function renderPipeline() {
+            const stages = ['new', 'contacted', 'qualified', 'won'];
+            const stageNames = { new: 'newStage', contacted: 'contactedStage', qualified: 'qualifiedStage', won: 'wonStage' };
+            
+            stages.forEach(stage => {
+                const stageLeads = leads.filter(l => l.stage === stage);
+                document.getElementById(stageNames[stage] + 'Count').textContent = stageLeads.length;
+                
+                const html = stageLeads.map(lead => `
+                    <div class="lead-card" onclick="viewLeadDetail('${lead.id}')">
+                        <div class="lead-name">${lead.name}</div>
+                        <div class="lead-company">${lead.company || 'No company'}</div>
+                        ${lead.value ? `<div style="font-weight: 600; margin-top: 8px;">$${lead.value.toFixed(2)}</div>` : ''}
+                    </div>
+                `).join('');
+                document.getElementById(stageNames[stage]).innerHTML = html || '<p style="color: var(--text-muted); font-size: 0.9rem; text-align: center; padding: 20px;">No leads</p>';
+            });
+
+            document.getElementById('totalLeads').textContent = leads.length;
+            document.getElementById('newCount').textContent = leads.filter(l => l.stage === 'new').length;
+            document.getElementById('contactedCount').textContent = leads.filter(l => l.stage === 'contacted').length;
+            document.getElementById('qualifiedCount').textContent = leads.filter(l => l.stage === 'qualified').length;
+            document.getElementById('wonCount').textContent = leads.filter(l => l.stage === 'won').length;
+        }
+
+        function renderContacts() {
+            const html = leads.map(lead => `
+                <div class="contact-item">
+                    <div class="contact-info">
+                        <span class="contact-name">${lead.name}</span>
+                        <span class="contact-details">${lead.email} ${lead.company ? '• ' + lead.company : ''}</span>
+                    </div>
+                    <div style="display: flex; gap: 8px; align-items: center;">
+                        <span class="badge" style="background: ${lead.stage === 'won' ? '#d1fae5' : lead.stage === 'qualified' ? '#d1fae5' : '#fef3c7'}; color: ${lead.stage === 'won' ? '#065f46' : '#92400e'}">${lead.stage}</span>
+                        <button class="btn btn-secondary btn-sm" onclick="viewLeadDetail('${lead.id}')">View</button>
+                    </div>
+                </div>
+            `).join('');
+            document.getElementById('contactList').innerHTML = html || '<div class="empty-state">No contacts yet</div>';
+        }
+
+        function renderActivity() {
+            const icons = { created: '➕', updated: '✏️', deleted: '🗑️', stage: '🔄', note: '📝' };
+            const html = activities.map(a => `
+                <div class="activity-item">
+                    <div class="activity-icon">${icons[a.type] || '📌'}</div>
+                    <div class="activity-content">
+                        <div class="activity-text"><strong>${a.leadName}</strong> ${a.details || a.type}</div>
+                        <div class="activity-time">${new Date(a.time).toLocaleString()}</div>
+                    </div>
+                </div>
+            `).join('');
+            document.getElementById('activityList').innerHTML = html || '<div class="empty-state">No activity yet</div>';
+        }
+
+        function clearActivity() {
+            if (confirm('Clear all activity?')) {
+                activities = [];
+                saveData();
+                renderActivity();
+            }
+        }
+
+        // Init
+        renderPipeline();
+        renderActivity();
+    </script>
 </body>
 </html>

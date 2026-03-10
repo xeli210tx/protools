@@ -3,335 +3,589 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Local SEO Tool — Rank Higher in Local Search</title>
-    <meta name="description" content="Optimize for local search. Track rankings and manage citations. Get more local customers.">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <title>Local SEO Tool — RenegadeTools</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #22C55E;
-            --primary-light: #4ADE80;
-            --accent: #14B8A6;
-            --dark-bg: #0F172A;
-            --card-bg: #1E293B;
-            --border: #334155;
-            --text: #F8FAFC;
-            --text-muted: #94A3B8;
-            --gradient: linear-gradient(135deg, #22C55E 0%, #14B8A6 100%);
+            --bg: #f8fafc; --card-bg: #ffffff; --border: #e2e8f0;
+            --text: #0f172a; --text-muted: #64748b;
+            --accent: #14b8a6; --accent-dim: #f0fdfa;
+            --success: #10b981; --warning: #f59e0b;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        html { scroll-behavior: smooth; }
-        body {
-            overflow-x: hidden;
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: var(--dark-bg);
-            color: var(--text);
-            line-height: 1.6;
-        }
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: 
-                radial-gradient(circle at 20% 50%, #22C55E20 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, #14B8A620 0%, transparent 40%);
-            pointer-events: none;
-            z-index: -1;
-        }
-        .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); line-height: 1.5; }
         
-        .value-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            background: linear-gradient(135deg, #22C55E20 0%, #22C55E10 100%);
-            border: 1px solid #22C55E40;
-            color: #22C55E;
-            padding: 6px 12px;
-            border-radius: 6px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            margin-bottom: 16px;
-        }
+        .header { background: var(--card-bg); border-bottom: 1px solid var(--border); padding: 16px 24px; position: sticky; top: 0; z-index: 100; }
+        .header-content { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-weight: 700; font-size: 1.25rem; display: flex; align-items: center; gap: 8px; }
+        .logo-icon { width: 32px; height: 32px; background: var(--accent-dim); border: 1px solid var(--accent); border-radius: 6px; display: flex; align-items: center; justify-content: center; }
         
-        nav {
-            padding: 20px 0;
-            border-bottom: 1px solid var(--border);
-            position: sticky;
-            top: 0;
-            background: rgba(15, 23, 42, 0.9);
-            backdrop-filter: blur(10px);
-            z-index: 100;
-        }
-        nav .container { display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-weight: 800; font-size: 1.4rem; display: flex; align-items: center; gap: 8px; }
-        .logo-icon {
-            width: 36px; height: 36px;
-            background: var(--gradient);
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-        }
-        .logo span { color: var(--primary); }
-        .nav-links { display: flex; gap: 24px; align-items: center; }
-        .nav-links a { color: var(--text-muted); text-decoration: none; font-weight: 500; transition: color 0.2s; }
-        .nav-links a:hover { color: var(--text); }
+        .nav-tabs { display: flex; gap: 4px; background: var(--bg); padding: 4px; border-radius: 8px; }
+        .nav-tab { padding: 8px 16px; border: none; background: transparent; color: var(--text-muted); font-weight: 500; cursor: pointer; border-radius: 6px; transition: all 0.2s; }
+        .nav-tab.active { background: var(--card-bg); color: var(--text); box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
         
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 12px 24px;
-            border-radius: 8px;
-            font-weight: 600;
-            font-size: 15px;
-            text-decoration: none;
-            cursor: pointer;
-            transition: all 0.2s;
-            border: none;
-        }
-        .btn-primary {
-            background: var(--primary);
-            color: white;
-        }
-        .btn-primary:hover {
-            background: var(--primary-light);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 24px var(--primary);
-        }
-        .btn-secondary {
-            background: transparent;
-            color: var(--text);
-            border: 1px solid var(--border);
-        }
-        .btn-secondary:hover {
-            border-color: var(--primary);
-            color: var(--primary);
-        }
+        .main { max-width: 1200px; margin: 0 auto; padding: 24px; }
         
-        .hero { padding: 100px 0 80px; text-align: center; }
-        .hero-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: #22C55E20;
-            border: 1px solid #22C55E50;
-            padding: 8px 16px;
-            border-radius: 100px;
-            font-size: 14px;
-            color: var(--primary);
-            margin-bottom: 24px;
-        }
-        .hero h1 {
-            font-size: 3.5rem;
-            font-weight: 800;
-            line-height: 1.1;
-            margin-bottom: 24px;
-            background: var(--gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        .hero p { font-size: 1.25rem; color: var(--text-muted); max-width: 600px; margin: 0 auto 40px; }
-        .hero-buttons { display: flex; gap: 16px; justify-content: center; margin-bottom: 60px; }
+        .page { display: none; }
+        .page.active { display: block; }
         
-        .social-proof { display: flex; justify-content: center; gap: 40px; flex-wrap: wrap; }
-        .proof-item { display: flex; align-items: center; gap: 8px; color: var(--text-muted); font-size: 0.9rem; }
-        .proof-item strong { color: var(--text); font-weight: 600; }
+        .card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 20px; margin-bottom: 16px; }
+        .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+        .card-title { font-weight: 600; font-size: 1rem; }
         
-        .features { padding: 80px 0; }
-        .section-header { text-align: center; margin-bottom: 60px; }
-        .section-header h2 { font-size: 2.5rem; font-weight: 700; margin-bottom: 16px; }
-        .section-header p { color: var(--text-muted); font-size: 1.1rem; max-width: 500px; margin: 0 auto; }
+        .btn { display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; border-radius: 8px; font-weight: 500; cursor: pointer; border: none; transition: all 0.2s; }
+        .btn-primary { background: var(--accent); color: white; }
+        .btn-primary:hover { background: #0d9488; }
+        .btn-secondary { background: var(--bg); color: var(--text); border: 1px solid var(--border); }
+        .btn-secondary:hover { border-color: var(--border-hover); }
+        .btn-sm { padding: 6px 12px; font-size: 0.875rem; }
         
-        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; }
-        .feature-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 16px; padding: 32px; transition: all 0.3s; }
-        .feature-card:hover { border-color: var(--primary); transform: translateY(-4px); }
-        .feature-icon { width: 48px; height: 48px; background: #22C55E20; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; margin-bottom: 20px; }
-        .feature-card h3 { font-size: 1.25rem; font-weight: 600; margin-bottom: 12px; }
-        .feature-card p { color: var(--text-muted); font-size: 0.95rem; }
+        .form-group { margin-bottom: 16px; }
+        .form-label { display: block; font-weight: 500; margin-bottom: 6px; font-size: 0.875rem; }
+        .form-input, .form-select, .form-textarea { width: 100%; padding: 10px 12px; border: 1px solid var(--border); border-radius: 8px; font-size: 0.9rem; transition: border-color 0.2s; font-family: inherit; }
+        .form-input:focus, .form-select:focus, .form-textarea:focus { outline: none; border-color: var(--accent); }
         
-        .pricing { padding: 80px 0; background: rgba(0, 0, 0, 0.2); }
-        .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px; max-width: 800px; margin: 0 auto; }
-        .pricing-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 16px; padding: 32px; text-align: center; }
-        .pricing-card.featured { border-color: var(--primary); position: relative; }
-        .pricing-card.featured::before { content: 'Popular'; position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: var(--primary); color: white; padding: 4px 16px; border-radius: 100px; font-size: 12px; font-weight: 600; }
-        .pricing-card h3 { font-size: 1.25rem; font-weight: 600; margin-bottom: 8px; }
-        .pricing-price { font-size: 2.5rem; font-weight: 800; margin: 16px 0; font-family: 'JetBrains Mono', monospace; }
-        .pricing-price span { font-size: 1rem; font-weight: 400; color: var(--text-muted); }
-        .pricing-savings { background: #22C55E20; color: #22C55E; font-size: 0.8rem; font-weight: 600; padding: 4px 10px; border-radius: 4px; display: inline-block; margin-bottom: 12px; }
-        .pricing-features { list-style: none; margin: 24px 0; text-align: left; }
-        .pricing-features li { padding: 10px 0; color: var(--text-muted); display: flex; align-items: center; gap: 12px; }
-        .pricing-features li::before { content: '✓'; color: var(--primary); font-weight: 600; }
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-bottom: 24px; }
+        .stat-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 20px; }
+        .stat-label { font-size: 0.875rem; color: var(--text-muted); margin-bottom: 4px; }
+        .stat-value { font-size: 1.5rem; font-weight: 700; }
         
-        .trial-banner { background: linear-gradient(135deg, #22C55E10 0%, #22C55E05 100%); border: 1px solid #22C55E40; border-radius: 12px; padding: 24px; text-align: center; margin: 40px auto; max-width: 500px; }
+        .business-info { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
         
-        .cta { padding: 80px 0; text-align: center; }
-        .cta h2 { font-size: 2.5rem; font-weight: 700; margin-bottom: 16px; }
-        .cta p { color: var(--text-muted); font-size: 1.1rem; margin-bottom: 32px; }
+        .citation-list, .review-list, .rank-list { display: grid; gap: 12px; }
+        .citation-item, .review-item, .rank-item { display: flex; justify-content: space-between; align-items: center; padding: 16px; background: var(--bg); border-radius: 8px; }
+        .citation-info, .review-info, .rank-info { display: flex; flex-direction: column; }
+        .citation-name, .review-name, .rank-keyword { font-weight: 600; }
+        .citation-url, .review-platform { font-size: 0.85rem; color: var(--text-muted); }
         
-        footer { padding: 40px 0; border-top: 1px solid var(--border); text-align: center; color: var(--text-muted); }
+        .status-badge { display: inline-block; padding: 4px 10px; border-radius: 100px; font-size: 0.75rem; font-weight: 600; }
+        .status-badge.claimed { background: #d1fae5; color: #065f46; }
+        .status-badge.pending { background: #fef3c7; color: #92400e; }
+        .status-badge.not-started { background: #f1f5f9; color: #475569; }
+        
+        .rank-position { display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: 8px; font-weight: 700; }
+        .rank-position.top-3 { background: #d1fae5; color: #065f46; }
+        .rank-position.top-10 { background: #fef3c7; color: #92400e; }
+        .rank-position.other { background: #f1f5f9; color: #475569; }
+        
+        .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 200; align-items: center; justify-content: center; }
+        .modal-overlay.active { display: flex; }
+        .modal { background: var(--card-bg); border-radius: 12px; padding: 24px; max-width: 500px; width: 90%; max-height: 90vh; overflow-y: auto; }
+        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .modal-title { font-weight: 600; font-size: 1.125rem; }
+        .modal-close { background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--text-muted); }
+        
+        .empty-state { text-align: center; padding: 48px; color: var(--text-muted); }
+        
+        .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
         
         @media (max-width: 768px) {
-            .hero h1 { font-size: 2rem; }
-            .hero p { font-size: 1rem; }
-            .hero-buttons { flex-direction: column; align-items: center; }
-            .features-grid { grid-template-columns: 1fr; }
-            .pricing-grid { grid-template-columns: 1fr; }
-            .nav-links { display: none; }
+            .header-content { flex-direction: column; gap: 12px; }
+            .business-info, .two-col { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
-    <nav>
-        <div class="container">
-            <div class="logo">
-                <div class="logo-icon">📍</div>
-                <span>Local SEO Tool</span>
-            </div>
-            <div class="nav-links">
-                <a href="#features">Features</a>
-                <a href="#pricing">Pricing</a>
-                <a href="#" class="btn btn-secondary">Log In</a>
-                <a href="#" class="btn btn-primary">Start Free</a>
+    <header class="header">
+        <div class="header-content">
+            <div class="logo"><span class="logo-icon">📍</span> Local SEO Tool</div>
+            <div class="nav-tabs">
+                <button class="nav-tab active" data-page="business">Business Info</button>
+                <button class="nav-tab" data-page="citations">Citations</button>
+                <button class="nav-tab" data-page="reviews">Review Links</button>
+                <button class="nav-tab" data-page="ranks">Rank Tracking</button>
             </div>
         </div>
-    </nav>
+    </header>
 
-    <section class="hero">
-        <div class="container">
-            <div class="hero-badge">✨ Now available</div>
-            <div class="value-badge">📈 Rank #1 in local search</div>
-            <h1>Master Local SEO in Minutes</h1>
-            <p>Optimize for local search. Track rankings and manage citations. Get more customers from Google Maps.</p>
-            
-            <div class="social-proof">
-                <div class="proof-item"><strong>25,000+</strong> local businesses</div>
-                <div class="proof-item"><strong>500K+</strong> citations managed</div>
-                <div class="proof-item"><strong>3x</strong> more visibility</div>
+    <main class="main">
+        <!-- Business Info Page -->
+        <div class="page active" id="business">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-label">Citations</div>
+                    <div class="stat-value" id="citationCount">0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Claimed</div>
+                    <div class="stat-value" id="claimedCount">0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Review Sites</div>
+                    <div class="stat-value" id="reviewCount">0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Tracked Keywords</div>
+                    <div class="stat-value" id="keywordCount">0</div>
+                </div>
             </div>
-            
-            <div class="hero-buttons">
-                <a href="#" class="btn btn-primary">Start Free Trial →</a>
-                <a href="#features" class="btn btn-secondary">Learn More</a>
-            </div>
-            
-            <p style="font-size: 0.85rem; color: var(--text-muted);">No credit card required • 14-day free trial</p>
-        </div>
-    </section>
 
-    <section class="features" id="features">
-        <div class="container">
-            <div class="section-header">
-                <h2>Everything you need</h2>
-                <p>Powerful features to rank higher in local search</p>
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-title">Business Information</span>
+                    <button class="btn btn-primary btn-sm" onclick="saveBusinessInfo()">Save</button>
+                </div>
+                <div class="business-info">
+                    <div class="form-group">
+                        <label class="form-label">Business Name</label>
+                        <input type="text" class="form-input" id="bizName" placeholder="Your Business Name">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Phone</label>
+                        <input type="tel" class="form-input" id="bizPhone" placeholder="+1 (555) 123-4567">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-input" id="bizEmail" placeholder="info@business.com">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Website</label>
+                        <input type="url" class="form-input" id="bizWebsite" placeholder="https://yourbusiness.com">
+                    </div>
+                    <div class="form-group" style="grid-column: 1 / -1;">
+                        <label class="form-label">Address</label>
+                        <input type="text" class="form-input" id="bizAddress" placeholder="123 Main St, City, State 12345">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">City</label>
+                        <input type="text" class="form-input" id="bizCity" placeholder="City">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">State</label>
+                        <input type="text" class="form-input" id="bizState" placeholder="State">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">ZIP Code</label>
+                        <input type="text" class="form-input" id="bizZip" placeholder="12345">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Category</label>
+                        <input type="text" class="form-input" id="bizCategory" placeholder="e.g., Plumber, Restaurant">
+                    </div>
+                </div>
             </div>
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">🔍</div>
-                    <h3>Rank Tracking</h3>
-                    <p>Track your rankings for local keywords. See daily position changes in Google Maps.</p>
+
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-title">Business Hours</span>
                 </div>
-                <div class="feature-card">
-                    <div class="feature-icon">📋</div>
-                    <h3>Citation Management</h3>
-                    <p>List your business on 50+ directories. One submission, everywhere.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">⭐</div>
-                    <h3>Review Management</h3>
-                    <p>Monitor and respond to reviews from one dashboard. Build your reputation.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">📝</div>
-                    <h3>GBP Optimization</h3>
-                    <p>Optimize your Google Business Profile. Photos, posts, products, services.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">🎯</div>
-                    <h3>Keyword Research</h3>
-                    <p>Discover local keywords your customers search for. Volume and difficulty.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">📊</div>
-                    <h3>Competitor Analysis</h3>
-                    <p>See what competitors are doing. Find gaps and opportunities.</p>
-                </div>
+                <div id="hoursList"></div>
+                <button class="btn btn-secondary btn-sm" onclick="addHoursRow()" style="margin-top: 12px;">+ Add Hours</button>
             </div>
         </div>
-    </section>
 
-    <section class="pricing" id="pricing">
-        <div class="container">
-            <div class="section-header">
-                <h2>Simple pricing</h2>
-                <p>Start free, upgrade when you're ready</p>
+        <!-- Citations Page -->
+        <div class="page" id="citations">
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-title">Citation Tracker</span>
+                    <button class="btn btn-primary btn-sm" onclick="openModal('citationModal')">+ Add Citation</button>
+                </div>
+                <div class="citation-list" id="citationList"></div>
             </div>
+        </div>
+
+        <!-- Reviews Page -->
+        <div class="page" id="reviews">
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-title">Review Links</span>
+                    <button class="btn btn-primary btn-sm" onclick="openModal('reviewModal')">+ Add Review Site</button>
+                </div>
+                <div class="review-list" id="reviewList"></div>
+            </div>
+        </div>
+
+        <!-- Rank Tracking Page -->
+        <div class="page" id="ranks">
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-title">Keyword Rankings</span>
+                    <button class="btn btn-primary btn-sm" onclick="openModal('rankModal')">+ Add Keyword</button>
+                </div>
+                <div class="rank-list" id="rankList"></div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Citation Modal -->
+    <div class="modal-overlay" id="citationModal">
+        <div class="modal">
+            <div class="modal-header">
+                <span class="modal-title">Add Citation</span>
+                <button class="modal-close" onclick="closeModal('citationModal')">&times;</button>
+            </div>
+            <form id="citationForm">
+                <div class="form-group">
+                    <label class="form-label">Site Name *</label>
+                    <input type="text" class="form-input" id="citationName" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">URL *</label>
+                    <input type="url" class="form-input" id="citationUrl" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Status</label>
+                    <select class="form-select" id="citationStatus">
+                        <option value="not-started">Not Started</option>
+                        <option value="pending">Pending</option>
+                        <option value="claimed">Claimed</option>
+                    </select>
+                </div>
+                <div style="display: flex; gap: 8px; justify-content: flex-end;">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal('citationModal')">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Review Modal -->
+    <div class="modal-overlay" id="reviewModal">
+        <div class="modal">
+            <div class="modal-header">
+                <span class="modal-title">Add Review Site</span>
+                <button class="modal-close" onclick="closeModal('reviewModal')">&times;</button>
+            </div>
+            <form id="reviewForm">
+                <div class="form-group">
+                    <label class="form-label">Platform *</label>
+                    <input type="text" class="form-input" id="reviewPlatform" placeholder="Google, Yelp, Facebook, etc." required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Review Link *</label>
+                    <input type="url" class="form-input" id="reviewUrl" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Rating</label>
+                    <select class="form-select" id="reviewRating">
+                        <option value="">Not rated</option>
+                        <option value="5">⭐⭐⭐⭐⭐ 5 Stars</option>
+                        <option value="4">⭐⭐⭐⭐ 4 Stars</option>
+                        <option value="3">⭐⭐⭐ 3 Stars</option>
+                        <option value="2">⭐⭐ 2 Stars</option>
+                        <option value="1">⭐ 1 Star</option>
+                    </select>
+                </div>
+                <div style="display: flex; gap: 8px; justify-content: flex-end;">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal('reviewModal')">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Rank Modal -->
+    <div class="modal-overlay" id="rankModal">
+        <div class="modal">
+            <div class="modal-header">
+                <span class="modal-title">Add Keyword</span>
+                <button class="modal-close" onclick="closeModal('rankModal')">&times;</button>
+            </div>
+            <form id="rankForm">
+                <div class="form-group">
+                    <label class="form-label">Keyword *</label>
+                    <input type="text" class="form-input" id="rankKeyword" placeholder="plumber near me" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Current Position</label>
+                    <input type="number" class="form-input" id="rankPosition" placeholder="e.g., 5">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Search Engine</label>
+                    <select class="form-select" id="rankEngine">
+                        <option value="Google">Google</option>
+                        <option value="Bing">Bing</option>
+                        <option value="Yahoo">Yahoo</option>
+                    </select>
+                </div>
+                <div style="display: flex; gap: 8px; justify-content: flex-end;">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal('rankModal')">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        let business = JSON.parse(localStorage.getItem('rc_business_info') || '{}');
+        let citations = JSON.parse(localStorage.getItem('rc_citations') || '[]');
+        let reviews = JSON.parse(localStorage.getItem('rc_reviews') || '[]');
+        let ranks = JSON.parse(localStorage.getItem('rc_ranks') || '[]');
+
+        const defaultCitations = [
+            { name: 'Google Business Profile', url: 'https://business.google.com', status: 'not-started' },
+            { name: 'Bing Places', url: 'https://www.bing.com/places', status: 'not-started' },
+            { name: 'Apple Maps', url: 'https://maps.apple.com', status: 'not-started' },
+            { name: 'Yelp', url: 'https://www.yelp.com', status: 'not-started' },
+            { name: 'Facebook Business', url: 'https://business.facebook.com', status: 'not-started' }
+        ];
+
+        if (citations.length === 0) {
+            citations = defaultCitations.map((c, i) => ({ id: 'c' + i, ...c }));
+            saveData();
+        }
+
+        function saveData() {
+            localStorage.setItem('rc_business_info', JSON.stringify(business));
+            localStorage.setItem('rc_citations', JSON.stringify(citations));
+            localStorage.setItem('rc_reviews', JSON.stringify(reviews));
+            localStorage.setItem('rc_ranks', JSON.stringify(ranks));
+        }
+
+        // Navigation
+        document.querySelectorAll('.nav-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+                tab.classList.add('active');
+                document.getElementById(tab.dataset.page).classList.add('active');
+            });
+        });
+
+        function openModal(id) { document.getElementById(id).classList.add('active'); }
+        function closeModal(id) { document.getElementById(id).classList.remove('active'); }
+
+        // Business Info
+        function loadBusinessInfo() {
+            document.getElementById('bizName').value = business.name || '';
+            document.getElementById('bizPhone').value = business.phone || '';
+            document.getElementById('bizEmail').value = business.email || '';
+            document.getElementById('bizWebsite').value = business.website || '';
+            document.getElementById('bizAddress').value = business.address || '';
+            document.getElementById('bizCity').value = business.city || '';
+            document.getElementById('bizState').value = business.state || '';
+            document.getElementById('bizZip').value = business.zip || '';
+            document.getElementById('bizCategory').value = business.category || '';
+            renderHours();
+        }
+
+        function saveBusinessInfo() {
+            business = {
+                name: document.getElementById('bizName').value,
+                phone: document.getElementById('bizPhone').value,
+                email: document.getElementById('bizEmail').value,
+                website: document.getElementById('bizWebsite').value,
+                address: document.getElementById('bizAddress').value,
+                city: document.getElementById('bizCity').value,
+                state: document.getElementById('bizState').value,
+                zip: document.getElementById('bizZip').value,
+                category: document.getElementById('bizCategory').value,
+                hours: business.hours || []
+            };
+            saveData();
+            alert('Business info saved!');
+        }
+
+        function renderHours() {
+            const hours = business.hours || [
+                { day: 'Monday', open: '9:00 AM', close: '5:00 PM', closed: false },
+                { day: 'Tuesday', open: '9:00 AM', close: '5:00 PM', closed: false },
+                { day: 'Wednesday', open: '9:00 AM', close: '5:00 PM', closed: false },
+                { day: 'Thursday', open: '9:00 AM', close: '5:00 PM', closed: false },
+                { day: 'Friday', open: '9:00 AM', close: '5:00 PM', closed: false },
+                { day: 'Saturday', open: '9:00 AM', close: '12:00 PM', closed: false },
+                { day: 'Sunday', open: '', close: '', closed: true }
+            ];
+            business.hours = hours;
             
-            <div class="trial-banner">
-                <h3>🎉 Try Pro Free for 14 Days</h3>
-                <p>Full access to all features. No credit card required.</p>
-            </div>
-            
-            <div class="pricing-grid">
-                <div class="pricing-card">
-                    <h3>Starter</h3>
-                    <div class="pricing-price">$0<span>/mo</span></div>
-                    <ul class="pricing-features">
-                        <li>Track 5 keywords</li>
-                        <li>1 location</li>
-                        <li>Basic citations</li>
-                        <li>Email support</li>
-                    </ul>
-                    <a href="#" class="btn btn-secondary" style="width: 100%;">Get Started</a>
+            const html = hours.map((h, i) => `
+                <div style="display: grid; grid-template-columns: 100px 1fr 1fr auto; gap: 8px; align-items: center; margin-bottom: 8px;">
+                    <span style="font-weight: 500;">${h.day}</span>
+                    <input type="time" class="form-input" value="${h.open}" onchange="updateHours(${i}, 'open', this.value)" ${h.closed ? 'disabled' : ''}>
+                    <input type="time" class="form-input" value="${h.close}" onchange="updateHours(${i}, 'close', this.value)" ${h.closed ? 'disabled' : ''}>
+                    <label style="display: flex; align-items: center; gap: 4px;">
+                        <input type="checkbox" ${h.closed ? 'checked' : ''} onchange="toggleClosed(${i}, this.checked)"> Closed
+                    </label>
                 </div>
-                <div class="pricing-card featured">
-                    <h3>Pro</h3>
-                    <div class="pricing-savings">Rank #1</div>
-                    <div class="pricing-price">$29<span>/mo</span></div>
-                    <ul class="pricing-features">
-                        <li>Unlimited keywords</li>
-                        <li>3 locations</li>
-                        <li>Priority citations</li>
-                        <li>Review management</li>
-                        <li>GBP optimization</li>
-                        <li>Competitor analysis</li>
-                        <li>Priority support</li>
-                    </ul>
-                    <a href="#" class="btn btn-primary" style="width: 100%;">Start Free Trial</a>
-                </div>
-                <div class="pricing-card">
-                    <h3>Agency</h3>
-                    <div class="pricing-price">$99<span>/mo</span></div>
-                    <ul class="pricing-features">
-                        <li>Everything in Pro</li>
-                        <li>Unlimited locations</li>
-                        <li>White-label reports</li>
-                        <li>API access</li>
-                        <li>Dedicated support</li>
-                    </ul>
-                    <a href="#" class="btn btn-secondary" style="width: 100%;">Contact Sales</a>
-                </div>
-            </div>
-        </div>
-    </section>
+            `).join('');
+            document.getElementById('hoursList').innerHTML = html;
+        }
 
-    <section class="cta">
-        <div class="container">
-            <h2>Ready to dominate local search?</h2>
-            <p>Join 25,000+ local businesses getting more customers</p>
-            <a href="#" class="btn btn-primary">Start Free Trial →</a>
-            <p style="margin-top: 16px; font-size: 0.85rem; color: var(--text-muted);">No credit card required • 14-day free trial</p>
-        </div>
-    </section>
+        function updateHours(index, field, value) {
+            business.hours = business.hours || [];
+            business.hours[index] = business.hours[index] || {};
+            business.hours[index][field] = value;
+            saveData();
+        }
 
-    <footer>
-        <div class="container">
-            <p>© 2026 Local SEO Tool. Built with care.</p>
-        </div>
-    </footer>
+        function toggleClosed(index, closed) {
+            business.hours = business.hours || [];
+            business.hours[index] = business.hours[index] || {};
+            business.hours[index].closed = closed;
+            saveData();
+            renderHours();
+        }
+
+        function addHoursRow() {
+            business.hours = business.hours || [];
+            business.hours.push({ day: 'New Day', open: '9:00 AM', close: '5:00 PM', closed: false });
+            saveData();
+            renderHours();
+        }
+
+        // Citations
+        document.getElementById('citationForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            citations.push({
+                id: Date.now().toString(),
+                name: document.getElementById('citationName').value,
+                url: document.getElementById('citationUrl').value,
+                status: document.getElementById('citationStatus').value
+            });
+            saveData();
+            closeModal('citationModal');
+            renderCitations();
+            updateStats();
+        });
+
+        function editCitation(id) {
+            const c = citations.find(c => c.id === id);
+            if (!c) return;
+            document.getElementById('citationName').value = c.name;
+            document.getElementById('citationUrl').value = c.url;
+            document.getElementById('citationStatus').value = c.status;
+            citations = citations.filter(x => x.id !== id);
+            openModal('citationModal');
+        }
+
+        function deleteCitation(id) {
+            if (confirm('Delete this citation?')) {
+                citations = citations.filter(c => c.id !== id);
+                saveData();
+                renderCitations();
+                updateStats();
+            }
+        }
+
+        function renderCitations() {
+            const html = citations.map(c => `
+                <div class="citation-item">
+                    <div class="citation-info">
+                        <span class="citation-name">${c.name}</span>
+                        <span class="citation-url">${c.url}</span>
+                    </div>
+                    <div style="display: flex; gap: 8px; align-items: center;">
+                        <span class="status-badge ${c.status}">${c.status.replace('-', ' ')}</span>
+                        <button class="btn btn-secondary btn-sm" onclick="editCitation('${c.id}')">Edit</button>
+                        <button class="btn btn-secondary btn-sm" onclick="deleteCitation('${c.id}')">Delete</button>
+                    </div>
+                </div>
+            `).join('');
+            document.getElementById('citationList').innerHTML = html || '<div class="empty-state">No citations added</div>';
+        }
+
+        // Reviews
+        document.getElementById('reviewForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            reviews.push({
+                id: Date.now().toString(),
+                platform: document.getElementById('reviewPlatform').value,
+                url: document.getElementById('reviewUrl').value,
+                rating: document.getElementById('reviewRating').value
+            });
+            saveData();
+            closeModal('reviewModal');
+            renderReviews();
+            updateStats();
+        });
+
+        function deleteReview(id) {
+            if (confirm('Delete this review link?')) {
+                reviews = reviews.filter(r => r.id !== id);
+                saveData();
+                renderReviews();
+                updateStats();
+            }
+        }
+
+        function renderReviews() {
+            const html = reviews.map(r => `
+                <div class="review-item">
+                    <div class="review-info">
+                        <span class="review-name">${r.platform}</span>
+                        <span class="review-platform">${r.url}</span>
+                        ${r.rating ? `<span style="margin-top: 4px;">${'⭐'.repeat(parseInt(r.rating))}</span>` : ''}
+                    </div>
+                    <div style="display: flex; gap: 8px;">
+                        <a href="${r.url}" target="_blank" class="btn btn-secondary btn-sm">Open</a>
+                        <button class="btn btn-secondary btn-sm" onclick="deleteReview('${r.id}')">Delete</button>
+                    </div>
+                </div>
+            `).join('');
+            document.getElementById('reviewList').innerHTML = html || '<div class="empty-state">No review links added</div>';
+        }
+
+        // Ranks
+        document.getElementById('rankForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            ranks.push({
+                id: Date.now().toString(),
+                keyword: document.getElementById('rankKeyword').value,
+                position: parseInt(document.getElementById('rankPosition').value) || 0,
+                engine: document.getElementById('rankEngine').value,
+                updatedAt: new Date().toISOString()
+            });
+            saveData();
+            closeModal('rankModal');
+            renderRanks();
+            updateStats();
+        });
+
+        function updateRank(id) {
+            const r = ranks.find(x => x.id === id);
+            if (!r) return;
+            const newPos = prompt('Enter new position:', r.position);
+            if (newPos !== null) {
+                r.position = parseInt(newPos);
+                r.updatedAt = new Date().toISOString();
+                saveData();
+                renderRanks();
+            }
+        }
+
+        function deleteRank(id) {
+            if (confirm('Delete this keyword?')) {
+                ranks = ranks.filter(r => r.id !== id);
+                saveData();
+                renderRanks();
+                updateStats();
+            }
+        }
+
+        function renderRanks() {
+            const html = ranks.map(r => {
+                const posClass = r.position <= 3 ? 'top-3' : r.position <= 10 ? 'top-10' : 'other';
+                return `
+                <div class="rank-item">
+                    <div class="rank-info">
+                        <span class="rank-keyword">${r.keyword}</span>
+                        <span class="citation-url">${r.engine} • Updated ${new Date(r.updatedAt).toLocaleDateString()}</span>
+                    </div>
+                    <div style="display: flex; gap: 8px; align-items: center;">
+                        <span class="rank-position ${posClass}">#${r.position}</span>
+                        <button class="btn btn-secondary btn-sm" onclick="updateRank('${r.id}')">Update</button>
+                        <button class="btn btn-secondary btn-sm" onclick="deleteRank('${r.id}')">Delete</button>
+                    </div>
+                </div>
+            `}).join('');
+            document.getElementById('rankList').innerHTML = html || '<div class="empty-state">No keywords tracked</div>';
+        }
+
+        function updateStats() {
+            const claimed = citations.filter(c => c.status === 'claimed').length;
+            document.getElementById('citationCount').textContent = citations.length;
+            document.getElementById('claimedCount').textContent = claimed;
+            document.getElementById('reviewCount').textContent = reviews.length;
+            document.getElementById('keywordCount').textContent = ranks.length;
+        }
+
+        // Init
+        loadBusinessInfo();
+        renderCitations();
+        renderReviews();
+        renderRanks();
+        updateStats();
+    </script>
 </body>
 </html>

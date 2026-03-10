@@ -3,343 +3,542 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SMS Reminder — Automated Appointment Reminders</title>
-    <meta name="description" content="Send automated SMS reminders to reduce no-shows by 80%. Save time and money.">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <title>SMS Reminder — RenegadeTools</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #ffffff;
-            --bg-alt: #f8fafc;
-            --card-bg: #ffffff;
-            --border: #e2e8f0;
-            --border-hover: #cbd5e1;
-            --text: #0f172a;
-            --text-muted: #64748b;
-            --accent: #0ea5e9;
-            --accent-dim: #f0f9ff;
-            --success: #10b981;
-            --purple: #8b5cf6;
+            --bg: #f8fafc; --card-bg: #ffffff; --border: #e2e8f0;
+            --text: #0f172a; --text-muted: #64748b;
+            --accent: #10b981; --accent-dim: #ecfdf5;
         }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        html { scroll-behavior: smooth; }
-        body {
-            overflow-x: hidden;
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            line-height: 1.6;
-        }
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: radial-gradient(ellipse 80% 50% at 50% -20%, #0ea5e908 0%, transparent 100%);
-            pointer-events: none;
-            z-index: -1;
-        }
-        .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+        * { margin: 0; padding: 0 border-box; }
+; box-sizing:        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); line-height: 1.5; }
         
-        .value-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            background: linear-gradient(135deg, #10b98120 0%, #10b98110 100%);
-            border: 1px solid #10b98140;
-            color: #059669;
-            padding: 6px 12px;
-            border-radius: 6px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            margin-bottom: 16px;
-        }
+        .header { background: var(--card-bg); border-bottom: 1px solid var(--border); padding: 16px 24px; position: sticky; top: 0; z-index: 100; }
+        .header-content { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-weight: 700; font-size: 1.25rem; display: flex; align-items: center; gap: 8px; }
+        .logo-icon { width: 32px; height: 32px; background: var(--accent-dim); border: 1px solid var(--accent); border-radius: 6px; display: flex; align-items: center; justify-content: center; }
         
-        nav {
-            padding: 20px 0;
-            border-bottom: 1px solid var(--border);
-            position: sticky;
-            top: 0;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            z-index: 100;
-        }
-        nav .container { display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-weight: 700; font-size: 1.3rem; display: flex; align-items: center; gap: 10px; letter-spacing: -0.02em; color: var(--text); }
-        .logo-icon {
-            width: 32px; height: 32px;
-            background: var(--accent-dim);
-            border: 1px solid var(--accent);
-            border-radius: 6px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1rem;
-            color: var(--accent);
-        }
-        .nav-links { display: flex; gap: 24px; align-items: center; }
-        .nav-links a { color: var(--text-muted); text-decoration: none; font-weight: 500; font-size: 0.9rem; transition: color 0.2s; }
-        .nav-links a:hover { color: var(--text); }
+        .nav-tabs { display: flex; gap: 4px; background: var(--bg); padding: 4px; border-radius: 8px; }
+        .nav-tab { padding: 8px 16px; border: none; background: transparent; color: var(--text-muted); font-weight: 500; cursor: pointer; border-radius: 6px; transition: all 0.2s; }
+        .nav-tab.active { background: var(--card-bg); color: var(--text); box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
         
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 10px 20px;
-            border-radius: 6px;
-            font-weight: 600;
-            font-size: 14px;
-            text-decoration: none;
-            cursor: pointer;
-            transition: all 0.2s;
-            border: none;
-        }
-        .btn-primary { background: var(--accent); color: #fff; }
-        .btn-primary:hover { background: #0284c7; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(14, 165, 233, 0.3); }
-        .btn-secondary { background: transparent; color: var(--text); border: 1px solid var(--border); }
-        .btn-secondary:hover { border-color: var(--text-muted); background: var(--bg-alt); }
-        .btn-outline { background: transparent; border: 2px solid var(--accent); color: var(--accent); }
-        .btn-outline:hover { background: var(--accent); color: white; }
+        .main { max-width: 1200px; margin: 0 auto; padding: 24px; }
         
-        .hero { padding: 100px 0 80px; text-align: center; }
-        .hero-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: var(--accent-dim);
-            border: 1px solid #0ea5e920;
-            padding: 6px 14px;
-            border-radius: 100px;
-            font-size: 13px;
-            color: var(--accent);
-            margin-bottom: 24px;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            font-weight: 500;
-        }
-        .hero h1 { font-size: 3.5rem; font-weight: 700; line-height: 1.1; margin-bottom: 24px; letter-spacing: -0.03em; color: var(--text); }
-        .hero p { font-size: 1.15rem; color: var(--text-muted); max-width: 550px; margin: 0 auto 40px; }
-        .hero-buttons { display: flex; gap: 14px; justify-content: center; margin-bottom: 60px; }
+        .page { display: none; }
+        .page.active { display: block; }
         
-        .social-proof { display: flex; justify-content: center; gap: 40px; flex-wrap: wrap; }
-        .proof-item { display: flex; align-items: center; gap: 8px; color: var(--text-muted); font-size: 0.9rem; }
-        .proof-item strong { color: var(--text); font-weight: 600; }
+        .card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 20px; margin-bottom: 16px; }
+        .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+        .card-title { font-weight: 600; font-size: 1rem; }
         
-        .features { padding: 80px 0; background: var(--bg-alt); }
-        .section-header { text-align: center; margin-bottom: 60px; }
-        .section-header h2 { font-size: 2rem; font-weight: 600; margin-bottom: 12px; letter-spacing: -0.02em; color: var(--text); }
-        .section-header p { color: var(--text-muted); font-size: 1rem; max-width: 450px; margin: 0 auto; }
+        .btn { display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; border-radius: 8px; font-weight: 500; cursor: pointer; border: none; transition: all 0.2s; }
+        .btn-primary { background: var(--accent); color: white; }
+        .btn-primary:hover { background: #059669; }
+        .btn-secondary { background: var(--bg); color: var(--text); border: 1px solid var(--border); }
+        .btn-secondary:hover { border-color: var(--border-hover); }
+        .btn-sm { padding: 6px 12px; font-size: 0.875rem; }
         
-        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
-        .feature-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 28px; transition: all 0.3s; }
-        .feature-card:hover { border-color: var(--border-hover); transform: translateY(-2px); box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05); }
-        .feature-icon { width: 40px; height: 40px; background: var(--accent-dim); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; margin-bottom: 16px; color: var(--accent); }
-        .feature-card h3 { font-size: 1.1rem; font-weight: 600; margin-bottom: 8px; letter-spacing: -0.01em; color: var(--text); }
-        .feature-card p { color: var(--text-muted); font-size: 0.9rem; }
+        .form-group { margin-bottom: 16px; }
+        .form-label { display: block; font-weight: 500; margin-bottom: 6px; font-size: 0.875rem; }
+        .form-input, .form-select, .form-textarea { width: 100%; padding: 10px 12px; border: 1px solid var(--border); border-radius: 8px; font-size: 0.9rem; transition: border-color 0.2s; font-family: inherit; }
+        .form-input:focus, .form-select:focus, .form-textarea:focus { outline: none; border-color: var(--accent); }
         
-        /* Stats */
-        .stats-section { padding: 60px 0; background: var(--bg); }
-        .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; text-align: center; }
-        .stat-card { padding: 32px; }
-        .stat-number { font-size: 3rem; font-weight: 700; color: var(--accent); margin-bottom: 8px; }
-        .stat-label { color: var(--text-muted); font-size: 1rem; }
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-bottom: 24px; }
+        .stat-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 20px; }
+        .stat-label { font-size: 0.875rem; color: var(--text-muted); margin-bottom: 4px; }
+        .stat-value { font-size: 1.75rem; font-weight: 700; }
         
-        .pricing { padding: 80px 0; background: var(--bg-alt); }
-        .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px; max-width: 800px; margin: 0 auto; }
-        .pricing-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 32px; text-align: center; position: relative; }
-        .pricing-card.featured { border-color: var(--accent); box-shadow: 0 4px 20px rgba(14, 165, 233, 0.15); }
-        .pricing-card.featured::before { content: 'Most Popular'; position: absolute; top: -11px; left: 50%; transform: translateX(-50%); background: var(--accent); color: #fff; padding: 3px 12px; border-radius: 100px; font-size: 11px; font-weight: 600; }
-        .pricing-card h3 { font-size: 1rem; font-weight: 600; margin-bottom: 4px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; font-size: 0.8rem; }
-        .pricing-price { font-size: 2.2rem; font-weight: 700; margin: 16px 0; letter-spacing: -0.02em; color: var(--text); }
-        .pricing-price span { font-size: 0.9rem; font-weight: 400; color: var(--text-muted); }
-        .pricing-savings { background: #10b98120; color: #059669; font-size: 0.8rem; font-weight: 600; padding: 4px 10px; border-radius: 4px; display: inline-block; margin-bottom: 12px; }
-        .pricing-features { list-style: none; margin: 20px 0; text-align: left; }
-        .pricing-features li { padding: 10px 0; color: var(--text-muted); font-size: 0.9rem; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid var(--border); }
-        .pricing-features li:last-child { border: none; }
-        .pricing-features li::before { content: '✓'; color: var(--success); font-weight: 600; }
+        .contact-list, .reminder-list, .history-list { display: grid; gap: 12px; }
+        .contact-item, .reminder-item { display: flex; justify-content: space-between; align-items: center; padding: 16px; background: var(--bg); border-radius: 8px; }
+        .contact-info, .reminder-info { display: flex; flex-direction: column; }
+        .contact-name, .reminder-title { font-weight: 600; }
+        .contact-details, .reminder-details { font-size: 0.875rem; color: var(--text-muted); }
         
-        .trial-banner { background: linear-gradient(135deg, #0ea5e910 0%, #0ea5e905 100%); border: 1px solid var(--accent); border-radius: 12px; padding: 24px; text-align: center; margin: 40px auto; max-width: 500px; }
+        .template-card { background: var(--bg); border-radius: 8px; padding: 16px; margin-bottom: 12px; cursor: pointer; transition: all 0.2s; border: 1px solid transparent; }
+        .template-card:hover { border-color: var(--accent); }
+        .template-card.selected { border-color: var(--accent); background: var(--accent-dim); }
+        .template-name { font-weight: 600; margin-bottom: 4px; }
+        .template-preview { font-size: 0.85rem; color: var(--text-muted); }
         
-        .cta { padding: 80px 0; text-align: center; background: var(--bg); }
-        .cta h2 { font-size: 2rem; font-weight: 600; margin-bottom: 12px; letter-spacing: -0.02em; color: var(--text); }
-        .cta p { color: var(--text-muted); font-size: 1rem; margin-bottom: 28px; }
+        .history-item { display: flex; gap: 12px; padding: 12px; background: var(--bg); border-radius: 8px; }
+        .history-icon { width: 32px; height: 32px; background: var(--accent-dim); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+        .history-content { flex: 1; }
+        .history-text { margin-bottom: 4px; }
+        .history-time { font-size: 0.8rem; color: var(--text-muted); }
         
-        footer { padding: 32px 0; border-top: 1px solid var(--border); text-align: center; color: var(--text-muted); font-size: 0.85rem; }
+        .badge { display: inline-block; padding: 4px 10px; border-radius: 100px; font-size: 0.75rem; font-weight: 600; }
+        .badge-pending { background: #fef3c7; color: #92400e; }
+        .badge-sent { background: #d1fae5; color: #065f46; }
+        .badge-cancelled { background: #f1f5f9; color: #475569; }
+        
+        .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 200; align-items: center; justify-content: center; }
+        .modal-overlay.active { display: flex; }
+        .modal { background: var(--card-bg); border-radius: 12px; padding: 24px; max-width: 500px; width: 90%; max-height: 90vh; overflow-y: auto; }
+        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .modal-title { font-weight: 600; font-size: 1.125rem; }
+        .modal-close { background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--text-muted); }
+        
+        .empty-state { text-align: center; padding: 48px; color: var(--text-muted); }
+        
+        .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
         
         @media (max-width: 768px) {
-            .hero h1 { font-size: 2.2rem; }
-            .hero p { font-size: 1rem; }
-            .hero-buttons { flex-direction: column; align-items: center; }
-            .features-grid { grid-template-columns: 1fr; }
-            .pricing-grid { grid-template-columns: 1fr; }
-            .stats-grid { grid-template-columns: 1fr; }
-            .nav-links { display: none; }
+            .header-content { flex-direction: column; gap: 12px; }
+            .two-col { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
-    <nav>
-        <div class="container">
-            <div class="logo">
-                <div class="logo-icon">◈</div>
-                SMS Reminder
-            </div>
-            <div class="nav-links">
-                <a href="#features">Features</a>
-                <a href="#pricing">Pricing</a>
-                <a href="#" class="btn btn-primary">Start Free</a>
+    <header class="header">
+        <div class="header-content">
+            <div class="logo"><span class="logo-icon">📱</span> SMS Reminder</div>
+            <div class="nav-tabs">
+                <button class="nav-tab active" data-page="schedule">Schedule</button>
+                <button class="nav-tab" data-page="contacts">Contacts</button>
+                <button class="nav-tab" data-page="templates">Templates</button>
+                <button class="nav-tab" data-page="history">History</button>
             </div>
         </div>
-    </nav>
+    </header>
 
-    <section class="hero">
-        <div class="container">
-            <div class="hero-badge">🚀 Now Available</div>
-            <div class="value-badge">📉 Reduce no-shows by 80%</div>
-            <h1>Never Miss an Appointment</h1>
-            <p>Automated SMS reminders that reduce no-shows and save your team hours every week.</p>
-            
-            <div class="social-proof">
-                <div class="proof-item"><strong>8,000+</strong> businesses</div>
-                <div class="proof-item"><strong>5M+</strong> messages sent</div>
-                <div class="proof-item"><strong>80%</strong> fewer no-shows</div>
-            </div>
-            
-            <div class="hero-buttons">
-                <a href="#" class="btn btn-primary">Start 14-Day Free Trial →</a>
-                <a href="#features" class="btn btn-secondary">Learn More</a>
-            </div>
-            
-            <p style="font-size: 0.85rem; color: var(--text-muted);">No credit card required • Setup in 5 minutes</p>
-        </div>
-    </section>
-
-    <section class="stats-section">
-        <div class="container">
+    <main class="main">
+        <!-- Schedule Page -->
+        <div class="page active" id="schedule">
             <div class="stats-grid">
                 <div class="stat-card">
-                    <div class="stat-number">80%</div>
-                    <div class="stat-label">Reduction in No-Shows</div>
+                    <div class="stat-label">Scheduled</div>
+                    <div class="stat-value" id="scheduledCount">0</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-number">5hrs</div>
-                    <div class="stat-label">Time Saved Weekly</div>
+                    <div class="stat-label">Sent Today</div>
+                    <div class="stat-value" id="sentToday">0</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-number">$500+</div>
-                    <div class="stat-label">Revenue Saved Monthly</div>
+                    <div class="stat-label">Contacts</div>
+                    <div class="stat-value" id="contactCount">0</div>
                 </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-title">Scheduled Reminders</span>
+                    <button class="btn btn-primary btn-sm" onclick="openModal('reminderModal')">+ New Reminder</button>
+                </div>
+                <div class="reminder-list" id="reminderList"></div>
             </div>
         </div>
-    </section>
 
-    <section class="features" id="features">
-        <div class="container">
-            <div class="section-header">
-                <h2>Everything you need</h2>
-                <p>Powerful features to reduce no-shows and save time</p>
-            </div>
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">🔔</div>
-                    <h3>Auto Reminders</h3>
-                    <p>Send reminders automatically at 24hr, 2hr, and custom intervals before appointments.</p>
+        <!-- Contacts Page -->
+        <div class="page" id="contacts">
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-title">Contacts</span>
+                    <button class="btn btn-primary btn-sm" onclick="openModal('contactModal')">+ Add Contact</button>
                 </div>
-                <div class="feature-card">
-                    <div class="feature-icon">💬</div>
-                    <h3>Two-Way SMS</h3>
-                    <p>Customers can confirm, reschedule, or cancel via text. Real-time sync with your calendar.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">📝</div>
-                    <h3>Custom Templates</h3>
-                    <p>Personalize messages with customer name, appointment time, location, and more.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">📊</div>
-                    <h3>Delivery Analytics</h3>
-                    <p>Track delivery rates, confirmation rates, and appointment outcomes. Export reports.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">📅</div>
-                    <h3>Calendar Sync</h3>
-                    <p>Integrates with Google Calendar, Outlook, Calendly, and 50+ booking platforms.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">👥</div>
-                    <h3>Customer Groups</h3>
-                    <p>Segment customers by service type, appointment length, or custom criteria.</p>
-                </div>
+                <div class="contact-list" id="contactList"></div>
             </div>
         </div>
-    </section>
 
-    <section class="pricing" id="pricing">
-        <div class="container">
-            <div class="section-header">
-                <h2>Simple pricing</h2>
-                <p>Pay only for what you use</p>
+        <!-- Templates Page -->
+        <div class="page" id="templates">
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-title">Message Templates</span>
+                    <button class="btn btn-primary btn-sm" onclick="openModal('templateModal')">+ New Template</button>
+                </div>
+                <div id="templateList"></div>
             </div>
+        </div>
+
+        <!-- History Page -->
+        <div class="page" id="history">
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-title">Reminder History</span>
+                    <button class="btn btn-secondary btn-sm" onclick="clearHistory()">Clear History</button>
+                </div>
+                <div class="history-list" id="historyList"></div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Contact Modal -->
+    <div class="modal-overlay" id="contactModal">
+        <div class="modal">
+            <div class="modal-header">
+                <span class="modal-title" id="contactModalTitle">Add Contact</span>
+                <button class="modal-close" onclick="closeModal('contactModal')">&times;</button>
+            </div>
+            <form id="contactForm">
+                <input type="hidden" id="contactId">
+                <div class="form-group">
+                    <label class="form-label">Name *</label>
+                    <input type="text" class="form-input" id="contactName" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Phone Number *</label>
+                    <input type="tel" class="form-input" id="contactPhone" placeholder="+1234567890" required>
+                </div>
+                <div style="display: flex; gap: 8px; justify-content: flex-end;">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal('contactModal')">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save Contact</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Reminder Modal -->
+    <div class="modal-overlay" id="reminderModal">
+        <div class="modal" style="max-width: 600px;">
+            <div class="modal-header">
+                <span class="modal-title">Schedule Reminder</span>
+                <button class="modal-close" onclick="closeModal('reminderModal')">&times;</button>
+            </div>
+            <form id="reminderForm">
+                <div class="two-col">
+                    <div class="form-group">
+                        <label class="form-label">Contact *</label>
+                        <select class="form-select" id="reminderContact" required></select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Template</label>
+                        <select class="form-select" id="reminderTemplate" onchange="applyTemplate()">
+                            <option value="">Custom message</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Message *</label>
+                    <textarea class="form-textarea" id="reminderMessage" rows="4" required></textarea>
+                </div>
+                <div class="two-col">
+                    <div class="form-group">
+                        <label class="form-label">Date *</label>
+                        <input type="date" class="form-input" id="reminderDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Time *</label>
+                        <input type="time" class="form-input" id="reminderTime" required>
+                    </div>
+                </div>
+                <div style="display: flex; gap: 8px; justify-content: flex-end;">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal('reminderModal')">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Schedule</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Template Modal -->
+    <div class="modal-overlay" id="templateModal">
+        <div class="modal">
+            <div class="modal-header">
+                <span class="modal-title" id="templateModalTitle">New Template</span>
+                <button class="modal-close" onclick="closeModal('templateModal')">&times;</button>
+            </div>
+            <form id="templateForm">
+                <input type="hidden" id="templateId">
+                <div class="form-group">
+                    <label class="form-label">Template Name *</label>
+                    <input type="text" class="form-input" id="templateName" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Message *</label>
+                    <textarea class="form-textarea" id="templateContent" rows="4" required></textarea>
+                </div>
+                <div style="display: flex; gap: 8px; justify-content: flex-end;">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal('templateModal')">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save Template</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        let contacts = JSON.parse(localStorage.getItem('rc_sms_contacts') || '[]');
+        let reminders = JSON.parse(localStorage.getItem('rc_sms_reminders') || '[]');
+        let templates = JSON.parse(localStorage.getItem('rc_sms_templates') || '[]');
+        let history = JSON.parse(localStorage.getItem('rc_sms_history') || '[]');
+
+        const defaultTemplates = [
+            { id: 't1', name: 'Appointment Reminder', content: 'Hi {name}! This is a reminder about your appointment on {date} at {time}. Reply YES to confirm or call us to reschedule.' },
+            { id: 't2', name: 'Payment Due', content: 'Hi {name}! This is a friendly reminder that payment of ${amount} is due on {date}. Please let us know if you have any questions.' },
+            { id: 't3', name: 'Follow Up', content: 'Hi {name}! Just following up on our recent conversation. Please let us know if you have any questions!' }
+        ];
+
+        if (templates.length === 0) {
+            templates = defaultTemplates;
+            localStorage.setItem('rc_sms_templates', JSON.stringify(templates));
+        }
+
+        function saveData() {
+            localStorage.setItem('rc_sms_contacts', JSON.stringify(contacts));
+            localStorage.setItem('rc_sms_reminders', JSON.stringify(reminders));
+            localStorage.setItem('rc_sms_templates', JSON.stringify(templates));
+            localStorage.setItem('rc_sms_history', JSON.stringify(history));
+        }
+
+        // Navigation
+        document.querySelectorAll('.nav-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+                tab.classList.add('active');
+                document.getElementById(tab.dataset.page).classList.add('active');
+                if (tab.dataset.page === 'contacts') renderContacts();
+                if (tab.dataset.page === 'templates') renderTemplates();
+                if (tab.dataset.page === 'history') renderHistory();
+            });
+        });
+
+        function openModal(id) {
+            document.getElementById(id).classList.add('active');
+            if (id === 'reminderModal') {
+                populateContactSelect();
+                populateTemplateSelect();
+                document.getElementById('reminderDate').value = new Date().toISOString().split('T')[0];
+            }
+            if (id === 'contactForm') document.getElementById('contactForm').reset();
+            if (id === 'templateForm') document.getElementById('templateForm').reset();
+        }
+        function closeModal(id) {
+            document.getElementById(id).classList.remove('active');
+        }
+
+        // Contact Functions
+        function populateContactSelect() {
+            const select = document.getElementById('reminderContact');
+            select.innerHTML = contacts.map(c => `<option value="${c.id}">${c.name}</option>`).join('');
+        }
+
+        document.getElementById('contactForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const id = document.getElementById('contactId').value;
+            const contact = {
+                id: id || Date.now().toString(),
+                name: document.getElementById('contactName').value,
+                phone: document.getElementById('contactPhone').value
+            };
+            if (id) {
+                const idx = contacts.findIndex(c => c.id === id);
+                contacts[idx] = contact;
+            } else {
+                contacts.push(contact);
+            }
+            saveData();
+            closeModal('contactModal');
+            renderContacts();
+            updateStats();
+        });
+
+        function editContact(id) {
+            const c = contacts.find(c => c.id === id);
+            if (!c) return;
+            document.getElementById('contactId').value = c.id;
+            document.getElementById('contactName').value = c.name;
+            document.getElementById('contactPhone').value = c.phone;
+            document.getElementById('contactModalTitle').textContent = 'Edit Contact';
+            openModal('contactModal');
+        }
+
+        function deleteContact(id) {
+            if (confirm('Delete this contact?')) {
+                contacts = contacts.filter(c => c.id !== id);
+                saveData();
+                renderContacts();
+                updateStats();
+            }
+        }
+
+        function renderContacts() {
+            const html = contacts.map(c => `
+                <div class="contact-item">
+                    <div class="contact-info">
+                        <span class="contact-name">${c.name}</span>
+                        <span class="contact-details">${c.phone}</span>
+                    </div>
+                    <div style="display: flex; gap: 8px;">
+                        <button class="btn btn-secondary btn-sm" onclick="editContact('${c.id}')">Edit</button>
+                        <button class="btn btn-secondary btn-sm" onclick="deleteContact('${c.id}')">Delete</button>
+                    </div>
+                </div>
+            `).join('');
+            document.getElementById('contactList').innerHTML = html || '<div class="empty-state">No contacts yet. Add your first contact!</div>';
+        }
+
+        // Template Functions
+        function populateTemplateSelect() {
+            const select = document.getElementById('reminderTemplate');
+            select.innerHTML = '<option value="">Custom message</option>' + templates.map(t => `<option value="${t.id}">${t.name}</option>`).join('');
+        }
+
+        function applyTemplate() {
+            const templateId = document.getElementById('reminderTemplate').value;
+            if (!templateId) return;
+            const template = templates.find(t => t.id === templateId);
+            if (template) document.getElementById('reminderMessage').value = template.content;
+        }
+
+        document.getElementById('templateForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const id = document.getElementById('templateId').value;
+            const template = {
+                id: id || 't' + Date.now(),
+                name: document.getElementById('templateName').value,
+                content: document.getElementById('templateContent').value
+            };
+            if (id) {
+                const idx = templates.findIndex(t => t.id === id);
+                templates[idx] = template;
+            } else {
+                templates.push(template);
+            }
+            saveData();
+            closeModal('templateModal');
+            renderTemplates();
+        });
+
+        function editTemplate(id) {
+            const t = templates.find(t => t.id === id);
+            if (!t) return;
+            document.getElementById('templateId').value = t.id;
+            document.getElementById('templateName').value = t.name;
+            document.getElementById('templateContent').value = t.content;
+            document.getElementById('templateModalTitle').textContent = 'Edit Template';
+            openModal('templateModal');
+        }
+
+        function deleteTemplate(id) {
+            if (confirm('Delete this template?')) {
+                templates = templates.filter(t => t.id !== id);
+                saveData();
+                renderTemplates();
+            }
+        }
+
+        function renderTemplates() {
+            const html = templates.map(t => `
+                <div class="template-card" onclick="editTemplate('${t.id}')">
+                    <div class="template-name">${t.name}</div>
+                    <div class="template-preview">${t.content.substring(0, 100)}${t.content.length > 100 ? '...' : ''}</div>
+                </div>
+            `).join('');
+            document.getElementById('templateList').innerHTML = html;
+        }
+
+        // Reminder Functions
+        document.getElementById('reminderForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const contact = contacts.find(c => c.id === document.getElementById('reminderContact').value);
+            const reminder = {
+                id: Date.now().toString(),
+                contactId: contact.id,
+                contactName: contact.name,
+                message: document.getElementById('reminderMessage').value,
+                scheduledDate: document.getElementById('reminderDate').value,
+                scheduledTime: document.getElementById('reminderTime').value,
+                status: 'pending',
+                createdAt: new Date().toISOString()
+            };
+            reminders.push(reminder);
+            saveData();
+            closeModal('reminderModal');
+            renderReminders();
+            updateStats();
+        });
+
+        function deleteReminder(id) {
+            if (confirm('Delete this reminder?')) {
+                reminders = reminders.filter(r => r.id !== id);
+                saveData();
+                renderReminders();
+                updateStats();
+            }
+        }
+
+        function renderReminders() {
+            const sorted = [...reminders].sort((a, b) => new Date(a.scheduledDate + ' ' + a.scheduledTime) - new Date(b.scheduledDate + ' ' + b.scheduledTime));
+            const html = sorted.map(r => `
+                <div class="reminder-item">
+                    <div class="reminder-info">
+                        <span class="reminder-title">${r.contactName}</span>
+                        <span class="reminder-details">${r.message.substring(0, 50)}${r.message.length > 50 ? '...' : ''}</span>
+                        <span class="reminder-details">📅 ${r.scheduledDate} at ${r.scheduledTime}</span>
+                    </div>
+                    <div style="display: flex; gap: 8px; align-items: center;">
+                        <span class="badge badge-${r.status}">${r.status}</span>
+                        <button class="btn btn-secondary btn-sm" onclick="deleteReminder('${r.id}')">Delete</button>
+                    </div>
+                </div>
+            `).join('');
+            document.getElementById('reminderList').innerHTML = html || '<div class="empty-state">No scheduled reminders</div>';
+        }
+
+        // History Functions
+        function addToHistory(reminder) {
+            history.unshift({
+                id: Date.now().toString(),
+                contactName: reminder.contactName,
+                message: reminder.message,
+                sentAt: new Date().toISOString()
+            });
+            saveData();
+        }
+
+        function clearHistory() {
+            if (confirm('Clear all history?')) {
+                history = [];
+                saveData();
+                renderHistory();
+            }
+        }
+
+        function renderHistory() {
+            const html = history.map(h => `
+                <div class="history-item">
+                    <div class="history-icon">✓</div>
+                    <div class="history-content">
+                        <div class="history-text"><strong>${h.contactName}</strong>: ${h.message.substring(0, 60)}${h.message.length > 60 ? '...' : ''}</div>
+                        <div class="history-time">${new Date(h.sentAt).toLocaleString()}</div>
+                    </div>
+                </div>
+            `).join('');
+            document.getElementById('historyList').innerHTML = html || '<div class="empty-state">No history yet</div>';
+        }
+
+        // Stats
+        function updateStats() {
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('scheduledCount').textContent = reminders.filter(r => r.status === 'pending').length;
+            document.getElementById('sentToday').textContent = history.filter(h => h.sentAt.startsWith(today)).length;
+            document.getElementById('contactCount').textContent = contacts.length;
+        }
+
+        // Simulate sending reminders (in real app, this would be server-side)
+        function checkReminders() {
+            const now = new Date();
+            const currentDate = now.toISOString().split('T')[0];
+            const currentTime = now.toTimeString().substring(0, 5);
             
-            <div class="trial-banner">
-                <h3>🎉 Try Pro Free for 14 Days</h3>
-                <p>Full access to all features. No credit card required.</p>
-            </div>
-            
-            <div class="pricing-grid">
-                <div class="pricing-card">
-                    <h3>Starter</h3>
-                    <div class="pricing-price">$0<span>/mo</span></div>
-                    <ul class="pricing-features">
-                        <li>50 messages/month</li>
-                        <li>Basic templates</li>
-                        <li>Email support</li>
-                    </ul>
-                    <a href="#" class="btn btn-secondary" style="width: 100%;">Get Started</a>
-                </div>
-                <div class="pricing-card featured">
-                    <h3>Pro</h3>
-                    <div class="pricing-savings">Best value</div>
-                    <div class="pricing-price">$19<span>/mo</span></div>
-                    <ul class="pricing-features">
-                        <li>500 messages/month</li>
-                        <li>Unlimited templates</li>
-                        <li>Two-way SMS</li>
-                        <li>Calendar sync</li>
-                        <li>Analytics dashboard</li>
-                        <li>Priority support</li>
-                    </ul>
-                    <a href="#" class="btn btn-primary" style="width: 100%;">Start Free Trial</a>
-                </div>
-                <div class="pricing-card">
-                    <h3>Business</h3>
-                    <div class="pricing-price">$49<span>/mo</span></div>
-                    <ul class="pricing-features">
-                        <li>2,000 messages/month</li>
-                        <li>Everything in Pro</li>
-                        <li>Multiple locations</li>
-                        <li>API access</li>
-                        <li>Dedicated support</li>
-                    </ul>
-                    <a href="#" class="btn btn-outline" style="width: 100%;">Contact Sales</a>
-                </div>
-            </div>
-        </div>
-    </section>
+            reminders.forEach(r => {
+                if (r.status === 'pending' && r.scheduledDate === currentDate && r.scheduledTime <= currentTime) {
+                    r.status = 'sent';
+                    addToHistory(r);
+                }
+            });
+            saveData();
+            renderReminders();
+            renderHistory();
+            updateStats();
+        }
 
-    <section class="cta">
-        <div class="container">
-            <h2>Ready to reduce no-shows?</h2>
-            <p>Join 8,000+ businesses saving time and money</p>
-            <a href="#" class="btn btn-primary">Start Free Trial →</a>
-            <p style="margin-top: 16px; font-size: 0.85rem; color: var(--text-muted);">No credit card required • Setup in 5 minutes</p>
-        </div>
-    </section>
-
-    <footer>
-        <div class="container">
-            <p>© 2026 SMS Reminder. Built with care.</p>
-        </div>
-    </footer>
+        // Init
+        renderReminders();
+        renderTemplates();
+        renderHistory();
+        updateStats();
+        setInterval(checkReminders, 60000); // Check every minute
+    </script>
 </body>
 </html>
