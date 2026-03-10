@@ -10,14 +10,15 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #0a0a0a;
-            --card-bg: #111111;
-            --border: #222222;
-            --border-hover: #333333;
-            --text: #ffffff;
-            --text-muted: #666666;
-            --accent: #00d4ff;
-            --accent-dim: #00d4ff20;
+            --bg: #ffffff;
+            --bg-alt: #f8fafc;
+            --card-bg: #ffffff;
+            --border: #e2e8f0;
+            --border-hover: #cbd5e1;
+            --text: #0f172a;
+            --text-muted: #64748b;
+            --accent: #0ea5e9;
+            --accent-dim: #f0f9ff;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; }
@@ -32,7 +33,7 @@
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
             background: 
-                radial-gradient(ellipse 80% 50% at 50% -20%, #00d4ff08 0%, transparent 100%);
+                radial-gradient(ellipse 80% 50% at 50% -20%, #0ea5e908 0%, transparent 100%);
             pointer-events: none;
             z-index: -1;
         }
@@ -43,7 +44,7 @@
             border-bottom: 1px solid var(--border);
             position: sticky;
             top: 0;
-            background: rgba(10, 10, 10, 0.9);
+            background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
             z-index: 100;
         }
@@ -79,12 +80,12 @@
         }
         .btn-primary {
             background: var(--accent);
-            color: #000;
+            color: #fff;
         }
         .btn-primary:hover {
-            background: #33ddff;
+            background: #0284c7;
             transform: translateY(-1px);
-            box-shadow: 0 4px 20px #00d4ff40;
+            box-shadow: 0 4px 12px rgba(14, 165, 233, 0.3);
         }
         .btn-secondary {
             background: transparent;
@@ -93,6 +94,7 @@
         }
         .btn-secondary:hover {
             border-color: var(--text-muted);
+            background: var(--bg-alt);
         }
         
         .hero {
@@ -104,7 +106,7 @@
             align-items: center;
             gap: 8px;
             background: var(--accent-dim);
-            border: 1px solid #00d4ff30;
+            border: 1px solid #0ea5e920;
             padding: 6px 14px;
             border-radius: 100px;
             font-size: 13px;
@@ -120,6 +122,7 @@
             line-height: 1.1;
             margin-bottom: 24px;
             letter-spacing: -0.03em;
+            color: var(--text);
         }
         .hero p {
             font-size: 1.15rem;
@@ -146,6 +149,7 @@
             font-weight: 600;
             margin-bottom: 12px;
             letter-spacing: -0.02em;
+            color: var(--text);
         }
         .section-header p {
             color: var(--text-muted);
