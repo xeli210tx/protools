@@ -23,10 +23,11 @@
             --accent-green: #059669;
             --border-color: #e5e7eb;
             --border-color-light: #f3f4f6;
+            --glow-color: rgba(79, 70, 229, 0.4);
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            overflow-x: hidden; font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; background: var(--bg-body); color: var(--text-primary); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+            overflow-x: hidden; position: relative; font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; background: var(--bg-body); color: var(--text-primary); line-height: 1.6; -webkit-font-smoothing: antialiased; }
         
         a { text-decoration: none; color: inherit; }
         
@@ -164,6 +165,290 @@
             .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
         }
         img { max-width: 100%; height: auto; }
+        /* Animated Gradient Background */
+        .gradient-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            background: linear-gradient(135deg, #f8f9fb 0%, #eef2ff 20%, #faf5ff 40%, #f0fdfa 60%, #f8fafc 80%, #f8f9fb 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 20s ease infinite;
+        }
+        
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            25% { background-position: 50% 25%; }
+            50% { background-position: 100% 50%; }
+            75% { background-position: 50% 75%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        /* Grid Pattern Overlay */
+        .grid-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background-image: 
+                linear-gradient(rgba(79, 70, 229, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(79, 70, 229, 0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+            pointer-events: none;
+        }
+        
+        /* Particle Canvas */
+        #particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+        
+        /* Logo glow animation */
+        .logo-icon { 
+            background: linear-gradient(135deg, var(--accent) 0%, #7c3aed 50%, #06b6d4 100%) !important;
+            box-shadow: 0 0 20px rgba(79, 70, 229, 0.4);
+            animation: logoGlow 3s ease-in-out infinite;
+        }
+        
+        @keyframes logoGlow {
+            0%, 100% { box-shadow: 0 0 20px rgba(79, 70, 229, 0.4); }
+            50% { box-shadow: 0 0 30px rgba(79, 70, 229, 0.6), 0 0 50px rgba(6, 182, 212, 0.3); }
+        }
+        
+        /* Glassmorphism navbar */
+        .navbar { 
+            background: rgba(255, 255, 255, 0.85) !important;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: 0 4px 30px rgba(79, 70, 229, 0.08) !important;
+        }
+        
+        /* Nav link underline animation */
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent), #06b6d4);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+            border-radius: 2px;
+        }
+        .nav-links a:hover::after, .nav-links a.active::after { width: 60%; }
+        
+        /* Glassmorphism buttons */
+        .btn-primary { 
+            background: linear-gradient(135deg, var(--accent) 0%, #7c3aed 100%) !important;
+            box-shadow: 0 4px 15px rgba(79, 70, 229, 0.3) !important;
+        }
+        .btn-primary:hover { 
+            box-shadow: 0 8px 25px rgba(79, 70, 229, 0.4), 0 0 30px rgba(79, 70, 229, 0.2) !important;
+            transform: translateY(-2px);
+        }
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: 0.5s;
+        }
+        .btn-primary:hover::before { left: 100%; }
+        
+        /* Glassmorphism hero */
+        .hero { 
+            background: linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(238,242,255,0.9) 100%) !important;
+            backdrop-filter: blur(20px);
+        }
+        
+        /* Hero gradient text */
+        .hero h1 span { 
+            background: linear-gradient(135deg, var(--accent) 0%, #7c3aed 50%, #06b6d4 100%) !important;
+            -webkit-background-clip: text !important;
+            -webkit-text-fill-color: transparent !important;
+            background-clip: text !important;
+            animation: textGradient 5s ease infinite;
+            background-size: 200% 200%;
+        }
+        
+        @keyframes textGradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        /* Badge pulse */
+        .hero-badge { 
+            background: rgba(79, 70, 229, 0.1) !important;
+            border: 1px solid rgba(79, 70, 229, 0.2) !important;
+            animation: badgePulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes badgePulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(79, 70, 229, 0.2); }
+            50% { box-shadow: 0 0 0 8px rgba(79, 70, 229, 0); }
+        }
+        
+        /* Glassmorphism cards */
+        .product-card { 
+            background: rgba(255, 255, 255, 0.85) !important;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+        
+        .product-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent), #7c3aed, #06b6d4);
+            background-size: 200% 200%;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .product-card:hover { 
+            transform: translateY(-6px) !important;
+            border-color: rgba(79, 70, 229, 0.3) !important;
+            box-shadow: 0 20px 40px rgba(79, 70, 229, 0.15), 0 0 30px rgba(79, 70, 229, 0.1) !important;
+        }
+        
+        .product-card:hover::before {
+            opacity: 1;
+            animation: cardBorder 2s ease infinite;
+        }
+        
+        @keyframes cardBorder {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 200% 50%; }
+        }
+        
+        .product-card:hover .product-icon {
+            transform: scale(1.1);
+            box-shadow: 0 0 20px rgba(79, 70, 229, 0.3);
+            background: linear-gradient(135deg, rgba(79, 70, 229, 0.1) 0%, rgba(6, 182, 212, 0.1) 100%) !important;
+        }
+        
+        /* Glassmorphism stats bar */
+        .stats-bar { 
+            background: rgba(255, 255, 255, 0.85) !important;
+            backdrop-filter: blur(20px);
+            box-shadow: 0 10px 40px rgba(79, 70, 229, 0.08) !important;
+        }
+        
+        .stat-item h3 { 
+            background: linear-gradient(135deg, var(--accent) 0%, #7c3aed 100%) !important;
+            -webkit-background-clip: text !important;
+            -webkit-text-fill-color: transparent !important;
+        }
+        
+        /* Glassmorphism category cards */
+        .category-card { 
+            background: rgba(255, 255, 255, 0.8) !important;
+            backdrop-filter: blur(20px);
+        }
+        
+        .category-card:hover { 
+            transform: translateY(-5px) !important;
+            box-shadow: 0 15px 35px rgba(79, 70, 229, 0.15), 0 0 30px rgba(79, 70, 229, 0.1) !important;
+        }
+        
+        .category-card:hover .category-card-icon { 
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 0 0 25px rgba(79, 70, 229, 0.3);
+        }
+        
+        .category-card:hover h3 { color: var(--accent) !important; }
+        
+        /* Gradient border featured banner */
+        .featured-banner { 
+            background: linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(238,242,255,0.9) 100%) !important;
+            backdrop-filter: blur(20px);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .featured-banner::after {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(135deg, var(--accent), #7c3aed, #06b6d4, var(--accent));
+            background-size: 300% 300%;
+            animation: borderGradient 4s ease infinite;
+            border-radius: 18px;
+            z-index: -1;
+            opacity: 0.7;
+        }
+        
+        @keyframes borderGradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .featured-icon {
+            background: linear-gradient(135deg, var(--accent) 0%, #7c3aed 50%, #06b6d4 100%) !important;
+            box-shadow: 0 0 40px rgba(79, 70, 229, 0.4);
+            animation: iconPulse 3s ease-in-out infinite;
+        }
+        
+        @keyframes iconPulse {
+            0%, 100% { box-shadow: 0 0 40px rgba(79, 70, 229, 0.4); }
+            50% { box-shadow: 0 0 60px rgba(79, 70, 229, 0.6), 0 0 80px rgba(6, 182, 212, 0.3); }
+        }
+        
+        .featured-tag {
+            background: linear-gradient(135deg, var(--accent) 0%, #7c3aed 100%) !important;
+            box-shadow: 0 0 15px rgba(79, 70, 229, 0.4);
+        }
+        
+        /* Glassmorphism footer */
+        .footer { 
+            background: rgba(255, 255, 255, 0.9) !important;
+            backdrop-filter: blur(20px);
+        }
+        
+        /* Category tabs */
+        .category-tab { 
+            background: rgba(255, 255, 255, 0.8) !important;
+            backdrop-filter: blur(10px);
+        }
+        .category-tab:hover { 
+            box-shadow: 0 0 20px rgba(79, 70, 229, 0.15);
+            transform: translateY(-2px);
+        }
+        .category-tab.active { 
+            background: linear-gradient(135deg, var(--accent) 0%, #7c3aed 100%) !important;
+            box-shadow: 0 4px 15px rgba(79, 70, 229, 0.4) !important;
+        }
+        
+        /* Search input glow */
+        .nav-search input { 
+            background: rgba(255, 255, 255, 0.8) !important;
+            backdrop-filter: blur(10px);
+        }
+        .nav-search input:focus { 
+            box-shadow: 0 0 20px rgba(79, 70, 229, 0.15) !important;
+        }
+
         @media (max-width: 480px) {
             .hero h1 { font-size: 1.5rem; }
             .hero p { font-size: 0.9rem; }
@@ -176,6 +461,12 @@
 </style>
 </head>
 <body>
+
+    <!-- Animated Backgrounds -->
+    <div class="gradient-bg"></div>
+    <div class="grid-overlay"></div>
+    <canvas id="particles"></canvas>
+
     <!-- Navigation -->
     <nav class="navbar">
         <div class="navbar-inner">
@@ -638,6 +929,79 @@
         </div>
     </div>
     
+
+
+    <!-- Particle Animation Script -->
+    <script>
+        const canvas = document.getElementById('particles');
+        const ctx = canvas.getContext('2d');
+        
+        let particles = [];
+        const particleCount = 40;
+        
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        
+        function createParticles() {
+            particles = [];
+            for (let i = 0; i < particleCount; i++) {
+                particles.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    vx: (Math.random() - 0.5) * 0.5,
+                    vy: (Math.random() - 0.5) * 0.5,
+                    size: Math.random() * 2 + 1,
+                    opacity: Math.random() * 0.5 + 0.1
+                });
+            }
+        }
+        
+        function drawParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            particles.forEach((p, index) => {
+                p.x += p.vx;
+                p.y += p.vy;
+                
+                if (p.x < 0) p.x = canvas.width;
+                if (p.x > canvas.width) p.x = 0;
+                if (p.y < 0) p.y = canvas.height;
+                if (p.y > canvas.height) p.y = 0;
+                
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(79, 70, 229, ${p.opacity})`;
+                ctx.fill();
+                
+                particles.slice(index + 1).forEach(p2 => {
+                    const dx = p.x - p2.x;
+                    const dy = p.y - p2.y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    
+                    if (dist < 120) {
+                        ctx.beginPath();
+                        ctx.moveTo(p.x, p.y);
+                        ctx.lineTo(p2.x, p2.y);
+                        ctx.strokeStyle = `rgba(79, 70, 229, ${0.1 * (1 - dist / 120)})`;
+                        ctx.stroke();
+                    }
+                });
+            });
+            
+            requestAnimationFrame(drawParticles);
+        }
+        
+        resizeCanvas();
+        createParticles();
+        drawParticles();
+        
+        window.addEventListener('resize', () => {
+            resizeCanvas();
+            createParticles();
+        });
+    </script>
 
 </body>
 </html>
