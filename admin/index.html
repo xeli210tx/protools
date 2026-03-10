@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RenegadeTools Admin</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+        }
+
+        :root {
+            --primary: #2563eb;
+            --primary-hover: #1d4ed8;
+            --bg: #f8fafc;
+            --surface: #ffffff;
+            --border: #e2e8f0;
+            --text: #1e293b;
+            --text-muted: #64748b;
+            --danger: #ef4444;
+            --success: #22c55e;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+        }
+
+        /* Login Screen */
+        .login-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .login-box {
+            background: var(--surface);
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .login-logo {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .login-logo h1 {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        .login-logo span {
+            color: var(--primary);
+        }
+
+        .login-logo p {
+            color: var(--text-muted);
+            font-size: 14px;
+            margin-top: 8px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: var(--text);
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            width: 100%;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-hover);
+        }
+
+        .login-error {
+            background: #fef2f2;
+            color: var(--danger);
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 14px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        /* Dashboard */
+        .dashboard {
+            display: none;
+            min-height: 100vh;
+        }
+
+        .dashboard.active {
+            display: block;
+        }
+
+        .header {
+            background: var(--surface);
+            border-bottom: 1px solid var(--border);
+            padding: 16px 32px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-logo {
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .header-logo span {
+            color: var(--primary);
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            background: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+        }
+
+        .user-name {
+            font-weight: 500;
+        }
+
+        .user-role {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .btn-logout {
+            background: transparent;
+            color: var(--text-muted);
+            padding: 8px 16px;
+            border: 1px solid var(--border);
+        }
+
+        .btn-logout:hover {
+            background: var(--bg);
+            color: var(--text);
+        }
+
+        .main-content {
+            padding: 32px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .page-header {
+            margin-bottom: 32px;
+        }
+
+        .page-header h2 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .page-header p {
+            color: var(--text-muted);
+        }
+
+        /* Tools Grid */
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 24px;
+        }
+
+        .tool-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 24px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .tool-card:hover {
+            border-color: var(--primary);
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .tool-icon {
+            width: 48px;
+            height: 48px;
+            background: #eff6ff;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 16px;
+            font-size: 24px;
+        }
+
+        .tool-card h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .tool-card p {
+            color: var(--text-muted);
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .tool-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+            margin-top: 16px;
+            padding: 4px 10px;
+            border-radius: 20px;
+            background: #f0fdf4;
+            color: #166534;
+        }
+
+        .tool-status::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            background: var(--success);
+            border-radius: 50%;
+        }
+
+        /* User Management */
+        .users-table {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .users-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .users-table th {
+            background: var(--bg);
+            padding: 16px 24px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        .users-table td {
+            padding: 16px 24px;
+            border-top: 1px solid var(--border);
+        }
+
+        .user-cell {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .user-cell .avatar {
+            width: 36px;
+            height: 36px;
+            background: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .role-badge {
+            display: inline-flex;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .role-badge.admin {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .role-badge.editor {
+            background: #eff6ff;
+            color: #1e40af;
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+        }
+
+        .status-badge::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: var(--success);
+            border-radius: 50%;
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            gap: 4px;
+            background: var(--bg);
+            padding: 4px;
+            border-radius: 10px;
+            margin-bottom: 24px;
+            width: fit-content;
+        }
+
+        .tab {
+            padding: 10px 20px;
+            border: none;
+            background: transparent;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .tab.active {
+            background: var(--surface);
+            color: var(--text);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Settings Modal */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 200;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal {
+            background: var(--surface);
+            border-radius: 12px;
+            padding: 32px;
+            width: 100%;
+            max-width: 500px;
+            margin: 20px;
+        }
+
+        .modal h3 {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 24px;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 12px;
+            justify-content: flex-end;
+            margin-top: 24px;
+        }
+
+        .btn-secondary {
+            background: var(--bg);
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            background: var(--border);
+        }
+
+        /* Tool Launcher Modal */
+        .launcher-modal .modal {
+            max-width: 700px;
+        }
+
+        .tool-preview {
+            background: var(--bg);
+            border-radius: 8px;
+            padding: 24px;
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .tool-preview-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+        }
+
+        .tool-preview h4 {
+            font-size: 18px;
+            margin-bottom: 8px;
+        }
+
+        .tool-preview p {
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        .quick-actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .quick-action {
+            flex: 1;
+            min-width: 150px;
+            padding: 16px;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .quick-action:hover {
+            border-color: var(--primary);
+            background: #eff6ff;
+        }
+
+        .quick-action strong {
+            display: block;
+            font-size: 14px;
+            margin-bottom: 4px;
+        }
+
+        .quick-action span {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header {
+                padding: 16px;
+            }
+
+            .main-content {
+                padding: 16px;
+            }
+
+            .tools-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .user-info {
+                display: none;
+            }
+
+            .users-table th,
+            .users-table td {
+                padding: 12px 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Login Screen -->
+    <div class="login-container" id="loginScreen">
+        <div class="login-box">
+            <div class="login-logo">
+                <h1>Renegade<span>Tools</span></h1>
+                <p>Admin Dashboard</p>
+            </div>
+            <div class="login-error" id="loginError">Invalid password. Please try again.</div>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" placeholder="Enter admin password" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Sign In</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Dashboard -->
+    <div class="dashboard" id="dashboard">
+        <header class="header">
+            <div class="header-logo">Renegade<span>Tools</span></div>
+            <div class="header-actions">
+                <div class="user-info">
+                    <div class="user-avatar">W</div>
+                    <div>
+                        <div class="user-name">Will</div>
+                        <div class="user-role">Administrator</div>
+                    </div>
+                </div>
+                <button class="btn btn-logout" id="logoutBtn">Logout</button>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <div class="page-header">
+                <h2>Dashboard</h2>
+                <p>Manage your tools and access all RenegadeTools services</p>
+            </div>
+
+            <div class="tabs">
+                <button class="tab active" data-tab="tools">Tools</button>
+                <button class="tab" data-tab="users">Users</button>
+                <button class="tab" data-tab="settings">Settings</button>
+            </div>
+
+            <!-- Tools Tab -->
+            <div class="tab-content active" id="tab-tools">
+                <div class="tools-grid">
+                    <div class="tool-card" data-tool="discord">
+                        <div class="tool-icon">💬</div>
+                        <h3>Discord Bot</h3>
+                        <p>Manage the Renegade Discord bot, check status, and view activity logs.</p>
+                        <div class="tool-status">Active</div>
+                    </div>
+                    <div class="tool-card" data-tool="website">
+                        <div class="tool-icon">🌐</div>
+                        <h3>Website Manager</h3>
+                        <p>Update content, manage blog posts, and configure site settings.</p>
+                        <div class="tool-status">Active</div>
+                    </div>
+                    <div class="tool-card" data-tool="api">
+                        <div class="tool-icon">🔌</div>
+                        <h3>API Console</h3>
+                        <p>Test API endpoints, view usage stats, and manage API keys.</p>
+                        <div class="tool-status">Active</div>
+                    </div>
+                    <div class="tool-card" data-tool="database">
+                        <div class="tool-icon">🗄️</div>
+                        <h3>Database</h3>
+                        <p>Access and manage the database, run queries, and view schema.</p>
+                        <div class="tool-status">Active</div>
+                    </div>
+                    <div class="tool-card" data-tool="analytics">
+                        <div class="tool-icon">📊</div>
+                        <h3>Analytics</h3>
+                        <p>View traffic analytics, user metrics, and performance data.</p>
+                        <div class="tool-status">Active</div>
+                    </div>
+                    <div class="tool-card" data-tool="email">
+                        <div class="tool-icon">📧</div>
+                        <h3>Email Manager</h3>
+                        <p>Send emails, manage templates, and view send history.</p>
+                        <div class="tool-status">Active</div>
+                    </div>
+                    <div class="tool-card" data-tool="storage">
+                        <div class="tool-icon">📁</div>
+                        <h3>File Storage</h3>
+                        <p>Manage uploaded files, media library, and storage usage.</p>
+                        <div class="tool-status">Active</div>
+                    </div>
+                    <div class="tool-card" data-tool="logs">
+                        <div class="tool-icon">📋</div>
+                        <h3>System Logs</h3>
+                        <p>View application logs, error reports, and system events.</p>
+                        <div class="tool-status">Active</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Users Tab -->
+            <div class="tab-content" id="tab-users">
+                <div class="users-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>User</th>
+                                <th>Role</th>
+                                <th>Status</th>
+                                <th>Last Active</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <div class="user-cell">
+                                        <div class="avatar">W</div>
+                                        <div>
+                                            <strong>Will</strong>
+                                            <div style="font-size: 12px; color: var(--text-muted);">will@renegadetools.co</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td><span class="role-badge admin">Admin</span></td>
+                                <td><span class="status-badge">Active</span></td>
+                                <td>Just now</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Settings Tab -->
+            <div class="tab-content" id="tab-settings">
+                <div class="users-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Setting</th>
+                                <th>Value</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <strong>Admin Password</strong>
+                                    <div style="font-size: 12px; color: var(--text-muted);">Change your admin password</div>
+                                </td>
+                                <td>••••••••</td>
+                                <td><button class="btn btn-secondary" style="padding: 8px 16px;" onclick="openPasswordModal()">Change</button></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>Two-Factor Authentication</strong>
+                                    <div style="font-size: 12px; color: var(--text-muted);">Add extra security to your account</div>
+                                </td>
+                                <td><span class="status-badge" style="color: var(--text-muted);">Not enabled</span></td>
+                                <td><button class="btn btn-secondary" style="padding: 8px 16px;">Enable</button></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>Session Timeout</strong>
+                                    <div style="font-size: 12px; color: var(--text-muted);">Auto logout after inactivity</div>
+                                </td>
+                                <td>30 minutes</td>
+                                <td><button class="btn btn-secondary" style="padding: 8px 16px;">Edit</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Password Change Modal -->
+    <div class="modal-overlay" id="passwordModal">
+        <div class="modal">
+            <h3>Change Password</h3>
+            <form id="passwordForm">
+                <div class="form-group">
+                    <label for="currentPassword">Current Password</label>
+                    <input type="password" id="currentPassword" required>
+                </div>
+                <div class="form-group">
+                    <label for="newPassword">New Password</label>
+                    <input type="password" id="newPassword" required>
+                </div>
+                <div class="form-group">
+                    <label for="confirmPassword">Confirm New Password</label>
+                    <input type="password" id="confirmPassword" required>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closePasswordModal()">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Tool Launcher Modal -->
+    <div class="modal-overlay launcher-modal" id="toolModal">
+        <div class="modal">
+            <div class="tool-preview">
+                <div class="tool-preview-icon" id="toolIcon">💬</div>
+                <h4 id="toolName">Discord Bot</h4>
+                <p id="toolDesc">Manage the Renegade Discord bot</p>
+            </div>
+            <h3>Quick Actions</h3>
+            <div class="quick-actions">
+                <div class="quick-action">
+                    <strong>Dashboard</strong>
+                    <span>View full dashboard</span>
+                </div>
+                <div class="quick-action">
+                    <strong>Settings</strong>
+                    <span>Configure tool</span>
+                </div>
+                <div class="quick-action">
+                    <strong>Logs</strong>
+                    <span>View recent logs</span>
+                </div>
+                <div class="quick-action">
+                    <strong>Docs</strong>
+                    <span>Read documentation</span>
+                </div>
+            </div>
+            <div class="modal-actions" style="margin-top: 24px;">
+                <button class="btn btn-secondary" onclick="closeToolModal()">Close</button>
+                <button class="btn btn-primary">Launch Tool</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Configuration
+        const CONFIG = {
+            // Will's chosen password - change this!
+            adminPassword: 'renegade2024',
+            tools: {
+                discord: { name: 'Discord Bot', icon: '💬', desc: 'Manage the Renegade Discord bot, check status, and view activity logs.' },
+                website: { name: 'Website Manager', icon: '🌐', desc: 'Update content, manage blog posts, and configure site settings.' },
+                api: { name: 'API Console', icon: '🔌', desc: 'Test API endpoints, view usage stats, and manage API keys.' },
+                database: { name: 'Database', icon: '🗄️', desc: 'Access and manage the database, run queries, and view schema.' },
+                analytics: { name: 'Analytics', icon: '📊', desc: 'View traffic analytics, user metrics, and performance data.' },
+                email: { name: 'Email Manager', icon: '📧', desc: 'Send emails, manage templates, and view send history.' },
+                storage: { name: 'File Storage', icon: '📁', desc: 'Manage uploaded files, media library, and storage usage.' },
+                logs: { name: 'System Logs', icon: '📋', desc: 'View application logs, error reports, and system events.' }
+            }
+        };
+
+        // Check if already logged in
+        if (localStorage.getItem('adminLoggedIn') === 'true') {
+            showDashboard();
+        }
+
+        // Login Form
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const password = document.getElementById('password').value;
+            
+            if (password === CONFIG.adminPassword) {
+                localStorage.setItem('adminLoggedIn', 'true');
+                showDashboard();
+            } else {
+                document.getElementById('loginError').style.display = 'block';
+                document.getElementById('password').value = '';
+            }
+        });
+
+        // Show Dashboard
+        function showDashboard() {
+            document.getElementById('loginScreen').style.display = 'none';
+            document.getElementById('dashboard').classList.add('active');
+        }
+
+        // Logout
+        document.getElementById('logoutBtn').addEventListener('click', function() {
+            localStorage.removeItem('adminLoggedIn');
+            document.getElementById('dashboard').classList.remove('active');
+            document.getElementById('loginScreen').style.display = 'flex';
+            document.getElementById('password').value = '';
+            document.getElementById('loginError').style.display = 'none';
+        });
+
+        // Tabs
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                
+                this.classList.add('active');
+                document.getElementById('tab-' + this.dataset.tab).classList.add('active');
+            });
+        });
+
+        // Tool Cards
+        document.querySelectorAll('.tool-card').forEach(card => {
+            card.addEventListener('click', function() {
+                const toolId = this.dataset.tool;
+                const tool = CONFIG.tools[toolId];
+                
+                document.getElementById('toolIcon').textContent = tool.icon;
+                document.getElementById('toolName').textContent = tool.name;
+                document.getElementById('toolDesc').textContent = tool.desc;
+                
+                document.getElementById('toolModal').classList.add('active');
+            });
+        });
+
+        // Close Tool Modal
+        function closeToolModal() {
+            document.getElementById('toolModal').classList.remove('active');
+        }
+
+        // Password Modal
+        function openPasswordModal() {
+            document.getElementById('passwordModal').classList.add('active');
+        }
+
+        function closePasswordModal() {
+            document.getElementById('passwordModal').classList.remove('active');
+            document.getElementById('passwordForm').reset();
+        }
+
+        // Password Change
+        document.getElementById('passwordForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const current = document.getElementById('currentPassword').value;
+            const newPass = document.getElementById('newPassword').value;
+            const confirm = document.getElementById('confirmPassword').value;
+
+            if (current !== CONFIG.adminPassword) {
+                alert('Current password is incorrect');
+                return;
+            }
+
+            if (newPass !== confirm) {
+                alert('New passwords do not match');
+                return;
+            }
+
+            if (newPass.length < 6) {
+                alert('Password must be at least 6 characters');
+                return;
+            }
+
+            // Update password (in real app, this would save to server)
+            CONFIG.adminPassword = newPass;
+            alert('Password changed successfully!');
+            closePasswordModal();
+        });
+
+        // Close modals on overlay click
+        document.querySelectorAll('.modal-overlay').forEach(overlay => {
+            overlay.addEventListener('click', function(e) {
+                if (e.target === this) {
+                    this.classList.remove('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
