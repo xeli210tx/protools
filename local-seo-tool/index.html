@@ -9,7 +9,8 @@
         :root {
             --bg: #f8fafc; --card-bg: #ffffff; --border: #e2e8f0;
             --text: #0f172a; --text-muted: #64748b;
-            --accent: #14b8a6; --accent-dim: #f0fdfa;
+            --text-label: #b0b0b0;
+            --accent: #00d9ff; --accent-dim: #f0fdfa;
             --success: #10b981; --warning: #f59e0b;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -22,7 +23,8 @@
         
         .nav-tabs { display: flex; gap: 4px; background: var(--bg); padding: 4px; border-radius: 8px; }
         .nav-tab { padding: 8px 16px; border: none; background: transparent; color: var(--text-muted); font-weight: 500; cursor: pointer; border-radius: 6px; transition: all 0.2s; }
-        .nav-tab.active { background: var(--card-bg); color: var(--text); box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+        .nav-tab:hover { background: var(--card-bg); color: var(--text); }
+        .nav-tab.active { background: var(--card-bg); color: var(--text); box-shadow: 0 1px 3px rgba(0,0,0,0.1); border-bottom: 2px solid var(--accent); }
         
         .main { max-width: 1200px; margin: 0 auto; padding: 24px; }
         
@@ -34,23 +36,27 @@
         .card-title { font-weight: 600; font-size: 1rem; }
         
         .btn { display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; border-radius: 8px; font-weight: 500; cursor: pointer; border: none; transition: all 0.2s; }
-        .btn-primary { background: var(--accent); color: white; }
-        .btn-primary:hover { background: #0d9488; }
+        .btn-primary { background: var(--accent); color: #0f172a; }
+        .btn-primary:hover { background: #00b8d9; }
+        .btn-primary:disabled { opacity: 0.7; cursor: not-allowed; }
         .btn-secondary { background: var(--bg); color: var(--text); border: 1px solid var(--border); }
-        .btn-secondary:hover { border-color: var(--border-hover); }
+        .btn-secondary:hover { border-color: #cbd5e1; }
         .btn-sm { padding: 6px 12px; font-size: 0.875rem; }
         
         .form-group { margin-bottom: 16px; }
-        .form-label { display: block; font-weight: 500; margin-bottom: 6px; font-size: 0.875rem; }
+        .form-label { display: block; font-weight: 500; margin-bottom: 6px; font-size: 0.875rem; color: var(--text-label); }
+        .form-label.required::after { content: " *"; color: #ef4444; }
         .form-input, .form-select, .form-textarea { width: 100%; padding: 10px 12px; border: 1px solid var(--border); border-radius: 8px; font-size: 0.9rem; transition: border-color 0.2s; font-family: inherit; }
         .form-input:focus, .form-select:focus, .form-textarea:focus { outline: none; border-color: var(--accent); }
         
-        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-bottom: 24px; }
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 24px; margin-bottom: 32px; }
         .stat-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 20px; }
-        .stat-label { font-size: 0.875rem; color: var(--text-muted); margin-bottom: 4px; }
+        .stat-label { font-size: 0.875rem; color: var(--text-label); margin-bottom: 4px; }
         .stat-value { font-size: 1.5rem; font-weight: 700; }
         
         .business-info { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        
+        .card-divider { height: 1px; background: var(--border); margin: 24px 0; }
         
         .citation-list, .review-list, .rank-list { display: grid; gap: 12px; }
         .citation-item, .review-item, .rank-item { display: flex; justify-content: space-between; align-items: center; padding: 16px; background: var(--bg); border-radius: 8px; }
@@ -79,9 +85,32 @@
         
         .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
         
+        /* Business Hours Compact */
+        .hours-container { display: flex; flex-direction: column; gap: 8px; }
+        .hours-row { display: flex; align-items: center; gap: 12px; padding: 8px 12px; background: var(--bg); border-radius: 8px; transition: all 0.2s; }
+        .hours-row:hover { background: #f1f5f9; }
+        .hours-day { font-weight: 500; min-width: 90px; }
+        .hours-times { display: flex; align-items: center; gap: 8px; flex: 1; }
+        .hours-times input { width: 130px; }
+        .hours-separator { color: var(--text-muted); }
+        .hours-closed { display: flex; align-items: center; gap: 4px; font-size: 0.85rem; color: var(--text-muted); }
+        .hours-toggle { margin-left: auto; }
+        
+        /* Toast Notification */
+        .toast { position: fixed; bottom: 24px; right: 24px; background: var(--text); color: white; padding: 12px 20px; border-radius: 8px; font-weight: 500; display: flex; align-items: center; gap: 8px; transform: translateY(100px); opacity: 0; transition: all 0.3s ease; z-index: 300; }
+        .toast.show { transform: translateY(0); opacity: 1; }
+        .toast-icon { font-size: 1.25rem; }
+        
+        /* Spinner */
+        .spinner { display: inline-block; width: 16px; height: 16px; border: 2px solid transparent; border-top-color: currentColor; border-radius: 50%; animation: spin 0.8s linear infinite; margin-right: 6px; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        
         @media (max-width: 768px) {
             .header-content { flex-direction: column; gap: 12px; }
             .business-info, .two-col { grid-template-columns: 1fr; }
+            .stats-grid { gap: 16px; margin-bottom: 24px; }
+            .hours-row { flex-wrap: wrap; }
+            .hours-times { width: 100%; margin-top: 4px; }
         }
     </style>
 </head>
@@ -127,40 +156,40 @@
                 </div>
                 <div class="business-info">
                     <div class="form-group">
-                        <label class="form-label">Business Name</label>
-                        <input type="text" class="form-input" id="bizName" placeholder="Your Business Name">
+                        <label class="form-label required">Business Name</label>
+                        <input type="text" class="form-input" id="bizName" placeholder="Enter your business name">
                     </div>
                     <div class="form-group">
-                        <label class="form-label">Phone</label>
-                        <input type="tel" class="form-input" id="bizPhone" placeholder="+1 (555) 123-4567">
+                        <label class="form-label required">Phone</label>
+                        <input type="tel" class="form-input" id="bizPhone" placeholder="Enter your phone number">
                     </div>
                     <div class="form-group">
                         <label class="form-label">Email</label>
-                        <input type="email" class="form-input" id="bizEmail" placeholder="info@business.com">
+                        <input type="email" class="form-input" id="bizEmail" placeholder="Enter your email address">
                     </div>
                     <div class="form-group">
                         <label class="form-label">Website</label>
-                        <input type="url" class="form-input" id="bizWebsite" placeholder="https://yourbusiness.com">
+                        <input type="url" class="form-input" id="bizWebsite" placeholder="Enter your website URL">
                     </div>
                     <div class="form-group" style="grid-column: 1 / -1;">
-                        <label class="form-label">Address</label>
-                        <input type="text" class="form-input" id="bizAddress" placeholder="123 Main St, City, State 12345">
+                        <label class="form-label required">Address</label>
+                        <input type="text" class="form-input" id="bizAddress" placeholder="Enter your street address">
                     </div>
                     <div class="form-group">
-                        <label class="form-label">City</label>
-                        <input type="text" class="form-input" id="bizCity" placeholder="City">
+                        <label class="form-label required">City</label>
+                        <input type="text" class="form-input" id="bizCity" placeholder="Enter your city">
                     </div>
                     <div class="form-group">
-                        <label class="form-label">State</label>
-                        <input type="text" class="form-input" id="bizState" placeholder="State">
+                        <label class="form-label required">State</label>
+                        <input type="text" class="form-input" id="bizState" placeholder="Enter your state">
                     </div>
                     <div class="form-group">
-                        <label class="form-label">ZIP Code</label>
-                        <input type="text" class="form-input" id="bizZip" placeholder="12345">
+                        <label class="form-label required">ZIP Code</label>
+                        <input type="text" class="form-input" id="bizZip" placeholder="Enter your ZIP code">
                     </div>
                     <div class="form-group">
                         <label class="form-label">Category</label>
-                        <input type="text" class="form-input" id="bizCategory" placeholder="e.g., Plumber, Restaurant">
+                        <input type="text" class="form-input" id="bizCategory" placeholder="Enter your business category">
                     </div>
                 </div>
             </div>
@@ -207,6 +236,12 @@
             </div>
         </div>
     </main>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">
+        <span class="toast-icon">✓</span>
+        <span id="toastMessage">Saved successfully!</span>
+    </div>
 
     <!-- Citation Modal -->
     <div class="modal-overlay" id="citationModal">
@@ -345,6 +380,14 @@
 
         function openModal(id) { document.getElementById(id).classList.add('active'); }
         function closeModal(id) { document.getElementById(id).classList.remove('active'); }
+        
+        // Toast notification
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastMessage').textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 3000);
+        }
 
         // Business Info
         function loadBusinessInfo() {
@@ -361,44 +404,61 @@
         }
 
         function saveBusinessInfo() {
-            business = {
-                name: document.getElementById('bizName').value,
-                phone: document.getElementById('bizPhone').value,
-                email: document.getElementById('bizEmail').value,
-                website: document.getElementById('bizWebsite').value,
-                address: document.getElementById('bizAddress').value,
-                city: document.getElementById('bizCity').value,
-                state: document.getElementById('bizState').value,
-                zip: document.getElementById('bizZip').value,
-                category: document.getElementById('bizCategory').value,
-                hours: business.hours || []
-            };
-            saveData();
-            alert('Business info saved!');
+            const btn = event.target;
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<span class="spinner"></span>Saving...';
+            btn.disabled = true;
+            
+            setTimeout(() => {
+                business = {
+                    name: document.getElementById('bizName').value,
+                    phone: document.getElementById('bizPhone').value,
+                    email: document.getElementById('bizEmail').value,
+                    website: document.getElementById('bizWebsite').value,
+                    address: document.getElementById('bizAddress').value,
+                    city: document.getElementById('bizCity').value,
+                    state: document.getElementById('bizState').value,
+                    zip: document.getElementById('bizZip').value,
+                    category: document.getElementById('bizCategory').value,
+                    hours: business.hours || []
+                };
+                saveData();
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+                showToast('Business info saved successfully!');
+            }, 800);
         }
 
         function renderHours() {
             const hours = business.hours || [
-                { day: 'Monday', open: '9:00 AM', close: '5:00 PM', closed: false },
-                { day: 'Tuesday', open: '9:00 AM', close: '5:00 PM', closed: false },
-                { day: 'Wednesday', open: '9:00 AM', close: '5:00 PM', closed: false },
-                { day: 'Thursday', open: '9:00 AM', close: '5:00 PM', closed: false },
-                { day: 'Friday', open: '9:00 AM', close: '5:00 PM', closed: false },
-                { day: 'Saturday', open: '9:00 AM', close: '12:00 PM', closed: false },
+                { day: 'Monday', open: '09:00', close: '17:00', closed: false },
+                { day: 'Tuesday', open: '09:00', close: '17:00', closed: false },
+                { day: 'Wednesday', open: '09:00', close: '17:00', closed: false },
+                { day: 'Thursday', open: '09:00', close: '17:00', closed: false },
+                { day: 'Friday', open: '09:00', close: '17:00', closed: false },
+                { day: 'Saturday', open: '09:00', close: '12:00', closed: false },
                 { day: 'Sunday', open: '', close: '', closed: true }
             ];
             business.hours = hours;
             
-            const html = hours.map((h, i) => `
-                <div style="display: grid; grid-template-columns: 100px 1fr 1fr auto; gap: 8px; align-items: center; margin-bottom: 8px;">
-                    <span style="font-weight: 500;">${h.day}</span>
-                    <input type="time" class="form-input" value="${h.open}" onchange="updateHours(${i}, 'open', this.value)" ${h.closed ? 'disabled' : ''}>
-                    <input type="time" class="form-input" value="${h.close}" onchange="updateHours(${i}, 'close', this.value)" ${h.closed ? 'disabled' : ''}>
-                    <label style="display: flex; align-items: center; gap: 4px;">
-                        <input type="checkbox" ${h.closed ? 'checked' : ''} onchange="toggleClosed(${i}, this.checked)"> Closed
-                    </label>
+            const html = `
+                <div class="hours-container">
+                    ${hours.map((h, i) => `
+                        <div class="hours-row" data-day="${i}">
+                            <span class="hours-day">${h.day}</span>
+                            <div class="hours-times">
+                                <input type="time" class="form-input" value="${h.open}" onchange="updateHours(${i}, 'open', this.value)" ${h.closed ? 'disabled' : ''}>
+                                <span class="hours-separator">to</span>
+                                <input type="time" class="form-input" value="${h.close}" onchange="updateHours(${i}, 'close', this.value)" ${h.closed ? 'disabled' : ''}>
+                            </div>
+                            <div class="hours-closed">
+                                <input type="checkbox" ${h.closed ? 'checked' : ''} onchange="toggleClosed(${i}, this.checked)">
+                                <span>Closed</span>
+                            </div>
+                        </div>
+                    `).join('')}
                 </div>
-            `).join('');
+            `;
             document.getElementById('hoursList').innerHTML = html;
         }
 
